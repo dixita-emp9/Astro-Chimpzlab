@@ -23,7 +23,7 @@ const url = siteUrl + canonical;
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 
 <head>
     <script is:inline>(function (w, d, s, l, i) {
@@ -71,7 +71,20 @@ const url = siteUrl + canonical;
     <script defer src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js" is:inline></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="/style.css">
-
+    <style is:inline>
+        html.lenis {
+            height: auto;
+        }
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important;
+        }
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+        .lenis.lenis-scrolling iframe {
+            pointer-events: none;
+        }
+    </style>
     <slot name="head" />
 </head>
 
