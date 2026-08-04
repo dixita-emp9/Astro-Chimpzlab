@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# Remove index.html from URLs
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s.*/index\.html[?\s] [NC]
+RewriteRule ^(.*)index\.html$ /$1 [R=301,L,NC]
+
+RewriteCond %{REQUEST_URI} !^/assets/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]

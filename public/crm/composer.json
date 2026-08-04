@@ -1,0 +1,20 @@
+{
+    "name": "jigs/microcrm",
+    "description": "Simple, fast PHP CRM for capturing and managing leads from multiple websites. Built on FlightPHP.",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.1",
+        "ext-pdo": "*",
+        "ext-pdo_sqlite": "*",
+        "flightphp/core": "^3.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    }
+}

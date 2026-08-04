@@ -1,0 +1,1481 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+    title="Performance Marketing and Lead Gen Agency in Thane | ChimpzLab"
+    description="ChimpzLab's demand generation services include email marketing, lead generation, performance marketing, and automation to fill your pipeline and grow revenue."
+    canonical="/services/demand-generation"
+    hideHeader={false}
+    hideFooter={false}
+>
+<Fragment slot="head">
+<!-- Fonts: Manrope -->
+    
+    
+    
+
+    <!-- Tailwind CSS -->
+    
+
+    <!-- GSAP for Animations -->
+    
+    
+
+    <!-- Lenis for Smooth Scrolling -->
+    
+
+    
+
+    
+    
+    
+    <style is:inline>
+        /* Case Study Carousel */
+        .case-study-carousel-outer {
+            position: relative;
+        }
+
+        .case-study-carousel .swiper-slide {
+            height: auto;
+        }
+
+        .case-study-carousel .swiper-slide>a {
+            height: 100%;
+        }
+
+        .case-study-carousel .swiper-pagination-bullet {
+            background: rgba(255, 255, 255, 0.25);
+            width: 10px;
+            height: 10px;
+            opacity: 1;
+            transition: all 0.3s ease;
+        }
+
+        .case-study-carousel .swiper-pagination-bullet-active {
+            background: #fff;
+            width: 32px;
+            border-radius: 5px;
+        }
+
+        .case-study-carousel-outer .swiper-button-next,
+        .case-study-carousel-outer .swiper-button-prev {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.06);
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.3s ease;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        .case-study-carousel-outer .swiper-button-next:hover,
+        .case-study-carousel-outer .swiper-button-prev:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .case-study-carousel-outer .swiper-button-next:hover {
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        .case-study-carousel-outer .swiper-button-prev:hover {
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        .case-study-carousel-outer .swiper-button-next::after,
+        .case-study-carousel-outer .swiper-button-prev::after {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .case-study-carousel-outer .swiper-button-next {
+            right: -8px;
+        }
+
+        @media (min-width: 768px) {
+            .case-study-carousel-outer .swiper-button-next {
+                right: -26px;
+            }
+        }
+
+        .case-study-carousel-outer .swiper-button-prev {
+            left: -8px;
+        }
+
+        @media (min-width: 768px) {
+            .case-study-carousel-outer .swiper-button-prev {
+                left: -26px;
+            }
+        }
+
+        .featured-single-mode .swiper-button-next,
+        .featured-single-mode .swiper-button-prev,
+        .featured-single-mode .swiper-pagination {
+            display: none;
+        }
+
+        .featured-single-mode .swiper-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+
+        .featured-single-card {
+            max-width: 900px;
+            width: 100%;
+        }
+    </style>
+</Fragment>
+
+
+    <!-- Hero Section -->
+    <header
+        class="min-h-screen flex flex-col justify-center px-6 md:px-12 pt-32 pb-20 relative bg-brand-dark overflow-hidden">
+        <div class="w-full max-w-[1400px] mx-auto z-10">
+            <div class="flex items-center gap-4 mb-8 gsap-reveal-text">
+                <div class="w-12 h-[1px] bg-white/30"></div>
+                <span class="block text-xs font-bold uppercase tracking-[0.2em] text-white/70">Demand Generation</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl md:text-8xl font-extrabold text-white mb-12 tracking-tighter uppercase">
+                <div class="overflow-hidden"><span class="block gsap-reveal-text">Turn raw attention into</span></div>
+                <div class="overflow-hidden"><span class="block gsap-reveal-text text-white/40">demand you can
+                        predict.</span></div>
+            </h1>
+
+            <div class="gsap-reveal">
+                <div>
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-8">
+                        <a href="/booking-form"
+                            class="interactive bg-white hover:bg-gray-200 text-black px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2">
+                            Book a Strategy Call
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </a>
+                        <div class="flex flex-col">
+                            <span class="text-xs font-bold uppercase tracking-widest text-white/50 mb-1">The
+                                Agenda</span>
+                            <span class="text-sm font-medium text-gray-400 whitespace-nowrap leading-tight">30 minutes.
+                                No pitch deck. Just finding your reputation gaps.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Intro Section (Image + Content) -->
+    <section class="px-0 md:px-12 bg-white text-brand-dark border-t border-gray-200">
+        <div class="max-w-[1400px] mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+                <!-- Left: Image -->
+                <div class="lg:col-span-6 order-2 lg:order-none gsap-reveal">
+                    <div class="relative h-full overflow-hidden md:mr-12">
+                        <img src="/services/image/demand-and-automation.png" alt="Demand & Automation"
+                            class="w-full h-full object-contain object-bottom min-h-[300px] lg:min-h-full">
+                    </div>
+                </div>
+
+                <!-- Right: Content -->
+                <div class="lg:col-span-6 order-1 lg:order-none py-16 md:py-24 px-6 md:px-0 gsap-reveal">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="w-12 h-[1px] bg-gray-300"></div>
+                        <span class="block text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Our
+                            Approach</span>
+                    </div>
+
+                    <p class="text-lg md:text-2xl font-light leading-relaxed text-gray-600 mb-8">
+                        ChimpzLab is a demand generation agency that connects performance marketing, email, automation
+                        and vetted lead generation into one pipeline, so your marketing spend turns into qualified
+                        demand instead of just clicks.
+                    </p>
+                    <p class="text-lg md:text-2xl font-light leading-relaxed text-gray-600 mb-8">
+                        A low cost-per-click means nothing if it never becomes a lead, and a lead means nothing if it
+                        was never a real buyer. We build the whole path, from the ad to the landing page to the
+                        follow-up, and we verify who is actually worth your sales team's time before we hand them over.
+                    </p>
+                    <p class="text-lg md:text-2xl font-light leading-relaxed text-gray-600 mb-10">
+                        The goal is a system that captures active intent and moves it forward on its own, so growth
+                        stops depending on someone remembering to chase every enquiry.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-8">
+                        <a href="/booking-form"
+                            class="interactive bg-brand-dark hover:bg-gray-800 text-white px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2">
+                            Book a Strategy Call
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section (Sticky Scroll Layout) -->
+    <section class="py-32 px-6 md:px-12 bg-brand-dark text-white relative border-t border-white/10">
+        <div class="max-w-[1400px] mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20 relative items-start">
+
+                <!-- Left: Pinned Header -->
+                <div class="lg:col-span-5 lg:sticky lg:top-40 gsap-reveal">
+                    <span class="text-xs font-bold uppercase tracking-[0.2em] text-white/50 mb-6 block">Our
+                        Services</span>
+                    <h2
+                        class="text-4xl sm:text-5xl md:text-7xl lg:text-5xl xl:text-6xl font-extrabold leading-[0.95] tracking-tighter uppercase">
+                        Demand<br>Generation<br>Services
+                    </h2>
+                </div>
+
+                <!-- Right: Scrolling Items -->
+                <div class="lg:col-span-7 space-y-6 md:space-y-8 min-w-0 services-list">
+                    <!-- Card 1 -->
+                    <a href="/services/demand-generation/performance-marketing-agency-in-thane"
+                        class="block bg-white/5 border border-white/10 p-8 md:p-10 rounded-2xl opacity-0 translate-y-8 group hover:border-white/30 transition-[border-color] duration-300">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="text-4xl text-white/30 font-extrabold">01</div>
+                            <div class="w-8 h-[1px] bg-white/30"></div>
+                        </div>
+                        <h3 class="text-xl md:text-3xl font-extrabold text-white mb-3 leading-tight tracking-tight">
+                            Performance Marketing</h3>
+                        <p class="text-base md:text-xl font-light leading-relaxed text-gray-400 max-w-2xl">Paid
+                            campaigns across Google, Meta and other channels, built and optimised around pipeline and
+                            revenue, not just cost-per-click. Includes: paid search and social, audience targeting and
+                            segmentation, budget and bid optimisation, attribution and reporting.</p>
+                    </a>
+                    <!-- Card 2 -->
+                    <a href="/services/demand-generation/email-marketing-services-in-thane"
+                        class="block bg-white/5 border border-white/10 p-8 md:p-10 rounded-2xl opacity-0 translate-y-8 group hover:border-white/30 transition-[border-color] duration-300">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="text-4xl text-white/30 font-extrabold">02</div>
+                            <div class="w-8 h-[1px] bg-white/30"></div>
+                        </div>
+                        <h3 class="text-xl md:text-3xl font-extrabold text-white mb-3 leading-tight tracking-tight">
+                            Email Marketing</h3>
+                        <p class="text-base md:text-xl font-light leading-relaxed text-gray-400 max-w-2xl">Email that
+                            nurtures and converts, instead of a monthly newsletter nobody opens. Includes: lifecycle and
+                            nurture sequences, campaign design and copy, list segmentation, deliverability and
+                            performance optimisation.</p>
+                    </a>
+                    <!-- Card 3 -->
+                    <a href="/services/demand-generation/marketing-automation-services-in-thane"
+                        class="block bg-white/5 border border-white/10 p-8 md:p-10 rounded-2xl opacity-0 translate-y-8 group hover:border-white/30 transition-[border-color] duration-300">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="text-4xl text-white/30 font-extrabold">03</div>
+                            <div class="w-8 h-[1px] bg-white/30"></div>
+                        </div>
+                        <h3 class="text-xl md:text-3xl font-extrabold text-white mb-3 leading-tight tracking-tight">
+                            Marketing Automation</h3>
+                        <p class="text-base md:text-xl font-light leading-relaxed text-gray-400 max-w-2xl">Workflows
+                            that keep running in the background, moving leads from first click to sales-ready without
+                            manual follow-up. Includes: automation workflow design, CRM and tool integration, lead
+                            scoring, ongoing optimisation.</p>
+                    </a>
+                    <!-- Card 4 -->
+                    <a href="/services/demand-generation/vetted-lead-generation-services-in-thane"
+                        class="block bg-white/5 border border-white/10 p-8 md:p-10 rounded-2xl opacity-0 translate-y-8 group hover:border-white/30 transition-[border-color] duration-300">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="text-4xl text-white/30 font-extrabold">04</div>
+                            <div class="w-8 h-[1px] bg-white/30"></div>
+                        </div>
+                        <h3 class="text-xl md:text-3xl font-extrabold text-white mb-3 leading-tight tracking-tight">
+                            Vetted Lead Generation</h3>
+                        <p class="text-base md:text-xl font-light leading-relaxed text-gray-400 max-w-2xl">Every lead
+                            goes through AI and human verification. Budget, intent and timeframe are all checked, with
+                            call and WhatsApp verification, before anyone reaches your sales team. Includes: landing
+                            page audits, A/B testing, funnel analysis, conversion work for ad-traffic pages, call
+                            verification, WhatsApp verification.</p>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology Section (Timeline layout) -->
+    <section class="py-32 px-6 md:px-12 bg-white text-brand-dark border-t border-gray-200">
+        <div class="max-w-[1400px] mx-auto">
+            <h2 class="text-4xl md:text-7xl font-extrabold tracking-tighter mb-24 uppercase gsap-reveal">How this works
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 relative hidden md:grid methodology-grid">
+                <div class="absolute top-8 inset-x-0 h-[2px] bg-gray-200 origin-left scale-x-0" id="methodology-line">
+                </div>
+                <!-- Phase 1 -->
+                <div class="opacity-0 translate-y-8 relative z-10 pt-4">
+                    <div class="w-3 h-3 bg-brand-dark rounded-full absolute -top-1.5 left-0"></div>
+                    <div class="text-gray-300 font-extrabold text-5xl mb-6 mt-4">01</div>
+                    <h4 class="text-2xl font-extrabold mb-3 tracking-tight uppercase text-brand-dark">Funnel Audit</h4>
+                    <p class="text-gray-600 font-medium text-base leading-relaxed">We map your current path from ad
+                        click to closed lead, and find where it leaks.</p>
+                </div>
+                <!-- Phase 2 -->
+                <div class="opacity-0 translate-y-8 relative z-10 pt-4">
+                    <div class="w-3 h-3 bg-brand-dark rounded-full absolute -top-1.5 left-0"></div>
+                    <div class="text-gray-300 font-extrabold text-5xl mb-6 mt-4">02</div>
+                    <h4 class="text-2xl font-extrabold mb-3 tracking-tight uppercase text-brand-dark">Channel and
+                        Automation Strategy</h4>
+                    <p class="text-gray-600 font-medium text-base leading-relaxed">A plan for paid, email and automation
+                        built around your actual sales process.</p>
+                </div>
+                <!-- Phase 3 -->
+                <div class="opacity-0 translate-y-8 relative z-10 pt-4">
+                    <div class="w-3 h-3 bg-brand-dark rounded-full absolute -top-1.5 left-0"></div>
+                    <div class="text-gray-300 font-extrabold text-5xl mb-6 mt-4">03</div>
+                    <h4 class="text-2xl font-extrabold mb-3 tracking-tight uppercase text-brand-dark">Campaign Execution
+                    </h4>
+                    <p class="text-gray-600 font-medium text-base leading-relaxed">Ads, email sequences and workflows
+                        launched by one team.</p>
+                </div>
+                <!-- Phase 4 -->
+                <div class="opacity-0 translate-y-8 relative z-10 pt-4">
+                    <div class="w-3 h-3 bg-brand-dark rounded-full absolute -top-1.5 left-0"></div>
+                    <div class="text-gray-300 font-extrabold text-5xl mb-6 mt-4">04</div>
+                    <h4 class="text-2xl font-extrabold mb-3 tracking-tight uppercase text-brand-dark">Reporting Tied to
+                        Pipeline</h4>
+                    <p class="text-gray-600 font-medium text-base leading-relaxed">Regular reporting on leads,
+                        cost-per-lead and revenue impact, not just clicks.</p>
+                </div>
+            </div>
+
+            <!-- Mobile Fallback for Timeline -->
+            <div class="md:hidden space-y-12 border-l-2 border-gray-200 pl-6 ml-2">
+                <div class="gsap-reveal relative">
+                    <div class="w-3 h-3 bg-brand-dark rounded-full absolute top-2 -left-[31px]"></div>
+                    <div class="text-gray-300 font-extrabold text-4xl mb-2">01</div>
+                    <h4 class="text-xl font-extrabold mb-2 uppercase text-brand-dark">Funnel Audit</h4>
+                    <p class="text-gray-600 font-medium text-sm">We map your current path from ad click to closed lead,
+                        and find where it leaks.</p>
+                </div>
+                <div class="gsap-reveal relative">
+                    <div class="w-3 h-3 bg-brand-dark rounded-full absolute top-2 -left-[31px]"></div>
+                    <div class="text-gray-300 font-extrabold text-4xl mb-2">02</div>
+                    <h4 class="text-xl font-extrabold mb-2 uppercase text-brand-dark">Channel and Automation Strategy
+                    </h4>
+                    <p class="text-gray-600 font-medium text-sm">A plan for paid, email and automation built around your
+                        actual sales process.</p>
+                </div>
+                <div class="gsap-reveal relative">
+                    <div class="w-3 h-3 bg-brand-dark rounded-full absolute top-2 -left-[31px]"></div>
+                    <div class="text-gray-300 font-extrabold text-4xl mb-2">03</div>
+                    <h4 class="text-xl font-extrabold mb-2 uppercase text-brand-dark">Campaign Execution</h4>
+                    <p class="text-gray-600 font-medium text-sm">Ads, email sequences and workflows launched by one
+                        team.</p>
+                </div>
+                <div class="gsap-reveal relative">
+                    <div class="w-3 h-3 bg-brand-dark rounded-full absolute top-2 -left-[31px]"></div>
+                    <div class="text-gray-300 font-extrabold text-4xl mb-2">04</div>
+                    <h4 class="text-xl font-extrabold mb-2 uppercase text-brand-dark">Reporting Tied to Pipeline</h4>
+                    <p class="text-gray-600 font-medium text-sm">Regular reporting on leads, cost-per-lead and revenue
+                        impact, not just clicks.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integrated Advantage -->
+    <section class="px-6 md:px-12 bg-brand-dark text-white border-t border-white/10">
+        <div class="max-w-[1400px] mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+                <div
+                    class="lg:col-span-6 order-1 lg:order-none py-16 md:py-24 gsap-reveal flex flex-col justify-center">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="w-12 h-[1px] bg-white/30"></div>
+                        <span class="text-xs font-bold uppercase tracking-[0.2em] text-white/50">The Integrated
+                            Advantage</span>
+                    </div>
+                    <p class="text-lg md:text-2xl font-light leading-relaxed text-gray-400">
+                        Running ads without fixing the landing page and follow-up they lead to is the most common reason
+                        performance marketing underperforms. We build and optimise the entire path, then filter what
+                        comes through it, so your sales team spends time on buyers instead of tyre-kickers.
+                    </p>
+                </div>
+                <div class="lg:col-span-6 order-2 lg:order-none gsap-reveal">
+                    <div class="relative h-full overflow-hidden md:ml-4">
+                        <img src="/services/image/demand-and-automation-lead.png" alt="Demand & Automation"
+                            class="w-full h-full object-contain object-bottom min-h-[300px] lg:min-h-full">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Bar -->
+    <section class="py-16 px-6 md:px-12 bg-white text-brand-dark border-t border-gray-200 overflow-hidden">
+        <div class="max-w-[1400px] mx-auto">
+            <div class="flex flex-col md:flex-row items-center justify-start gap-6 md:gap-12">
+                <span class="text-xs font-bold uppercase tracking-widest text-gray-400 whitespace-nowrap">We worked
+                    for</span>
+                <div class="trust-marquee w-full">
+                    <div class="trust-track flex items-center gap-3 md:gap-4">
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/nasscom-logo.png" alt="NASSCOM"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/evershine.png" alt="Evershine Builders"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/tiger-analtics.png" alt="Tiger Analytics"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/anita-b.png" alt="AnitaB"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/CCoE-Logo.png" alt="CCoE"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/CII-logo.png" alt="CII" class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/Ebixcash-logo.png" alt="Ebixcash"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/ibm-logo.png" alt="IBM" class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/national-coe-logo.png" alt="National CoE"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/new-blue-star-logo.png" alt="Blue Star"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/new-stl-logo.png" alt="STL"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/societe-generele-logo.png" alt="Societe Generale"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/tcs-logo.png" alt="TCS" class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/cpr-logo.png" alt="CPR" class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/dsci-logo.png" alt="DSCI"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/hsbc-logo.png" alt="HSBC"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/kasyap-logo.png" alt="Kasyap"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/vodafone-foundation.png" alt="Vodafone Foundation"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/nasscom-logo.png" alt="NASSCOM"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/evershine.png" alt="Evershine Builders"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/tiger-analtics.png" alt="Tiger Analytics"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/anita-b.png" alt="AnitaB"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/CCoE-Logo.png" alt="CCoE"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/CII-logo.png" alt="CII" class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/Ebixcash-logo.png" alt="Ebixcash"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/ibm-logo.png" alt="IBM" class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/national-coe-logo.png" alt="National CoE"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/new-blue-star-logo.png" alt="Blue Star"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/new-stl-logo.png" alt="STL"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/societe-generele-logo.png" alt="Societe Generale"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/tcs-logo.png" alt="TCS" class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/cpr-logo.png" alt="CPR" class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/dsci-logo.png" alt="DSCI"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/hsbc-logo.png" alt="HSBC"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/kasyap-logo.png" alt="Kasyap"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white border border-gray-200 rounded-xl p-2 shrink-0">
+                            <img src="/asset/client-logo/vodafone-foundation.png" alt="Vodafone Foundation"
+                                class="w-full h-full object-contain">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Carousel Section -->
+    <section class="py-16 md:py-32 px-4 md:px-12 bg-[#f5f5f5] text-brand-dark border-t border-gray-200 overflow-hidden">
+        <div class="max-w-[950px] mx-auto">
+            <div class="flex items-center gap-4 mb-12 gsap-reveal">
+                <div class="w-12 h-[1px] bg-gray-300"></div>
+                <span class="text-xs font-bold uppercase tracking-[0.2em] text-gray-500">What Our Clients Say</span>
+            </div>
+
+            <div class="relative">
+                <!-- Prev Button - outside card: left on desktop, bottom on mobile -->
+                <button
+                    class="testimonial-prev absolute left-0 md:-left-16 bottom-[-40px] md:bottom-auto md:top-1/2 md:-translate-y-1/2 w-12 h-12 rounded-full bg-white border border-gray-200 shadow-md flex items-center justify-center hover:bg-gray-50 hover:border-gray-300 transition-all duration-300 group z-20"
+                    aria-label="Previous testimonial">
+                    <svg class="w-5 h-5 text-gray-600 group-hover:text-black transition-colors" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
+                        </path>
+                    </svg>
+                </button>
+
+                <!-- Next Button - outside card: right on desktop, bottom on mobile -->
+                <button
+                    class="testimonial-next absolute right-0 md:-right-16 bottom-[-40px] md:bottom-auto md:top-1/2 md:-translate-y-1/2 w-12 h-12 rounded-full bg-white border border-gray-200 shadow-md flex items-center justify-center hover:bg-gray-50 hover:border-gray-300 transition-all duration-300 group z-20"
+                    aria-label="Next testimonial">
+                    <svg class="w-5 h-5 text-gray-600 group-hover:text-black transition-colors" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+
+                <div class="testimonial-carousel overflow-hidden">
+                    <div class="testimonial-track flex transition-transform duration-500 ease-in-out"></div>
+                </div>
+
+                <!-- Dots -->
+                <div class="flex items-center justify-center gap-2 mt-4 md:mt-6" id="testimonial-dots"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies Grid Version (Active by default) -->
+    <section
+        class="py-16 md:py-32 px-4 sm:px-6 md:px-12 bg-brand-dark text-white border-t border-white/10 overflow-hidden">
+        <div class="max-w-[1400px] mx-auto">
+            <div class="flex items-center gap-4 mb-4 gsap-reveal">
+                <div class="w-12 h-[1px] bg-white/30"></div>
+                <span class="text-xs font-bold uppercase tracking-[0.2em] text-white/50">Case Studies</span>
+            </div>
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16 gsap-reveal">
+                <h2 class="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tighter uppercase m-0">
+                    Featured Work
+                </h2>
+                <a href="/case-studies"
+                    class="inline-flex items-center gap-2 text-white font-bold text-sm hover:gap-3 transition-all duration-300 pb-1 border-b border-white/30 hover:border-white shrink-0 uppercase tracking-wider">
+                    View All Case Studies
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+            </div>
+            <div class="case-study-carousel-outer relative">
+                <div class="swiper case-study-carousel gsap-reveal">
+                    <div class="swiper-wrapper" data-slugs="cisco-thingqbator,evershine-amavi"
+                        data-link-prefix="../case-studies/">
+                    </div>
+                    <div class="swiper-pagination !relative !bottom-auto mt-10 md:mt-12"></div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </section>
+    <!-- Insights Section -->
+    <section class="py-16 px-4 sm:px-6 md:px-12 bg-[#f5f5f5] text-brand-dark border-t border-gray-200">
+        <div class="max-w-[1400px] mx-auto">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 gsap-reveal">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tighter uppercase m-0 gsap-reveal">
+                Insights
+            </h2>
+            <a href="/insights"
+                class="interactive border-2 border-brand-dark text-brand-dark hover:bg-brand-dark hover:text-white px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 inline-block shrink-0 whitespace-nowrap">Explore
+                more</a>
+        </div>
+
+            <div id="insight-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-5"></div>
+    </div></section>
+
+    <!-- FAQ Section -->
+    <section class="py-32 px-6 md:px-12 bg-white text-brand-dark border-t border-gray-200">
+        <div class="max-w-[1000px] mx-auto">
+            <h2 class="text-4xl md:text-5xl font-extrabold tracking-tighter mb-16 uppercase gsap-reveal">FAQ's</h2>
+
+            <div class="border-t border-gray-200">
+                <!-- Q1 -->
+                <div class="gsap-reveal border-b border-gray-200 faq-item group">
+                    <button
+                        class="w-full text-left py-6 font-bold text-base md:text-xl flex justify-between items-center interactive focus:outline-none tracking-tight pr-4">
+                        How is this different from just running Google or Meta ads?
+                        <svg class="w-6 h-6 transform transition-transform duration-300 icon text-gray-400 group-hover:text-black shrink-0 ml-4"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div class="pb-6 text-gray-600 font-medium text-base leading-relaxed hidden answer max-w-3xl">
+                        Running ads without fixing the page and the follow-up they point to is the usual reason spend
+                        underperforms. We build and optimise the whole path, not only the ad, then verify the leads that
+                        come out of it.
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="gsap-reveal border-b border-gray-200 faq-item group">
+                    <button
+                        class="w-full text-left py-6 font-bold text-base md:text-xl flex justify-between items-center interactive focus:outline-none tracking-tight pr-4">
+                        What does vetted lead generation actually mean?
+                        <svg class="w-6 h-6 transform transition-transform duration-300 icon text-gray-400 group-hover:text-black shrink-0 ml-4"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div class="pb-6 text-gray-600 font-medium text-base leading-relaxed hidden answer max-w-3xl">
+                        Every lead is checked by a mix of AI and a human before it reaches you. We confirm budget,
+                        intent and timeframe, and verify contact details over call and WhatsApp, so your team only
+                        follows up on real prospects.
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="gsap-reveal border-b border-gray-200 faq-item group">
+                    <button
+                        class="w-full text-left py-6 font-bold text-base md:text-xl flex justify-between items-center interactive focus:outline-none tracking-tight pr-4">
+                        Do you build the landing pages too, or only the ads?
+                        <svg class="w-6 h-6 transform transition-transform duration-300 icon text-gray-400 group-hover:text-black shrink-0 ml-4"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div class="pb-6 text-gray-600 font-medium text-base leading-relaxed hidden answer max-w-3xl">
+                        Both. Landing pages and conversion work are part of this, because ad performance is capped by
+                        what happens after the click.
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="gsap-reveal border-b border-gray-200 faq-item group">
+                    <button
+                        class="w-full text-left py-6 font-bold text-base md:text-xl flex justify-between items-center interactive focus:outline-none tracking-tight pr-4">
+                        What CRM and automation tools do you work with?
+                        <svg class="w-6 h-6 transform transition-transform duration-300 icon text-gray-400 group-hover:text-black shrink-0 ml-4"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div class="pb-6 text-gray-600 font-medium text-base leading-relaxed hidden answer max-w-3xl">
+                        We work inside your existing stack wherever possible, including Salesforce, Zoho, HubSpot,
+                        ActiveCampaign and similar, rather than forcing a migration.
+                    </div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="gsap-reveal border-b border-gray-200 faq-item group">
+                    <button
+                        class="w-full text-left py-6 font-bold text-base md:text-xl flex justify-between items-center interactive focus:outline-none tracking-tight pr-4">
+                        How is success measured, leads or revenue?
+                        <svg class="w-6 h-6 transform transition-transform duration-300 icon text-gray-400 group-hover:text-black shrink-0 ml-4"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div class="pb-6 text-gray-600 font-medium text-base leading-relaxed hidden answer max-w-3xl">
+                        Wherever your sales process allows it, we report on cost-per-qualified-lead and pipeline
+                        contribution, not just lead volume or ad platform numbers.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA / Form Section (CTA 3 of 3) -->
+    <section class="py-32 px-6 md:px-12 bg-brand-dark text-white border-t border-white/10" id="booking-form">
+        <div class="max-w-[1400px] mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+
+                <!-- Left Side: Copy -->
+                <div class="gsap-reveal">
+                    <h2
+                        class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tighter mb-8 uppercase leading-[0.9]">
+                        Stop leaving your pipeline to chance.
+                    </h2>
+                    <p class="text-lg md:text-2xl text-gray-400 mb-12 max-w-lg font-light">Let us build a demand system
+                        that turns digital attention into leads your sales team can actually close.</p>
+                </div>
+
+                <!-- Right Side: Dark Form Container (Matches Homepage Redesign) -->
+                <div class="bg-[#111] border border-white/10 rounded-2xl p-8 md:p-12 gsap-reveal">
+                    <form id="contactForm" class="space-y-6" method="POST" action="/lead-capture.php">
+                        <!-- Top Row Fields -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <input type="text" name="name" placeholder="Your Name *" minlength="2" maxlength="100"
+                                    pattern="[A-Za-zÀ-ÿ\s\.\-']+"
+                                    title="Please enter a valid name (letters, spaces, hyphens only)"
+                                    class="w-full bg-transparent border border-white/20 rounded-xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-white transition-colors"
+                                    required>
+                                <p class="error-msg text-red-500 text-xs mt-1 hidden">Please enter your full name.</p>
+                            </div>
+                            <div>
+                                <input type="email" name="email" placeholder="Email *" maxlength="254"
+                                    pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+                                    title="Please enter a valid email address"
+                                    class="w-full bg-transparent border border-white/20 rounded-xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-white transition-colors"
+                                    required>
+                                <p class="error-msg text-red-500 text-xs mt-1 hidden">Please enter a valid email
+                                    address.</p>
+                            </div>
+                        </div>
+                        <!-- Phone -->
+                        <div>
+                            <input type="tel" name="phone" placeholder="Phone *" minlength="10" maxlength="15"
+                                pattern="[0-9]{10,15}" inputmode="numeric" title="Please enter a valid phone number (10-15 digits)"
+                                class="w-full bg-transparent border border-white/20 rounded-xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-white transition-colors"
+                                required>
+                            <p class="error-msg text-red-500 text-xs mt-1 hidden">Please enter a valid phone number (min
+                                10 digits).</p>
+                        </div>
+                        <!-- Textarea -->
+                        <div>
+                            <textarea name="message" placeholder="Tell us about your project *" rows="4" minlength="10"
+                                maxlength="2000"
+                                class="w-full bg-transparent border border-white/20 rounded-xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-white transition-colors resize-none"
+                                required></textarea>
+                            <p class="error-msg text-red-500 text-xs mt-1 hidden">Message must be at least 10
+                                characters.</p>
+                        </div>
+
+                        <!-- Honeypot: invisible to humans, bots love it -->
+                        <div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true">
+                            <label>Leave this blank</label>
+                            <input type="text" name="_hp" tabindex="-1" autocomplete="off">
+                        </div>
+
+                        
+                        <!-- Google reCAPTCHA -->
+                        <div class="pt-2">
+                            <div class="g-recaptcha" data-sitekey="6Ld5s24tAAAAABcGfuai8DbOmn6JAS9kARQonH1h"></div>
+                            <p id="recaptchaError" class="error-msg text-red-500 text-xs mt-1 hidden">Please complete the CAPTCHA.</p>
+                        </div>
+
+                        <!-- Hidden fields -->
+                        <input type="hidden" name="api_key" value="3afc0840e1193e58397159d4af15cf4a15b5b35c">
+                        <input type="hidden" name="_redirect" value="thanks.html">
+
+                        <!-- Submit Button -->
+                        <div class="pt-6">
+                            <button type="submit" id="submitBtn"
+                                class="interactive w-fit bg-white hover:bg-gray-200 text-black px-10 py-5 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-3">
+                                Send Message
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- JS Logic -->
+    <script is:inline>
+        // Custom Cursor Logic
+        const cursor = document.getElementById('cursor');
+        const interactiveElements = document.querySelectorAll('.interactive, a, button, input, textarea, select, label');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+        // Initialize Lenis Smooth Scrolling
+        window.lenis = new Lenis({
+            wrapper: window,
+            content: document.documentElement,
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+            infinite: false,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // Connect GSAP to Lenis
+        gsap.registerPlugin(ScrollTrigger);
+        lenis.on('scroll', ScrollTrigger.update);
+
+        // Hero Text Reveal
+        gsap.from(".gsap-reveal-text", {
+            y: 120,
+            opacity: 0,
+            duration: 1.2,
+            stagger: 0.1,
+            ease: "power4.out",
+            delay: 0.2
+        });
+
+        // General Scroll Reveals
+        function initScrollReveals() {
+            const revealElements = document.querySelectorAll(".gsap-reveal");
+            revealElements.forEach((el) => {
+                const rect = el.getBoundingClientRect();
+                const isInView = rect.top < window.innerHeight - 80;
+                if (isInView) {
+                    gsap.set(el, { opacity: 1, y: 0 });
+                } else {
+                    gsap.to(el, {
+                        scrollTrigger: {
+                            trigger: el,
+                            start: "top 88%",
+                            toggleActions: "play none none none"
+                        },
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.6,
+                        ease: "power2.out"
+                    });
+                }
+            });
+        }
+
+        initScrollReveals();
+
+        function animateCards(container, staggerDelay, duration) {
+            if (!container || container.offsetParent === null) return;
+            const cards = container.querySelectorAll(':scope > div, :scope > a');
+            if (!cards.length || cards[0].style.opacity === '1') return;
+            const rect = container.getBoundingClientRect();
+            const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+            const anim = () => gsap.fromTo(cards,
+                { opacity: 0, y: 32 },
+                { opacity: 1, y: 0, duration: duration, stagger: staggerDelay, ease: "power2.out" }
+            );
+            if (isInView) {
+                anim();
+            } else {
+                ScrollTrigger.create({
+                    trigger: container,
+                    start: "top 85%",
+                    onEnter: anim,
+                    once: true
+                });
+            }
+        }
+
+        animateCards(document.querySelector('.methodology-grid'), 0.15, 0.6);
+        animateCards(document.querySelector('.services-list'), 0.12, 0.5);
+
+        // Animate methodology timeline line
+        const methodLine = document.getElementById('methodology-line');
+        if (methodLine) {
+            const lineAnim = () => {
+                gsap.to(methodLine, {
+                    scaleX: 1,
+                    duration: 1.5,
+                    ease: 'power1.out'
+                });
+            };
+            const rect = methodLine.closest('.methodology-grid').getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                lineAnim();
+            } else {
+                ScrollTrigger.create({
+                    trigger: methodLine.closest('.methodology-grid'),
+                    start: 'top 80%',
+                    onEnter: lineAnim,
+                    once: true
+                });
+            }
+        }
+
+        // Refresh multiple times to handle Lenis & font loading
+        function refreshST() {
+            ScrollTrigger.refresh();
+            animateCards(document.querySelector('.methodology-grid'), 0.15, 0.6);
+            animateCards(document.querySelector('.services-list'), 0.12, 0.5);
+        }
+        window.addEventListener('load', refreshST);
+        window.addEventListener('resize', refreshST);
+        setTimeout(refreshST, 600);
+
+        // FAQ Accordion Logic
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const button = item.querySelector('button');
+            const answer = item.querySelector('.answer');
+            const icon = item.querySelector('.icon');
+
+            button.addEventListener('click', () => {
+                const isOpen = !answer.classList.contains('hidden');
+
+                // Close all others
+                faqItems.forEach(otherItem => {
+                    otherItem.querySelector('.answer').classList.add('hidden');
+                    otherItem.querySelector('.icon').style.transform = 'rotate(0deg)';
+                });
+
+                if (!isOpen) {
+                    answer.classList.remove('hidden');
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        // Testimonial Carousel Logic - Data Driven
+        const testimonialTrack = document.querySelector('.testimonial-track');
+        const prevBtn = document.querySelector('.testimonial-prev');
+        const nextBtn = document.querySelector('.testimonial-next');
+        const dotsContainer = document.getElementById('testimonial-dots');
+        let currentSlide = 0;
+        let totalSlides = 0;
+        let autoplayInterval;
+
+        function renderTestimonials(data) {
+            totalSlides = data.length;
+
+            testimonialTrack.innerHTML = data.map((t, i) => `
+                        <div class="testimonial-slide min-w-full px-2">
+                            <div class="bg-white rounded-3xl p-6 md:p-14 relative shadow-sm h-full flex flex-col justify-center">
+                                <div class="absolute top-8 right-10 text-[120px] leading-none font-serif text-gray-100 select-none pointer-events-none">"</div>
+                                <p class="text-sm sm:text-lg md:text-xl lg:text-2xl font-medium leading-relaxed text-gray-800 mb-10 relative z-10 italic max-w-[800px] ">"${t.quote}"</p>
+                                <div class="flex items-center gap-4 relative z-10 shrink-0">
+                                    ${t.image
+                    ? `<img src="/services/${t.image}" alt="${t.author}" class="w-14 h-14 rounded-full object-cover">`
+                    : `<div class="w-14 h-14 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-bold text-lg shrink-0">${t.letter}</div>`
+                }
+                                    <div>
+                                        <p class="font-bold text-base text-brand-dark">${t.author}</p>
+                                        <p class="text-sm text-gray-500">${t.title}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            `).join('');
+
+            dotsContainer.innerHTML = data.map((_, i) => `
+                <button class="testimonial-dot w-2.5 h-2.5 rounded-full ${i === 0 ? 'bg-black' : 'bg-gray-300'} transition-all duration-300"
+                    data-index="${i}" aria-label="Go to slide ${i + 1}"></button>
+            `).join('');
+
+            initCarousel();
+        }
+
+        function initCarousel() {
+            const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+            const dots = document.querySelectorAll('.testimonial-dot');
+
+            function goToSlide(index) {
+                if (index < 0) index = totalSlides - 1;
+                if (index >= totalSlides) index = 0;
+                currentSlide = index;
+                testimonialTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('bg-black', i === currentSlide);
+                    dot.classList.toggle('bg-gray-300', i !== currentSlide);
+                });
+            }
+
+            function startAutoplay() {
+                autoplayInterval = setInterval(() => goToSlide(currentSlide + 1), 5000);
+            }
+
+            function stopAutoplay() {
+                clearInterval(autoplayInterval);
+            }
+
+            prevBtn.addEventListener('click', () => {
+                stopAutoplay();
+                goToSlide(currentSlide - 1);
+                startAutoplay();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                stopAutoplay();
+                goToSlide(currentSlide + 1);
+                startAutoplay();
+            });
+
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    stopAutoplay();
+                    goToSlide(parseInt(dot.dataset.index));
+                    startAutoplay();
+                });
+            });
+
+            // Drag / Swipe Support
+            const carouselEl = document.querySelector('.testimonial-carousel');
+            let dragStartX = 0;
+            let dragDeltaX = 0;
+            let isDragging = false;
+
+            function setTransition(v) {
+                testimonialTrack.style.transition = v ? 'transform 0.5s ease' : 'none';
+            }
+
+            function onDragStart(e) {
+                if (e.type === 'mousedown' && e.button !== 0) return;
+                isDragging = true;
+                dragStartX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+                dragDeltaX = 0;
+                setTransition(false);
+                stopAutoplay();
+            }
+
+            function onDragMove(e) {
+                if (!isDragging) return;
+                const x = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+                dragDeltaX = x - dragStartX;
+                const offset = -(currentSlide * 100) + (dragDeltaX / carouselEl.offsetWidth * 100);
+                testimonialTrack.style.transform = `translateX(${offset}%)`;
+            }
+
+            function onDragEnd() {
+                if (!isDragging) return;
+                isDragging = false;
+                setTransition(true);
+                if (dragDeltaX < -50) {
+                    goToSlide(currentSlide + 1);
+                } else if (dragDeltaX > 50) {
+                    goToSlide(currentSlide - 1);
+                } else {
+                    goToSlide(currentSlide);
+                }
+                startAutoplay();
+            }
+
+            carouselEl.addEventListener('touchstart', onDragStart, { passive: true });
+            carouselEl.addEventListener('touchmove', onDragMove, { passive: true });
+            carouselEl.addEventListener('touchend', onDragEnd);
+            carouselEl.addEventListener('mousedown', onDragStart);
+            carouselEl.addEventListener('mousemove', onDragMove);
+            carouselEl.addEventListener('mouseup', onDragEnd);
+            carouselEl.addEventListener('mouseleave', onDragEnd);
+
+            startAutoplay();
+        }
+
+        fetch('../data/testimonials.json')
+            .then(res => res.json())
+            .then(renderTestimonials)
+            .catch(err => console.error('Failed to load testimonials:', err));
+    </script>
+    <!-- Footer -->
+    
+<Fragment slot="scripts">
+
+
+    <script is:inline>
+        (function () {
+            function initTestimonials() {
+                const testimonialTrack = document.querySelector('.testimonial-track');
+                const prevBtn = document.querySelector('.testimonial-prev');
+                const nextBtn = document.querySelector('.testimonial-next');
+                const dotsContainer = document.getElementById('testimonial-dots');
+                if (!testimonialTrack) return;
+
+                let currentSlide = 0;
+                let totalSlides = 0;
+                let autoplayInterval;
+
+                const fallbackData = [
+                    {
+                        "quote": "ChimpzLab team has delivered an exceptional UI/UX upgrade for CIRL. Your ability to blend sophisticated design with functional simplicity is remarkable. The intuitive interface they crafted has significantly enhanced the experience for our customers. I would highly recommended any organization looking to elevate their digital presence to try Chimpzlab.",
+                        "author": "Latesh A Shetty",
+                        "title": "MD & CEO, Centrico Insurance Repository Limited",
+                        "image": "",
+                        "letter": "LS"
+                    },
+                    {
+                        "quote": "Partnering with Chimpzlab has been an excellent experience. Their strategic thinking, creative excellence, and commitment to quality have consistently elevated our brand communication. A dependable team that truly understands premium real estate marketing.",
+                        "author": "Lachman Ludhani",
+                        "title": "Chairman & Managing Director, Evershine Group",
+                        "image": "",
+                        "letter": "LL"
+                    },
+                    {
+                        "quote": "Chimpzlab has been a commendable partner for us. Their creative approach and timely delivery of services make our collaboration seamless and highly effective. We truly appreciate their professionalism and the value they bring to our initiatives.",
+                        "author": "Dr Sriram Birudavolu",
+                        "title": "CEO, Cybersecurity Centre of Excellence, Hyderabad",
+                        "image": "",
+                        "letter": "SB"
+                    },
+                    {
+                        "quote": "Working with the Chimpzlab team has been a seamless experience. They have consistently delivered high-quality work with professionalism and responsiveness. The team is proactive, easy to work with, and quick to understand our requirements, ensuring that updates are implemented efficiently. We value their commitment, reliability, and continued support, and would be happy to recommend them to any organization looking for a dependable digital partner.",
+                        "author": "Palak Nanjani",
+                        "title": "Director, Paradigm ARQ",
+                        "image": "",
+                        "letter": "PN"
+                    },
+                    {
+                        "quote": "Our experience working with the Chimpzlab team has been nothing short of outstanding. They possess a unique ability to bridge the gap between complex financial communication and highly effective digital strategy, a truly dependable team.",
+                        "author": "Ananya Deshmukh",
+                        "title": "VP of Corporate Strategy, FinVantage Capital",
+                        "image": "",
+                        "letter": "AD"
+                    }
+                ];
+
+                function renderTestimonials(data) {
+                    if (!data || !data.length) data = fallbackData;
+                    totalSlides = data.length;
+
+                    testimonialTrack.innerHTML = data.map((t, i) => `
+                <div class="testimonial-slide min-w-full px-2">
+                    <div class="bg-white rounded-3xl p-6 md:p-14 relative shadow-sm h-full flex flex-col justify-center">
+                        <div class="absolute top-8 right-10 text-[120px] leading-none font-serif text-gray-100 select-none pointer-events-none">"</div>
+                        <p class="text-sm sm:text-lg md:text-xl lg:text-2xl font-medium leading-relaxed text-gray-800 mb-10 relative z-10 italic max-w-[800px]">"${t.quote}"</p>
+                        <div class="flex items-center gap-4 relative z-10 shrink-0">
+                            ${t.image
+                            ? `<img src="/services/${t.image}" alt="${t.author}" class="w-14 h-14 rounded-full object-cover">`
+                            : `<div class="w-14 h-14 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-bold text-lg shrink-0">${t.letter}</div>`
+                        }
+                            <div>
+                                <p class="font-bold text-base text-brand-dark">${t.author}</p>
+                                <p class="text-sm text-gray-500">${t.title}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+                    if (dotsContainer) {
+                        dotsContainer.innerHTML = data.map((_, i) => `
+                    <button class="testimonial-dot w-2.5 h-2.5 rounded-full ${i === 0 ? 'bg-black' : 'bg-gray-300'} transition-all duration-300"
+                        data-index="${i}" aria-label="Go to slide ${i + 1}"></button>
+                `).join('');
+                    }
+
+                    initCarousel();
+                }
+
+                function initCarousel() {
+                    const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+                    const dots = document.querySelectorAll('.testimonial-dot');
+
+                    function goToSlide(index) {
+                        if (index < 0) index = totalSlides - 1;
+                        if (index >= totalSlides) index = 0;
+                        currentSlide = index;
+                        testimonialTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+                        dots.forEach((dot, i) => {
+                            dot.classList.toggle('bg-black', i === currentSlide);
+                            dot.classList.toggle('bg-gray-300', i !== currentSlide);
+                        });
+                    }
+
+                    function startAutoplay() {
+                        autoplayInterval = setInterval(() => goToSlide(currentSlide + 1), 5000);
+                    }
+
+                    function stopAutoplay() {
+                        clearInterval(autoplayInterval);
+                    }
+
+                    if (prevBtn) {
+                        prevBtn.addEventListener('click', () => {
+                            stopAutoplay();
+                            goToSlide(currentSlide - 1);
+                            startAutoplay();
+                        });
+                    }
+
+                    if (nextBtn) {
+                        nextBtn.addEventListener('click', () => {
+                            stopAutoplay();
+                            goToSlide(currentSlide + 1);
+                            startAutoplay();
+                        });
+                    }
+
+                    dots.forEach(dot => {
+                        dot.addEventListener('click', () => {
+                            stopAutoplay();
+                            goToSlide(parseInt(dot.dataset.index));
+                            startAutoplay();
+                        });
+                    });
+
+                    const carouselEl = document.querySelector('.testimonial-carousel');
+                    if (carouselEl) {
+                        let dragStartX = 0;
+                        let dragDeltaX = 0;
+                        let isDragging = false;
+
+                        function setTransition(v) {
+                            testimonialTrack.style.transition = v ? 'transform 0.5s ease' : 'none';
+                        }
+
+                        function onDragStart(e) {
+                            if (e.type === 'mousedown' && e.button !== 0) return;
+                            isDragging = true;
+                            dragStartX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+                            dragDeltaX = 0;
+                            setTransition(false);
+                            stopAutoplay();
+                        }
+
+                        function onDragMove(e) {
+                            if (!isDragging) return;
+                            const x = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+                            dragDeltaX = x - dragStartX;
+                            const offset = -(currentSlide * 100) + (dragDeltaX / carouselEl.offsetWidth * 100);
+                            testimonialTrack.style.transform = `translateX(${offset}%)`;
+                        }
+
+                        function onDragEnd() {
+                            if (!isDragging) return;
+                            isDragging = false;
+                            setTransition(true);
+                            if (dragDeltaX < -50) {
+                                goToSlide(currentSlide + 1);
+                            } else if (dragDeltaX > 50) {
+                                goToSlide(currentSlide - 1);
+                            } else {
+                                goToSlide(currentSlide);
+                            }
+                            startAutoplay();
+                        }
+
+                        carouselEl.addEventListener('touchstart', onDragStart, { passive: true });
+                        carouselEl.addEventListener('touchmove', onDragMove, { passive: true });
+                        carouselEl.addEventListener('touchend', onDragEnd);
+                        carouselEl.addEventListener('mousedown', onDragStart);
+                        carouselEl.addEventListener('mousemove', onDragMove);
+                        carouselEl.addEventListener('mouseup', onDragEnd);
+                        carouselEl.addEventListener('mouseleave', onDragEnd);
+                    }
+
+                    startAutoplay();
+                }
+
+                const fetchPath = '../data/testimonials.json';
+                fetch(fetchPath)
+                    .then(res => res.json())
+                    .then(renderTestimonials)
+                    .catch(err => {
+                        console.warn('Failed to fetch testimonials JSON, using fallback data:', err);
+                        renderTestimonials(fallbackData);
+                    });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initTestimonials);
+            } else {
+                initTestimonials();
+            }
+        })();
+    </script>
+
+    <script is:inline>
+        // Dynamic insights loader
+        (async function () {
+            const grid = document.getElementById('insight-grid');
+            if (!grid) return;
+            try {
+                const prefix = '../';
+                const targetSlugs = ["who-is-liable-for-ai-generated-google-ads-2026", "dpdp-act-email-marketing-compliance-india-2026"];
+                const res = await fetch(prefix + 'insights/data.json');
+                const data = await res.json();
+
+                let articles = [];
+                if (targetSlugs.length > 0) {
+                    articles = data.articles.filter(a => targetSlugs.includes(a.slug));
+                    // Sort articles in the exact order specified in targetSlugs
+                    articles.sort((a, b) => targetSlugs.indexOf(a.slug) - targetSlugs.indexOf(b.slug));
+                } else {
+                    // Fallback for pages not explicitly mapped: show 3 recent
+                    articles = (data.articles || []).slice(0, 3);
+                }
+
+                if (articles.length === 0) return;
+                function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+                grid.innerHTML = articles.map(function (a, i) {
+                    return '<div class="insight-card-item p-6 md:p-8 border-l border-t md:border-t-0 border-gray-300">' +
+                        '<span class="text-gray-500 text-xs font-bold uppercase tracking-widest mb-4 block">' + (a.tag || cap(a.category)) + '</span>' +
+                        '<h3 class="text-lg md:text-xl font-bold mb-8 leading-snug">' + (a.titleParts ? a.titleParts.join(' ') : a.titleFull) + '</h3>' +
+                        '<a href="/services/' + prefix + 'blog-insite.html?slug=' + a.slug + '" class="text-brand-dark hover:opacity-70 transition-opacity duration-300">' +
+                        '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>' +
+                        '</a></div>';
+                }).join('');
+            } catch (e) { console.warn('Insights load error:', e); }
+        })();
+    </script>
+
+    <script is:inline>
+        // Location Map Modal Functionality
+        (function () {
+            const locationLink = document.getElementById('location-link');
+            const mapModal = document.getElementById('map-modal');
+            const mapModalContent = document.getElementById('map-modal-content');
+            const closeMapModal = document.getElementById('close-map-modal');
+
+            if (locationLink && mapModal) {
+                locationLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    mapModal.classList.remove('opacity-0', 'pointer-events-none');
+                    if (mapModalContent) {
+                        mapModalContent.classList.remove('scale-95');
+                        mapModalContent.classList.add('scale-100');
+                    }
+                });
+
+                const closeModal = () => {
+                    mapModal.classList.add('opacity-0', 'pointer-events-none');
+                    if (mapModalContent) {
+                        mapModalContent.classList.remove('scale-100');
+                        mapModalContent.classList.add('scale-95');
+                    }
+                };
+
+                if (closeMapModal) {
+                    closeMapModal.addEventListener('click', closeModal);
+                }
+
+                mapModal.addEventListener('click', (e) => {
+                    if (e.target === mapModal) {
+                        closeModal();
+                    }
+                });
+
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && !mapModal.classList.contains('pointer-events-none')) {
+                        closeModal();
+                    }
+                });
+            }
+        })();
+    </script>
+<script is:inline src="/hash-cleaner.js"></script>
+
+    <!-- Google reCAPTCHA API -->
+    <script is:inline src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <!-- Google reCAPTCHA Validation Logic -->
+    <script is:inline>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('contactForm');
+            if (!form) return;
+
+            const errorEl = document.getElementById('recaptchaError');
+
+            form.addEventListener('submit', (e) => {
+                const recaptchaResponse = grecaptcha.getResponse();
+                if (recaptchaResponse.length === 0) {
+                    e.preventDefault();
+                    if(errorEl) errorEl.classList.remove('hidden');
+                } else {
+                    if(errorEl) errorEl.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+
+    <!-- Form Validation -->
+    <script is:inline src="/form-validation.js"></script>
+
+</Fragment>
+</BaseLayout>
