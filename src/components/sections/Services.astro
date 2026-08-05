@@ -6,6 +6,7 @@ interface Service {
     title: string;
     description: string;
     tags: { href: string; label: string }[];
+    maxWidth?: string;
 }
 
 const services: Service[] = [
@@ -61,6 +62,7 @@ const services: Service[] = [
             { href: '/services/digital-experiences/chatbot-development-services-in-thane', label: 'Chatbots' },
             { href: '/services/digital-experiences/landing-page-services-in-thane', label: 'Landing Pages' },
         ],
+        maxWidth: '380px',
     },
 ];
 ---
@@ -81,7 +83,7 @@ const services: Service[] = [
                         <div class="lg:col-span-4">
                             <a href={service.href} class="text-gray-400 font-medium">{service.description}</a>
                         </div>
-                        <div class="lg:col-span-4 text-sm lg:max-w-[350px] font-medium opacity-70 flex flex-wrap gap-2">
+                        <div class={`lg:col-span-4 text-sm lg:max-w-[${service.maxWidth ?? '350px'}] font-medium opacity-70 flex flex-wrap gap-2`}>
                             {service.tags.map((tag) => (
                                 <a href={tag.href}
                                     class="px-3 py-1 rounded-full border border-current interactive">{tag.label}</a>

@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from './sections/Hero.astro';
+import NumbersStrip from './sections/NumbersStrip.astro';
+import WhoWeAre from './sections/WhoWeAre.astro';
+import WhatWeHelp from './sections/WhatWeHelp.astro';
+import Services from './sections/Services.astro';
+import OurWork from './sections/OurWork.astro';
+import Insights from './sections/Insights.astro';
+import BookingForm from './sections/BookingForm.astro';
+import Testimonials from './Testimonials.tsx';
+---
+
+<BaseLayout
+    title="Digital Marketing Agency in Thane | ChimpzLab"
+    description="ChimpzLab is a full-service digital marketing agency offering SEO, social media, performance marketing, branding, PR, and web development for brands in Thane."
+    canonical="/"
+    hideHeader={false}
+    hideFooter={false}
+>
+<Fragment slot="head">
+    <!-- Preload LCP image -->
+    <link rel="preload" as="image" href="/asset/home-page.webp" fetchpriority="high">
+</Fragment>
+
+    <Hero />
+    <NumbersStrip />
+    <WhoWeAre />
+    <WhatWeHelp />
+    <Services />
+    <OurWork />
+    <Insights />
+    <Testimonials client:load />
+    <BookingForm />
+    <BookingForm otp hidden />
+
+<Fragment slot="scripts">
+    <script is:inline src="/hash-cleaner.js"></script>
+
+    <!-- Google reCAPTCHA API -->
+    <script is:inline src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <!-- Google reCAPTCHA Validation Logic -->
+    <script is:inline>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('contactForm');
+            if (!form) return;
+
+            const errorEl = document.getElementById('recaptchaError');
+
+            form.addEventListener('submit', (e) => {
+                const recaptchaResponse = grecaptcha.getResponse();
+                if (recaptchaResponse.length === 0) {
+                    e.preventDefault();
+                    errorEl.classList.remove('hidden');
+                } else {
+                    errorEl.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+
+    <!-- Form Validation -->
+    <script is:inline src="/form-validation.js"></script>
+</Fragment>
+</BaseLayout>

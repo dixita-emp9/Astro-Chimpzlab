@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/sections/ContactForm.astro';
 ---
 <BaseLayout
     title="About Us | Integrated Communications Agency in Thane | ChimpzLab"
@@ -7,6 +8,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     canonical="/about"
     hideHeader={false}
     hideFooter={false}
+    activeNav="about"
 >
 <Fragment slot="head">
 <!-- Fonts: Manrope -->
@@ -148,7 +150,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
             <div class="mb-20 gsap-reveal max-w-4xl">
                 <h2 class="text-5xl md:text-7xl font-extrabold tracking-tighter uppercase mb-8">The Ecosystem
-                    Model:<br><span class="text-outline-dark text-black">Specialized Roles. One Unified Engine.</span>
+                    Model:<br><span class="text-black">Specialized Roles. One Unified Engine.</span>
                 </h2>
                 <p class="text-xl md:text-2xl font-light text-gray-600 leading-relaxed">
                     We do not believe in generalist pools or flat execution. Our team of 40 operates as a highly
@@ -412,10 +414,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <!-- Contact / Ready to Get Started Section -->
     <section class="py-32 px-6 md:px-12 bg-[#111111] text-white" id="contact">
         <div class="max-w-[1400px] mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-24 items-start">
 
                 <!-- Left Side: Copy -->
-                <div class="lg:col-span-5 gsap-reveal">
+                <div class="gsap-reveal">
                     <h2 class="text-5xl md:text-7xl font-extrabold tracking-tighter mb-6 uppercase leading-[0.9]">Ready
                         to align your brand presence?</h2>
                     <p class="text-xl text-gray-400 mb-12 max-w-lg font-light">Let’s discuss how our integrated
@@ -455,83 +457,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     </div>
                 </div>
 
-                <!-- Right Side: Dark Form Container (Exact Structured Look) -->
-                <div
-                    class="lg:col-span-7 bg-[#1a1a1a] border border-white/5 rounded-3xl p-8 md:p-12 shadow-2xl gsap-reveal">
-                    <form id="contactForm" class="space-y-6" method="POST" action="/lead-capture.php">
-                        <!-- Top Row Fields -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <input type="text" name="name" placeholder="Your Name *" minlength="2" maxlength="100"
-                                    pattern="[A-Za-zÀ-ÿ\s\.\-']+"
-                                    title="Please enter a valid name (letters, spaces, hyphens only)"
-                                    class="w-full bg-[#111111] border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-white/30 transition-colors"
-                                    required>
-                                <p class="error-msg text-red-500 text-xs mt-1 hidden">Please enter your full name.</p>
-                            </div>
-                            <div>
-                                <input type="email" name="email" placeholder="Email *" maxlength="254"
-                                    pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
-                                    title="Please enter a valid email address"
-                                    class="w-full bg-[#111111] border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-white/30 transition-colors"
-                                    required>
-                                <p class="error-msg text-red-500 text-xs mt-1 hidden">Please enter a valid email
-                                    address.</p>
-                            </div>
-                        </div>
-                        <!-- Phone -->
-                        <div>
-                            <input type="tel" name="phone" placeholder="Phone *" minlength="10" maxlength="15"
-                                pattern="[0-9]{10,15}" inputmode="numeric" title="Please enter a valid phone number (10-15 digits)"
-                                class="w-full bg-[#111111] border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-white/30 transition-colors"
-                                required>
-                            <p class="error-msg text-red-500 text-xs mt-1 hidden">Please enter a valid phone number (min
-                                10 digits).</p>
-                        </div>
-                        <!-- Textarea -->
-                        <div>
-                            <textarea name="message" placeholder="Tell us about your project *" rows="4" minlength="10"
-                                maxlength="2000"
-                                class="w-full bg-[#111111] border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-white/30 transition-colors resize-none"
-                                required></textarea>
-                            <p class="error-msg text-red-500 text-xs mt-1 hidden">Message must be at least 10
-                                characters.</p>
-                        </div>
-
-                        <!-- Honeypot: invisible to humans, bots love it -->
-                        <div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true">
-                            <label>Leave this blank</label>
-                            <input type="text" name="_hp" tabindex="-1" autocomplete="off">
-                        </div>
-
-
-                        <!-- Google reCAPTCHA -->
-                        <div class="pt-2">
-                            <div class="g-recaptcha" data-sitekey="6Ld5s24tAAAAABcGfuai8DbOmn6JAS9kARQonH1h"></div>
-                            <p id="recaptchaError" class="error-msg text-red-500 text-xs mt-1 hidden">Please complete
-                                the CAPTCHA.</p>
-                        </div>
-
-                        <!-- Hidden fields -->
-                        <input type="hidden" name="api_key" value="3afc0840e1193e58397159d4af15cf4a15b5b35c">
-                        <input type="hidden" name="_redirect" value="thanks.html">
-
-                        <!-- Submit Button -->
-                        <div class="pt-6">
-                            <button type="submit" id="submitBtn"
-                                class="interactive w-fit bg-white hover:bg-gray-200 text-black px-8 py-4 rounded-full text-sm font-bold tracking-wider uppercase transition-all duration-300 flex items-center gap-2">
-                                Send Message
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                                </svg>
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                <!-- Right Side: Dark Form -->
+                <ContactForm theme="dark" />
             </div>
         </div>
-
     </section>
 
     <!-- Footer -->

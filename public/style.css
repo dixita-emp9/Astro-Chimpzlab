@@ -2049,6 +2049,8 @@ body.menu-open {
 }
 
 .insights-swiper .swiper-pagination {
+  position: relative;
+  bottom: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2979,6 +2981,13 @@ section.bg-white ::selection {
   padding-top: 12px;
   padding-bottom: 12px;
   border: none;
+}
+
+@media (min-width: 768px) {
+  .footer-v2 .footer-bottom {
+    flex-direction: row;
+    align-items: center;
+  }
 }
 
 .footer-v2 .footer-bottom p,

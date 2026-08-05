@@ -1,4 +1,7 @@
 ---
+const { activeNav = '' } = Astro.props;
+const linkClass = (nav) =>
+    `interactive text-sm transition-colors ${nav === activeNav ? 'text-white font-bold' : 'text-gray-300 hover:text-white font-medium'}`;
 ---
 <nav class="fixed w-full top-0 z-50 px-6 md:px-12 py-6 flex justify-between items-center pointer-events-none backdrop-blur-md"
         style="background: linear-gradient(180deg, #000000cf, transparent);">
@@ -72,12 +75,9 @@
                         </div>
                     </div>
                 </div>
-                <a href="/case-studies"
-                    class="interactive text-gray-300 hover:text-white font-medium text-sm transition-colors">Work</a>
-                <a href="/about"
-                    class="interactive text-gray-300 hover:text-white font-medium text-sm transition-colors">About</a>
-                <a href="/insights"
-                    class="interactive text-gray-300 hover:text-white font-medium text-sm transition-colors">Insights</a>
+                <a href="/case-studies" class={`interactive text-sm transition-colors ${activeNav === 'work' ? 'text-white font-bold' : 'text-gray-300 hover:text-white font-medium'}`}>Work</a>
+                <a href="/about" class={linkClass('about')}>About</a>
+                <a href="/insights" class={`interactive text-sm transition-colors ${activeNav === 'insights' ? 'text-white font-bold' : 'text-gray-300 hover:text-white font-medium'}`}>Insights</a>
             </div>
         </div>
 
