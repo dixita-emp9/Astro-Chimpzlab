@@ -1,0 +1,100 @@
+[
+  {
+    "image": "../casestudy/landing-pages/carnelian.png",
+    "title": "Carnelian Capital",
+    "desc": "Boutique Investment Management Firm",
+    "link": "https://carneliancapital.co.in/",
+    "category": "FinServ"
+  },
+  {
+    "image": "../casestudy/landing-pages/ccoe.png",
+    "title": "CCOE",
+    "desc": "Joint initiative of Government of Telangana & Data Security Council of India",
+    "link": "https://ccoe.dsci.in/",
+    "category": "IT Services"
+  },
+  {
+    "image": "../casestudy/landing-pages/cirl.png",
+    "title": "CIRL",
+    "desc": "Insurance Repository of CDSL",
+    "link": "https://www.cirl.co.in/",
+    "category": "FinServ"
+  },
+  {
+    "image": "../casestudy/landing-pages/dpnc.png",
+    "title": "DPNC",
+    "desc": "Tax & Finance Consulting Firm",
+    "link": "https://dpncglobal.com/",
+    "category": "FinServ"
+  },
+  {
+    "image": "../casestudy/landing-pages/eduspark.png",
+    "title": "Eduspark",
+    "desc": "Kids Toys E-Commerce Store",
+    "link": "https://edusparktoys.com/",
+    "category": "E-Commerce"
+  },
+  {
+    "image": "../casestudy/landing-pages/ellarra.png",
+    "title": "Ellarra",
+    "desc": "Law Consulting Firm",
+    "link": "https://elarralawoffices.com/",
+    "category": "Consulting"
+  },
+  {
+    "image": "../casestudy/landing-pages/ignite.png",
+    "title": "Ignite",
+    "desc": "Training Institute based in UAE",
+    "link": "https://ignitetraininginstitute.com",
+    "category": "Education"
+  },
+  {
+    "image": "../casestudy/landing-pages/invenia.jpg",
+    "title": "Invenia",
+    "desc": "An STL Group Company (Part of Vedanta Group)",
+    "link": "https://inveniatech.com/",
+    "category": "IT Services"
+  },
+  {
+    "image": "../casestudy/landing-pages/jifyfood.png",
+    "title": "JifyFood",
+    "desc": "D2C Food Brand",
+    "link": "https://ifyfood.com/",
+    "category": "E-Commerce"
+  },
+  {
+    "image": "../casestudy/landing-pages/mos.png",
+    "title": "MOS World",
+    "desc": "Listed Digital FinServ Company",
+    "link": "https://mos-world.com/",
+    "category": "FinServ"
+  },
+  {
+    "image": "../casestudy/landing-pages/owl-academy.png",
+    "title": "Owl Academy",
+    "desc": "International School",
+    "link": "https://owl-academy.com/",
+    "category": "Education"
+  },
+  {
+    "image": "../casestudy/landing-pages/psiog.png",
+    "title": "Psiog",
+    "desc": "Mid Market IT Services Company",
+    "link": "https://psiog.com/",
+    "category": "IT Services"
+  },
+  {
+    "image": "../casestudy/landing-pages/reverbasia.png",
+    "title": "Reverb Asia",
+    "desc": "Tech Accessories E-Commerce Store",
+    "link": "https://reverbasia.com/",
+    "category": "E-Commerce"
+  },
+  {
+    "image": "../casestudy/landing-pages/wherefore.png",
+    "title": "Wherefore",
+    "desc": "Mar-Comm Consulting Company",
+    "link": "https://wherefore.in/",
+    "category": "Consulting"
+  }
+]

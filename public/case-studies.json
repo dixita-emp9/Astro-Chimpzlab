@@ -1,0 +1,274 @@
+[
+  {
+    "slug": "ajmera-realty",
+    "title": "Ajmera Realty & Infra India Ltd.",
+    "cover": "./casestudy/ajmera-realty/cover.jpg",
+    "cats": "DESIGN",
+    "categoryKeys": [
+      "design"
+    ],
+    "link": "case-studies/ajmera-realty",
+    "hasDetail": true,
+    "desc": "Real estate brand building & visual identity."
+  },
+  {
+    "slug": "blue-star",
+    "title": "Blue Star India",
+    "cover": "./casestudy/blue-star/cover.png",
+    "cats": "EMPLOYER BRANDING  ·  SOCIAL MEDIA MARKETING",
+    "categoryKeys": [
+      "employer-branding",
+      "social-media-marketing"
+    ],
+    "link": "case-studies/blue-star",
+    "hasDetail": true,
+    "desc": "Employer branding & social media for India's AC leader."
+  },
+  {
+    "slug": "carnelian-capital",
+    "title": "Carnelian Capital",
+    "cover": "./casestudy/carnelian-capital/cover.jpg",
+    "cats": "SEO / AEO  ·  CONTENT WRITING",
+    "categoryKeys": [
+      "seo-aeo",
+      "content-writing"
+    ],
+    "link": "case-studies/carnelian-capital",
+    "hasDetail": true,
+    "desc": "From Unranked to Category Leader"
+  },
+  {
+    "slug": "cisco-thingqbator",
+    "title": "Cisco thingQbator",
+    "cover": "./casestudy/cisco-thingqbator/cover.jpg",
+    "cats": "PERFORMANCE MARKETING  ·  DESIGN",
+    "categoryKeys": [
+      "performance-marketing",
+      "design"
+    ],
+    "link": "case-studies/cisco-thingqbator",
+    "hasDetail": true,
+    "desc": "Startup accelerator platform & IoT storytelling."
+  },
+  {
+    "slug": "evershine-builders",
+    "title": "Evershine Builders",
+    "cover": "./casestudy/evershine-builders/cover.png",
+    "cats": "PUBLIC RELATIONS  ·  SOCIAL MEDIA MARKETING  ·  THOUGHT LEADERSHIP",
+    "categoryKeys": [
+      "public-relations",
+      "social-media-marketing",
+      "thought-leadership"
+    ],
+    "link": "case-studies/evershine-builders",
+    "hasDetail": true,
+    "desc": "PR & thought leadership for a real estate developer."
+  },
+  {
+    "slug": "forest-hills",
+    "title": "Forest Hills at Tala",
+    "cover": "./casestudy/forest-hills/cover.jpg",
+    "cats": "BRANDING  ·  DESIGN",
+    "categoryKeys": [
+      "branding",
+      "design"
+    ],
+    "link": "case-studies/forest-hills",
+    "hasDetail": true,
+    "desc": "Branding & design for a luxury weekend home."
+  },
+  {
+    "slug": "ghci-2024",
+    "title": "Grace Hopper Celebration India 2024",
+    "cover": "./casestudy/ghci-2024/cover.jpg",
+    "cats": "SOCIAL MEDIA MARKETING  ·  DESIGN",
+    "categoryKeys": [
+      "social-media-marketing",
+      "design"
+    ],
+    "link": "case-studies/ghci-2024",
+    "hasDetail": true,
+    "desc": "Social media & design for Grace Hopper Celebration."
+  },
+  {
+    "slug": "imbesharam",
+    "title": "IMBesharam",
+    "cover": "./casestudy/imbesharam/cover.jpg",
+    "cats": "SOCIAL MEDIA MARKETING  ·  DESIGN  ·  CONTENT WRITING",
+    "categoryKeys": [
+      "social-media-marketing",
+      "design",
+      "content-writing"
+    ],
+    "link": "case-studies/imbesharam",
+    "hasDetail": true,
+    "desc": "Ecommerce growth, content & site for a bold D2C brand."
+  },
+  {
+    "slug": "mos-world",
+    "title": "MOS World",
+    "cover": "./casestudy/mos-world/cover.jpg",
+    "cats": "BRANDING  ·  THOUGHT LEADERSHIP",
+    "categoryKeys": [
+      "branding",
+      "thought-leadership"
+    ],
+    "link": "case-studies/mos-world",
+    "hasDetail": true,
+    "desc": "Branding & thought leadership for MOS World."
+  },
+  {
+    "slug": "munns-mars",
+    "title": "Munns & Mars",
+    "cover": "./casestudy/munns-mars/cover.jpg",
+    "cats": "SOCIAL MEDIA MARKETING  ·  INFLUENCER MARKETING",
+    "categoryKeys": [
+      "social-media-marketing",
+      "influencer-marketing"
+    ],
+    "link": "case-studies/munns-mars",
+    "hasDetail": true,
+    "desc": "Social media & influencer marketing for Munns & Mars."
+  },
+  {
+    "slug": "nasscom-konnect",
+    "title": "Nasscom Konnect",
+    "cover": "./casestudy/nasscom-konnect/cover.jpg",
+    "cats": "CORPORATE COMMUNICATIONS  ·  SOCIAL MEDIA MARKETING",
+    "categoryKeys": [
+      "corporate-communications",
+      "social-media-marketing"
+    ],
+    "link": "case-studies/nasscom-konnect",
+    "hasDetail": true,
+    "desc": "Corporate comms & social for NASSCOM Konnect."
+  },
+  {
+    "slug": "nasscom-member-connect",
+    "title": "Nasscom Member Connect",
+    "cover": "./casestudy/nasscom-member-connect/cover.jpg",
+    "cats": "CORPORATE COMMUNICATIONS  ·  THOUGHT LEADERSHIP  ·  SOCIAL MEDIA MARKETING",
+    "categoryKeys": [
+      "corporate-communications",
+      "thought-leadership",
+      "social-media-marketing"
+    ],
+    "link": "case-studies/nasscom-member-connect",
+    "hasDetail": true,
+    "desc": "Membership & community for NASSCOM."
+  },
+  {
+    "slug": "psiog",
+    "title": "Psiog",
+    "cover": "./casestudy/psiog/cover.png",
+    "cats": "BRANDING",
+    "categoryKeys": [
+      "branding"
+    ],
+    "link": "case-studies/psiog",
+    "hasDetail": true,
+    "desc": "Creative, branding & design for Psiog."
+  },
+  {
+    "slug": "robust-petcare",
+    "title": "Robust Petcare",
+    "cover": "./casestudy/robust-petcare/cover.jpg",
+    "cats": "DESIGN  ·  BRANDING",
+    "categoryKeys": [
+      "design",
+      "branding"
+    ],
+    "link": "case-studies/robust-petcare",
+    "hasDetail": true,
+    "desc": "Branding & design for Robust Petcare."
+  },
+  {
+    "slug": "soul-skin",
+    "title": "Soul Skin",
+    "draft": true,
+    "cover": "./casestudy/soul-skin/cover.jpeg",
+    "cats": "SEO / AEO  ·  CONTENT WRITING",
+    "categoryKeys": [
+      "seo-aeo",
+      "content-writing"
+    ],
+    "link": "case-studies/soul-skin",
+    "hasDetail": true,
+    "desc": "Owning Page One of a Hyperlocal Category"
+  },
+  {
+    "slug": "stl-digital",
+    "title": "STL Digital",
+    "cover": "./casestudy/stl-digital/cover.jpg",
+    "cats": "CORPORATE COMMUNICATIONS  ·  SOCIAL MEDIA MARKETING  ·  DESIGN",
+    "categoryKeys": [
+      "corporate-communications",
+      "social-media-marketing",
+      "design"
+    ],
+    "link": "case-studies/stl-digital",
+    "hasDetail": true,
+    "desc": "Corporate comms, design & web for STL Digital."
+  },
+  {
+    "slug": "tiger-analytics",
+    "title": "Tiger Analytics",
+    "cover": "./casestudy/tiger-analytics/cover.jpg",
+    "cats": "SEO / AEO  ·  CONTENT WRITING",
+    "categoryKeys": [
+      "seo-aeo",
+      "content-writing"
+    ],
+    "link": "case-studies/tiger-analytics",
+    "hasDetail": true,
+    "desc": "Doubling Organic Reach in an AI-Saturated Category"
+  },
+  {
+    "slug": "evershine-house",
+    "title": "Evershine House",
+    "cover": "./casestudy/evershine-house/cover.png",
+    "cats": "CHATBOT & VIRTUAL ASSISTANT",
+    "categoryKeys": [
+      "chatbot-virtual-assistant"
+    ],
+    "link": "case-studies/evershine-house",
+    "hasDetail": true,
+    "desc": "Turning Every Website Visitor Into a Qualified Sales Conversation"
+  },
+  {
+    "slug": "evershine-amavi",
+    "title": "Evershine Amavi",
+    "cover": "./casestudy/evershine-amavi/cover.jpg",
+    "cats": "VETTED LEAD GENERATION",
+    "categoryKeys": [
+      "vetted-lead-generation"
+    ],
+    "link": "case-studies/evershine-amavi",
+    "hasDetail": true,
+    "desc": "Turning Cold Clicks Into a Sales-Ready Pipeline"
+  },
+  {
+    "slug": "quantumapps-ai",
+    "title": "QuantumApps.AI",
+    "cover": "./casestudy/quantumapps-ai/cover.jpg",
+    "cats": "BRANDING",
+    "categoryKeys": [
+      "branding"
+    ],
+    "link": "case-studies/quantumapps-ai",
+    "hasDetail": true,
+    "desc": "Giving an AI-Native Platform a Visual Identity Built on Precision"
+  },
+  {
+    "slug": "soul-skin-clinic",
+    "title": "Soul Skin Clinic",
+    "cover": "./casestudy/soul-skin-clinic/cover.jpg",
+    "cats": "CHATBOT & VIRTUAL ASSISTANT",
+    "categoryKeys": [
+      "chatbot-virtual-assistant"
+    ],
+    "link": "case-studies/soul-skin-clinic",
+    "hasDetail": true,
+    "desc": "Turning WhatsApp Into an Always-On Front Desk"
+  }
+]

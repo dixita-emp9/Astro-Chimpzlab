@@ -25,6 +25,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     
 
     <!-- Masonry & ImagesLoaded -->
+    <script is:inline src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script is:inline src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
 </Fragment>
 
 
@@ -249,6 +251,203 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             }
         })();
     </script>
+
+    <script is:inline>
+        // --- Render case study cards from JSON ---
+        document.addEventListener('DOMContentLoaded', function () {
+            const CATS = {
+                "corporate-communications": "Corporate Communications",
+                "public-relations": "Public Relations",
+                "thought-leadership": "Thought Leadership",
+                "employer-branding": "Employer Branding",
+                "social-media-marketing": "Social Media Marketing",
+                "seo-aeo": "SEO / AEO",
+                "content-writing": "Content Writing",
+                "influencer-marketing": "Influencer Marketing",
+                "branding": "Branding",
+                "design": "Design",
+                "performance-marketing": "Performance Marketing",
+                "vetted-lead-generation": "Vetted Lead Generation",
+                "chatbot-virtual-assistant": "Chatbot & Virtual Assistant"
+            };
+
+            const grid = document.getElementById('cs-grid');
+            const emptyMsg = document.getElementById('cs-empty');
+            const countEl = document.querySelector('.cs-count');
+            if (!grid) return;
+
+            function renderCards(data) {
+                grid.innerHTML = '';
+                data = data.filter(item => !item.draft);
+                data.forEach((item, i) => {
+                    const idx = String(i + 1).padStart(2, '0');
+                    const tags = item.cats
+                        ? '<span class="cs-tag">' + item.cats + '</span>'
+                        : item.categoryKeys.map(k => '<span class="cs-tag">' + (CATS[k] || k) + '</span>').join('');
+                    const card = document.createElement('a');
+                    card.href = item.link;
+                    card.setAttribute('data-cats', item.categoryKeys.join(' '));
+                    card.className = 'cs-card group relative block rounded-2xl overflow-hidden border border-white/10 bg-[#101010]';
+                    card.innerHTML =
+                        '<div class="relative overflow-hidden">' +
+                        '<img src="' + item.cover + '" alt="' + item.title + '" class="w-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" loading="lazy">' +
+                        '</div>' +
+                        '<div class="p-5 sm:p-6">' +
+                        '<h3 class="text-lg sm:text-xl md:text-2xl font-extrabold uppercase tracking-tight leading-[1.05] text-white">' + item.title + '</h3>' +
+                        '<div class="flex flex-wrap gap-2 mt-3 mb-2">' + tags + '</div>' +
+                        '<span class="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white/85 mt-2">View Case Study' +
+                        '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H8m9 0v9"/></svg>' +
+                        '</span>' +
+                        '</div>';
+                    grid.appendChild(card);
+                });
+            }
+
+            let msnry = null;
+
+            function getGutter() {
+                return window.innerWidth >= 1024 ? 32 : 24;
+            }
+
+            // Load data from external JSON file
+            fetch('/case-studies.json', { cache: 'no-cache' })
+                .then(r => r.json())
+                .then(data => {
+                    renderCards(data);
+                    imagesLoaded(grid, () => {
+                        msnry = new Masonry(grid, {
+                            itemSelector: '.cs-card',
+                            columnWidth: '.cs-card',
+                            percentPosition: true,
+                            gutter: getGutter(),
+                            transitionDuration: 0,
+                        });
+                        grid.classList.add('cs-masonry-ready');
+                        initReveal();
+                        updateCount();
+                    });
+                })
+                .catch(() => {
+                    grid.innerHTML = '<p class="text-center text-white/40 py-20">Failed to load case studies.</p>';
+                });
+
+            function initReveal() {
+                const cards = document.querySelectorAll('.cs-card');
+                if ('IntersectionObserver' in window) {
+                    const io = new IntersectionObserver((entries) => {
+                        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+                    }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+                    cards.forEach(c => io.observe(c));
+                } else {
+                    cards.forEach(c => c.classList.add('in'));
+                }
+            }
+
+            // Filtering with crossfade
+            const filterBtns = document.querySelectorAll('.cs-filter');
+
+            function updateCount() {
+                const visible = grid.querySelectorAll('.cs-card:not(.hidden)').length;
+                countEl.textContent = visible + (visible === 1 ? ' Project' : ' Projects');
+                emptyMsg.classList.toggle('hidden', visible > 0);
+            }
+
+            let filterBusy = false;
+            filterBtns.forEach(btn => btn.addEventListener('click', () => {
+                if (btn.classList.contains('active') || filterBusy) return;
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const f = btn.dataset.filter;
+
+                filterBusy = true;
+                grid.style.transition = 'opacity .28s ease';
+                grid.style.opacity = '0';
+
+                setTimeout(() => {
+                    const cards = grid.querySelectorAll('.cs-card');
+                    cards.forEach(card => {
+                        const match = f === 'all' || card.dataset.cats.split(' ').includes(f);
+                        card.classList.toggle('hidden', !match);
+                        if (match) card.classList.add('in'); else card.classList.remove('in');
+                    });
+                    updateCount();
+                    if (msnry) msnry.destroy();
+                    msnry = new Masonry(grid, {
+                        itemSelector: '.cs-card:not(.hidden)',
+                        columnWidth: '.cs-card:not(.hidden)',
+                        percentPosition: true,
+                        gutter: getGutter(),
+                        transitionDuration: 0,
+                    });
+                    requestAnimationFrame(() => {
+                        grid.style.opacity = '1';
+                        setTimeout(() => { filterBusy = false; }, 280);
+                    });
+                }, 280);
+            }));
+
+            // Drag-to-scroll for case study filters
+            (function () {
+                const el = document.getElementById('cs-filters');
+                if (!el) return;
+                let isDown = false, startX, scrollLeft, vel = 0;
+                let frame = null, lastX = 0, lastTime = 0;
+
+                function momentum() {
+                    vel *= 0.95;
+                    el.scrollLeft -= vel;
+                    if (Math.abs(vel) > 0.5) {
+                        frame = requestAnimationFrame(momentum);
+                    } else {
+                        cancelAnimationFrame(frame);
+                        frame = null;
+                    }
+                }
+
+                function startDrag(pageX) {
+                    isDown = true;
+                    el.classList.add('dragging');
+                    cancelAnimationFrame(frame);
+                    frame = null;
+                    vel = 0;
+                    startX = pageX;
+                    lastX = pageX;
+                    scrollLeft = el.scrollLeft;
+                    lastTime = performance.now();
+                }
+
+                function moveDrag(pageX) {
+                    if (!isDown) return;
+                    const now = performance.now();
+                    const dt = Math.min(now - lastTime, 50);
+                    const dx = pageX - lastX;
+                    if (dt > 0) {
+                        vel = vel * 0.6 + (dx / dt * 16) * 0.4;
+                    }
+                    el.scrollLeft -= dx * 2.5;
+                    lastX = pageX;
+                    lastTime = now;
+                }
+
+                function endDrag() {
+                    isDown = false;
+                    el.classList.remove('dragging');
+                    if (Math.abs(vel) > 0.5) {
+                        frame = requestAnimationFrame(momentum);
+                    }
+                }
+
+                el.addEventListener('mousedown', (e) => { startDrag(e.pageX); e.preventDefault(); });
+                el.addEventListener('mousemove', (e) => { moveDrag(e.pageX); });
+                el.addEventListener('mouseup', endDrag);
+                el.addEventListener('mouseleave', endDrag);
+                el.addEventListener('touchstart', (e) => { startDrag(e.touches[0].pageX); }, { passive: true });
+                el.addEventListener('touchmove', (e) => { moveDrag(e.touches[0].pageX); }, { passive: true });
+                el.addEventListener('touchend', endDrag);
+            })();
+        });
+    </script>
+
     <script is:inline src="/hash-cleaner.js"></script>
 
     <!-- Google reCAPTCHA API -->

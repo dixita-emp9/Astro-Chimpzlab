@@ -1,0 +1,72 @@
+[
+  {
+    "image": "../casestudy/landing-pages/drswathi.jpg",
+    "title": "Dr. Swathi",
+    "desc": "",
+    "link": "https://drswathi.in/",
+    "category": "Healthcare"
+  },
+  {
+    "image": "../casestudy/landing-pages/evershine.png",
+    "title": "Evershine",
+    "desc": "",
+    "link": "https://evershinebuilders.com/2-bhk-flat-in-virar",
+    "category": "Real Estate"
+  },
+  {
+    "image": "../casestudy/landing-pages/evershine-house.jpg",
+    "title": "Evershine House",
+    "desc": "",
+    "link": "https://click4demos.co.in/evershine-house-3/",
+    "category": "Real Estate"
+  },
+  {
+    "image": "../casestudy/landing-pages/gcc-awards-2024.jpg",
+    "title": "GCC Awards 2024",
+    "desc": "",
+    "link": "https://click4demos.co.in/event-sites/gcc/",
+    "category": "Events"
+  },
+  {
+    "image": "../casestudy/landing-pages/ghci-2024.jpg",
+    "title": "GHCI 2024",
+    "desc": "",
+    "link": "https://click4demos.co.in/event-sites/ghci/",
+    "category": "Events"
+  },
+  {
+    "image": "../casestudy/landing-pages/nsc2025.jpg",
+    "title": "NSC 2025",
+    "desc": "",
+    "link": "https://click4demos.co.in/event-sites/nsc-sme/",
+    "category": "Events"
+  },
+  {
+    "image": "../casestudy/landing-pages/ntc2024.jpg",
+    "title": "NTC 2024",
+    "desc": "",
+    "link": "https://click4demos.co.in/event-sites/ntc24/",
+    "category": "Events"
+  },
+  {
+    "image": "../casestudy/landing-pages/ntlf2025.jpg",
+    "title": "NTLF 2025",
+    "desc": "",
+    "link": "https://click4demos.co.in/event-sites/ntlf/",
+    "category": "Events"
+  },
+  {
+    "image": "../casestudy/landing-pages/sme2026.jpg",
+    "title": "SME 2026",
+    "desc": "",
+    "link": "https://click4demos.co.in/event-sites/nsc25/",
+    "category": "Events"
+  },
+  {
+    "image": "../casestudy/landing-pages/soul.jpg",
+    "title": "Soul-IV Drip process",
+    "desc": "",
+    "link": "https://soulskinclinic.com/services/iv-therapy-anna-nagar",
+    "category": "Healthcare"
+  }
+]

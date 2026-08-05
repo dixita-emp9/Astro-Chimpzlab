@@ -417,11 +417,155 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             }
         })();
     </script>
+
+    <script is:inline>
+        // Fetch insights/data.json and render insight cards dynamically
+        (async function () {
+            const grid = document.getElementById('insight-grid');
+            const emptyMsg = document.getElementById('insight-empty');
+            if (!grid) return;
+
+            let articles = [];
+            try {
+                const res = await fetch('/insights/data.json');
+                const data = await res.json();
+                articles = data.articles || [];
+            } catch (e) {
+                console.error('Failed to load insights data:', e);
+                return;
+            }
+
+            function capitalize(str) {
+                return String(str || '').split('-').map(function (w) {
+                    return w.charAt(0).toUpperCase() + w.slice(1);
+                }).join(' ');
+            }
+
+            function renderCards(filter) {
+                const filtered = filter === 'all' ? articles : articles.filter(a => a.category === filter);
+                grid.querySelectorAll('.insight-card').forEach(c => c.remove());
+                filtered.forEach((article, i) => {
+                    const card = document.createElement('a');
+                    card.href = '/blog-insite?slug=' + article.slug;
+                    card.setAttribute('data-category', article.category);
+                    card.className = 'insight-card group interactive block rounded-2xl border border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.07] hover:-translate-y-1.5 hover:border-white/25 transition-all duration-500 overflow-hidden relative';
+                    card.style.transitionDelay = (i % 3) * 0.07 + 's';
+                    card.innerHTML = `
+                        <div class="w-full aspect-[16/10] overflow-hidden relative">
+                            <img src="/${article.image}" alt="${article.alt}"
+                                class="w-full h-full object-cover grayscale contrast-110 group-hover:grayscale-0 group-hover:contrast-100 group-hover:scale-110 transition-all duration-700 ease-out">
+                        </div>
+                        <div class="p-6 pt-5">
+                            <span class="text-[11px] font-bold uppercase tracking-widest text-gray-500 block mb-2.5">${capitalize(article.category)} • ${article.readTime.replace(/\s+/g, ' ').trim()}</span>
+                            <h4 class="text-sm sm:text-base md:text-base lg:text-base xl:text-lg font-bold tracking-tight text-white group-hover:text-white/80 transition-colors leading-snug mb-2.5">${article.titleParts ? article.titleParts.join(' ') : article.titleFull}</h4>
+                            <span class="text-xs font-bold uppercase tracking-widest text-white/60 group-hover:text-white transition-colors">Read Article →</span>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+                const countEl = document.querySelector('.insight-count');
+                if (countEl) countEl.textContent = filtered.length + (filtered.length === 1 ? ' Insight' : ' Insights');
+                if (emptyMsg) {
+                    if (filtered.length === 0) {
+                        emptyMsg.classList.remove('hidden');
+                        grid.appendChild(emptyMsg);
+                    } else {
+                        emptyMsg.classList.add('hidden');
+                    }
+                }
+                const newCards = Array.prototype.slice.call(grid.querySelectorAll('.insight-card'));
+                if ('IntersectionObserver' in window) {
+                    const io = new IntersectionObserver((entries) => {
+                        entries.forEach((e) => {
+                            if (e.isIntersecting) {
+                                e.target.classList.add('in');
+                                io.unobserve(e.target);
+                            }
+                        });
+                    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+                    newCards.forEach((c) => io.observe(c));
+                } else {
+                    newCards.forEach((c) => c.classList.add('in'));
+                }
+            }
+
+            renderCards('all');
+
+            const filterBar = document.getElementById('insight-filters');
+            if (filterBar) {
+                const buttons = Array.prototype.slice.call(filterBar.querySelectorAll('.insight-filter'));
+                buttons.forEach((btn) => {
+                    btn.addEventListener('click', () => {
+                        buttons.forEach((b) => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+                        btn.classList.add('active');
+                        btn.setAttribute('aria-selected', 'true');
+                        renderCards(btn.getAttribute('data-filter'));
+                    });
+                });
+
+                // Drag-to-scroll for filter bar with momentum
+                let isDown = false, startX, scrollLeft, vel = 0;
+                let frame = null, lastX = 0, lastTime = 0;
+
+                function momentum() {
+                    vel *= 0.95;
+                    filterBar.scrollLeft -= vel;
+                    if (Math.abs(vel) > 0.5) {
+                        frame = requestAnimationFrame(momentum);
+                    } else {
+                        cancelAnimationFrame(frame);
+                        frame = null;
+                    }
+                }
+
+                function startDrag(pageX) {
+                    isDown = true;
+                    filterBar.classList.add('dragging');
+                    cancelAnimationFrame(frame);
+                    frame = null;
+                    vel = 0;
+                    startX = pageX;
+                    lastX = pageX;
+                    scrollLeft = filterBar.scrollLeft;
+                    lastTime = performance.now();
+                }
+
+                function moveDrag(pageX) {
+                    if (!isDown) return;
+                    const now = performance.now();
+                    const dt = Math.min(now - lastTime, 50);
+                    const dx = pageX - lastX;
+                    if (dt > 0) {
+                        vel = vel * 0.6 + (dx / dt * 16) * 0.4;
+                    }
+                    filterBar.scrollLeft -= dx * 2.5;
+                    lastX = pageX;
+                    lastTime = now;
+                }
+
+                function endDrag() {
+                    isDown = false;
+                    filterBar.classList.remove('dragging');
+                    if (Math.abs(vel) > 0.5) {
+                        frame = requestAnimationFrame(momentum);
+                    }
+                }
+
+                filterBar.addEventListener('mousedown', (e) => { startDrag(e.pageX); e.preventDefault(); });
+                filterBar.addEventListener('mousemove', (e) => { moveDrag(e.pageX); });
+                filterBar.addEventListener('mouseup', endDrag);
+                filterBar.addEventListener('mouseleave', endDrag);
+                filterBar.addEventListener('touchstart', (e) => { startDrag(e.touches[0].pageX); }, { passive: true });
+                filterBar.addEventListener('touchmove', (e) => { moveDrag(e.touches[0].pageX); }, { passive: true });
+                filterBar.addEventListener('touchend', endDrag);
+            }
+        })();
+    </script>
+
     <script is:inline src="/hash-cleaner.js"></script>
 
     <!-- Google reCAPTCHA API -->
     <script is:inline src="https://www.google.com/recaptcha/api.js" async defer></script>
-
     <!-- Google reCAPTCHA Validation Logic -->
     <script is:inline>
         document.addEventListener('DOMContentLoaded', () => {
