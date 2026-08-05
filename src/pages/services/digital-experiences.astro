@@ -850,6 +850,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+        });
+
         // Initialize Lenis Smooth Scrolling
         window.lenis = new Lenis({
             wrapper: window,

@@ -1,0 +1,95 @@
+---
+// Services section - list of the five service pillars with tags.
+
+interface Service {
+    href: string;
+    title: string;
+    description: string;
+    tags: { href: string; label: string }[];
+}
+
+const services: Service[] = [
+    {
+        href: '/services/reputation-communications',
+        title: 'Reputation & Communications',
+        description: 'For organisations that need credibility, stakeholder confidence and consistent public presence.',
+        tags: [
+            { href: '/services/reputation-communications/thought-leadership-agency-in-thane', label: 'Thought Leadership' },
+            { href: '/services/reputation-communications/public-relations-agency-in-thane', label: 'PR' },
+            { href: '/services/reputation-communications/corporate-communications-agency-in-thane', label: 'Employer Branding' },
+            { href: '/services/reputation-communications/corporate-communications-agency-in-thane', label: 'Corporate Comms' },
+        ],
+    },
+    {
+        href: '/services/visibility-search',
+        title: 'Visibility & Search',
+        description: 'For brands that want to be discovered, understood and considered by the right audiences.',
+        tags: [
+            { href: '/services/visibility-search/seo-aeo-agency-in-thane', label: 'SEO / AEO' },
+            { href: '/services/visibility-search/social-media-marketing-agency-in-thane', label: 'Social Media' },
+            { href: '/services/visibility-search/content-writing-services-in-thane', label: 'Content Marketing' },
+            { href: '/services/visibility-search/influencer-marketing-agency-in-thane', label: 'Influencer Marketing' },
+        ],
+    },
+    {
+        href: '/services/creative',
+        title: 'Creative',
+        description: 'For teams that need sharper storytelling, stronger campaigns and clearer brand expression.',
+        tags: [
+            { href: '/services/creative/branding-agency-in-thane', label: 'Brand Strategy' },
+            { href: '/services/creative/video-production-services-in-thane', label: 'Video' },
+            { href: '/services/creative/design', label: 'Design' },
+        ],
+    },
+    {
+        href: '/services/demand-generation',
+        title: 'Demand Generation',
+        description: 'For organisations focused on measurable engagement, leads and business outcomes.',
+        tags: [
+            { href: '/services/demand-generation/vetted-lead-generation-services-in-thane', label: 'Demand Gen' },
+            { href: '/services/demand-generation/performance-marketing-agency-in-thane', label: 'Performance' },
+            { href: '/services/demand-generation/marketing-automation-services-in-thane', label: 'Automation' },
+            { href: '/services/demand-generation/email-marketing-services-in-thane', label: 'Email Marketing' },
+        ],
+    },
+    {
+        href: '/services/digital-experiences',
+        title: 'Digital Experiences',
+        description: 'For brands that need better digital journeys across web, language, interaction and intelligence.',
+        tags: [
+            { href: '/services/digital-experiences/website-design-development-services-in-thane', label: 'Website Design' },
+            { href: '/services/digital-experiences/chatbot-development-services-in-thane', label: 'Chatbots' },
+            { href: '/services/digital-experiences/landing-page-services-in-thane', label: 'Landing Pages' },
+        ],
+    },
+];
+---
+<section class="py-32 px-6 md:px-12 bg-zinc-900" id="services-section">
+    <div class="max-w-[1400px] mx-auto">
+        <div class="mb-20 flex justify-between items-end">
+            <h2 class="text-5xl md:text-7xl font-black tracking-tighter">Services.</h2>
+        </div>
+
+        <div class="border-t border-white/20">
+            {services.map((service) => (
+                <div class="service-row interactive block border-b border-white/20 py-12 group">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-4">
+                            <a href={service.href}
+                                class="text-3xl md:text-4xl font-bold tracking-tight interactive">{service.title}</a>
+                        </div>
+                        <div class="lg:col-span-4">
+                            <a href={service.href} class="text-gray-400 font-medium">{service.description}</a>
+                        </div>
+                        <div class="lg:col-span-4 text-sm lg:max-w-[350px] font-medium opacity-70 flex flex-wrap gap-2">
+                            {service.tags.map((tag) => (
+                                <a href={tag.href}
+                                    class="px-3 py-1 rounded-full border border-current interactive">{tag.label}</a>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>

@@ -1,0 +1,299 @@
+---
+// Shared page-level behaviours: custom cursor, Lenis smooth scroll,
+// GSAP scroll animations, Swiper sliders, map modal and the mobile
+// off-canvas menu. Mirrors the behaviour of the reference chimpzlab site.
+---
+
+<script is:inline defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Custom Cursor Logic
+        const cursor = document.getElementById('cursor');
+        if (cursor && !cursor.dataset.globalBound) {
+            cursor.dataset.globalBound = '1';
+            const interactiveElements = document.querySelectorAll('.interactive, a, button, input, textarea, label');
+
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+            });
+        }
+
+        // Initialize Lenis Smooth Scrolling (only if the page hasn't already)
+        if (!window.lenis) {
+            window.lenis = new Lenis({
+                wrapper: window,
+                content: document.documentElement,
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                direction: 'vertical',
+                gestureDirection: 'vertical',
+                smooth: true,
+                mouseMultiplier: 1,
+                smoothTouch: false,
+                touchMultiplier: 2,
+                infinite: false,
+            });
+
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+        }
+
+        // Connect GSAP to Lenis
+        gsap.registerPlugin(ScrollTrigger);
+        if (window.lenis) {
+            lenis.on('scroll', ScrollTrigger.update);
+        }
+
+        // Our Work Swiper
+        const workSwiperEl = document.querySelector('.work-swiper');
+        if (workSwiperEl && !workSwiperEl.swiper) {
+            const workSwiper = new Swiper('.work-swiper', {
+                loop: true,
+                slidesPerView: 1.2,
+                spaceBetween: 16,
+                speed: 800,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                breakpoints: {
+                    768: {
+                        slidesPerView: 2,
+                        spaceBetween: 24,
+                    },
+                    1024: {
+                        slidesPerView: 2,
+                        spaceBetween: 32,
+                    },
+                },
+            });
+        }
+
+        // Insights Swiper
+        const insightsSwiperEl = document.querySelector('.insights-swiper');
+        if (insightsSwiperEl && !insightsSwiperEl.swiper) {
+            const insightsSwiper = new Swiper('.insights-swiper', {
+                loop: true,
+                slidesPerView: 1,
+                spaceBetween: 16,
+                speed: 800,
+                pagination: {
+                    el: '.insights-swiper .swiper-pagination',
+                    clickable: true,
+                },
+                breakpoints: {
+                    768: {
+                        slidesPerView: 2,
+                        spaceBetween: 24,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 32,
+                    },
+                },
+            });
+        }
+
+        // GSAP Animations
+        // 1. Hero Text Reveal
+        if (document.querySelectorAll('.gsap-reveal-text').length) {
+            gsap.from(".gsap-reveal-text", {
+                y: 100,
+                opacity: 0,
+                duration: 1,
+                stagger: 0.15,
+                ease: "power4.out",
+                delay: 0.2
+            });
+        }
+
+        // 2. Scroll Reveals for all other elements
+        const revealElements = document.querySelectorAll(".gsap-reveal");
+        revealElements.forEach((el) => {
+            if (el.dataset.gsRevealed) return;
+            el.dataset.gsRevealed = '1';
+            gsap.to(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 85%",
+                    toggleActions: "play none none reverse"
+                },
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power3.out"
+            });
+        });
+
+        // 3. Number Counter Animation
+        const counters = document.querySelectorAll(".counter-value");
+        counters.forEach((counter) => {
+            if (counter.dataset.gsCounted) return;
+            counter.dataset.gsCounted = '1';
+            const target = parseInt(counter.getAttribute("data-target"));
+            gsap.to(counter, {
+                scrollTrigger: {
+                    trigger: counter.closest(".gsap-reveal"),
+                    start: "top 85%",
+                },
+                innerHTML: target,
+                duration: 2,
+                ease: "power3.out",
+                snap: { innerHTML: 1 },
+                onUpdate: function () {
+                    counter.innerHTML = Math.round(gsap.getProperty(counter, "innerHTML"));
+                },
+            });
+        });
+
+        // 4. Fade Up Reveal for pillars
+        const fadeUpElements = document.querySelectorAll(".fade-up");
+        fadeUpElements.forEach((el) => {
+            if (el.dataset.gsFaded) return;
+            el.dataset.gsFaded = '1';
+            gsap.to(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 85%",
+                    toggleActions: "play none none reverse"
+                },
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power3.out"
+            });
+        });
+
+        // Location Map Modal Functionality
+        const locationLink = document.getElementById('location-link');
+        const mapModal = document.getElementById('map-modal');
+        const mapModalContent = document.getElementById('map-modal-content');
+        const closeMapModal = document.getElementById('close-map-modal');
+
+        if (locationLink && mapModal) {
+            locationLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                mapModal.classList.remove('opacity-0', 'pointer-events-none');
+                mapModalContent.classList.remove('scale-95');
+                mapModalContent.classList.add('scale-100');
+            });
+
+            const closeModal = () => {
+                mapModal.classList.add('opacity-0', 'pointer-events-none');
+                mapModalContent.classList.remove('scale-100');
+                mapModalContent.classList.add('scale-95');
+            };
+
+            closeMapModal.addEventListener('click', closeModal);
+
+            // Modal ke baahar dark area pe click karne par bhi close ho jayega
+            mapModal.addEventListener('click', (e) => {
+                if (e.target === mapModal) {
+                    closeModal();
+                }
+            });
+
+            // ESC key press karne par close ho jayega
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !mapModal.classList.contains('pointer-events-none')) {
+                    closeModal();
+                }
+            });
+        }
+
+    });
+</script>
+
+<!-- MOBILE_OFFCANVAS_MENU -->
+<script is:inline>
+    /* Mobile Offcanvas Menu - built dynamically from each page's nav */
+    (function () {
+        if (document.querySelector('.mobile-menu-overlay')) return;
+        var navEl = document.querySelector('nav');
+        var hamburgerBtn = navEl ? navEl.querySelector('button') : null;
+        if (!navEl || !hamburgerBtn) return;
+
+        var megaLinks = Array.prototype.slice.call(document.querySelectorAll('nav .mega-menu-grid a')).map(function (a) {
+            var t = a.querySelector('.card-title');
+            var label = t ? t.innerHTML.replace(/<br\s*\/?>/gi, ' ').replace(/\s+/g, ' ').trim() : a.textContent.trim();
+            return { href: a.href, label: label };
+        });
+        var directLinks = Array.prototype.slice.call(document.querySelectorAll('nav .nav-pill > a')).map(function (a) {
+            return { href: a.href, label: a.textContent.trim() };
+        });
+        var ctaLink = Array.prototype.slice.call(document.querySelectorAll('nav a')).find(function (a) {
+            return /connect/i.test(a.textContent);
+        });
+        var homeLink = document.querySelector('nav a[aria-label="Home"]');
+
+        var overlay = document.createElement('div');
+        overlay.className = 'mobile-menu-overlay';
+        var panel = document.createElement('div');
+        panel.className = 'mobile-menu-panel';
+        panel.setAttribute('data-lenis-prevent', ''); // let the panel scroll natively even when Lenis is stopped
+
+        var html = '<div class="mobile-menu-head"><a href="/" class="mobile-menu-logo">CHIMPZLAB</a>';
+        html += '<button type="button" class="mobile-menu-close" aria-label="Close menu">&times;</button></div>';
+        html += '<nav class="mobile-menu-nav">';
+        html += '<div class="mobile-menu-group"><button type="button" class="mobile-menu-toggle">Services <span class="chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button><div class="mobile-submenu">';
+        megaLinks.forEach(function (l) { html += '<a href="' + l.href + '" class="mobile-submenu-link">' + l.label + '</a>'; });
+        html += '</div></div>';
+        directLinks.forEach(function (l) { html += '<a href="' + l.href + '" class="mobile-menu-link">' + l.label + '</a>'; });
+        html += '</nav>';
+        html += '<a href="' + (ctaLink ? ctaLink.href : '#booking-form') + '" class="mobile-menu-cta">Let\'s Connect</a>';
+
+        panel.innerHTML = html;
+        overlay.appendChild(panel);
+        document.body.appendChild(overlay);
+
+        function lockScroll() {
+            document.body.classList.add('menu-open');
+            if (window.lenis && typeof window.lenis.stop === 'function') window.lenis.stop();
+        }
+        function unlockScroll() {
+            document.body.classList.remove('menu-open');
+            if (window.lenis && typeof window.lenis.start === 'function') window.lenis.start();
+        }
+        function openMenu() {
+            overlay.classList.add('open');
+            hamburgerBtn.classList.add('is-active');
+            hamburgerBtn.setAttribute('aria-expanded', 'true');
+            lockScroll();
+        }
+        function closeMenu() {
+            overlay.classList.remove('open');
+            hamburgerBtn.classList.remove('is-active');
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+            unlockScroll();
+        }
+
+        hamburgerBtn.addEventListener('click', function () {
+            if (overlay.classList.contains('open')) { closeMenu(); }
+            else { openMenu(); }
+        });
+        overlay.addEventListener('click', function (e) {
+            if (e.target === overlay) closeMenu();
+            if (e.target.closest('a')) closeMenu();
+        });
+        var closeBtn = panel.querySelector('.mobile-menu-close');
+        if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+
+        var svcToggle = panel.querySelector('.mobile-menu-toggle');
+        if (svcToggle) {
+            svcToggle.addEventListener('click', function () {
+                svcToggle.parentElement.classList.toggle('open');
+            });
+        }
+    })();
+</script>

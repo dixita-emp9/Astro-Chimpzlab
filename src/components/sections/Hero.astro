@@ -1,0 +1,94 @@
+---
+// Hero section: big headline, CTAs, mobile image and the trusted-by logo marquee.
+
+interface Logo {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+}
+
+const logos: Logo[] = [
+    { src: '/asset/client-logo/nasscom-logo.png', alt: 'NASSCOM', width: 200, height: 100 },
+    { src: '/asset/client-logo/evershine.png', alt: 'Evershine Builders', width: 400, height: 200 },
+    { src: '/asset/client-logo/tiger-analtics.png', alt: 'Tiger Analytics', width: 400, height: 200 },
+    { src: '/asset/client-logo/anita-b.png', alt: 'AnitaB', width: 400, height: 200 },
+    { src: '/asset/client-logo/CCoE-Logo.png', alt: 'CCoE', width: 200, height: 100 },
+    { src: '/asset/client-logo/CII-logo.png', alt: 'CII', width: 200, height: 100 },
+    { src: '/asset/client-logo/Ebixcash-logo.png', alt: 'Ebixcash', width: 200, height: 100 },
+    { src: '/asset/client-logo/ibm-logo.png', alt: 'IBM', width: 200, height: 100 },
+    { src: '/asset/client-logo/national-coe-logo.png', alt: 'National CoE', width: 200, height: 100 },
+    { src: '/asset/client-logo/new-blue-star-logo.png', alt: 'Blue Star', width: 200, height: 100 },
+    { src: '/asset/client-logo/new-stl-logo.png', alt: 'STL', width: 200, height: 100 },
+    { src: '/asset/client-logo/societe-generele-logo.png', alt: 'Societe Generale', width: 200, height: 100 },
+    { src: '/asset/client-logo/tcs-logo.png', alt: 'TCS', width: 200, height: 100 },
+    { src: '/asset/client-logo/cpr-logo.png', alt: 'CPR', width: 200, height: 100 },
+    { src: '/asset/client-logo/dsci-logo.png', alt: 'DSCI', width: 200, height: 100 },
+    { src: '/asset/client-logo/hsbc-logo.png', alt: 'HSBC', width: 200, height: 100 },
+    { src: '/asset/client-logo/kasyap-logo.png', alt: 'Kasyap', width: 200, height: 100 },
+    { src: '/asset/client-logo/vodafone-foundation.png', alt: 'Vodafone Foundation', width: 200, height: 100 },
+];
+
+// The marquee loops continuously, so the logo set is rendered twice.
+const marqueeLogos: Logo[] = [...logos, ...logos];
+---
+<header
+    class="min-h-screen flex flex-col justify-center px-6 md:px-12 pt-40 pb-20 relative bg-brand-dark overflow-hidden">
+    <!-- Background Hero Image -->
+    <div
+        class="hidden md:block absolute top-0 right-0 w-full md:w-[60%] h-full z-0 pointer-events-none transition-opacity duration-500">
+        <img src="/asset/home-page.webp" alt="ChimpzLab Banner" width="1080" height="1350" fetchpriority="high"
+            class="w-full h-full object-cover object-center lg:object-left-top opacity-30 md:opacity-100 scale-[85%]">
+        <!-- Fade/Blend Gradients -->
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark to-transparent"></div>
+    </div>
+
+    <div class="w-full max-w-[1400px] mx-auto relative z-10">
+        <!-- Huge Heading -->
+        <h1 class="text-huge font-extrabold uppercase text-white mb-16">
+            <div class="overflow-hidden"><span class="block gsap-reveal-text">Visibility.</span></div>
+            <div class="overflow-hidden"><span class="block gsap-reveal-text text-gray-500">Reputation.</span></div>
+            <div class="overflow-hidden"><span class="block gsap-reveal-text">Engagement.</span></div>
+            <div class="overflow-hidden"><span class="block gsap-reveal-text text-gray-500">Trust.</span></div>
+        </h1>
+
+        <!-- Intro Text & Mascot -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end gsap-reveal">
+            <div class="lg:col-span-7">
+                <div class="flex flex-wrap gap-6 items-center md:mb-10">
+                    <a href="/booking-form"
+                        class="interactive bg-white hover:bg-gray-200 text-black px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300">Let's
+                        Connect</a>
+                    <a href="/services"
+                        class="interactive px-4 py-4 text-sm font-bold uppercase tracking-wider underline underline-offset-8 hover:text-gray-400 transition-colors">SEE
+                        WHAT WE DO</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Hero Image -->
+        <div class="block md:hidden mt-5">
+            <img src="/asset/home-page.webp" alt="ChimpzLab Banner" width="1080" height="1350" fetchpriority="high"
+                class="w-full max-w-md mx-auto max-h-[400px] object-contain">
+        </div>
+
+        <!-- Trust Bar -->
+        <div class="w-full border-t border-white/10 pt-8 pb-4 gsap-reveal overflow-hidden">
+            <div class="flex flex-col md:flex-row items-center justify-start gap-6 md:gap-12">
+                <span class="text-xs font-bold uppercase tracking-widest text-gray-500 whitespace-nowrap">We worked
+                    for</span>
+                <div class="trust-marquee w-full">
+                    <div class="trust-track flex items-center gap-3 md:gap-4">
+                        {marqueeLogos.map((logo) => (
+                            <div
+                                class="flex items-center justify-center w-40 md:w-56 h-20 md:h-24 bg-white rounded-xl p-2 shrink-0">
+                                <img src={logo.src} alt={logo.alt} width={logo.width} height={logo.height}
+                                    class="w-full h-full object-contain">
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
