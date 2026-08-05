@@ -901,7 +901,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
                     return '<div class="insight-card-item p-6 md:p-8 border-l border-t md:border-t-0 border-gray-300">' +
                         '<span class="text-gray-500 text-xs font-bold uppercase tracking-widest mb-4 block">' + (a.tag || cap(a.category)) + '</span>' +
                         '<h3 class="text-lg md:text-xl font-bold mb-8 leading-snug">' + (a.titleParts ? a.titleParts.join(' ') : a.titleFull) + '</h3>' +
-                        '<a href="/services/visibility-search/' + prefix + 'blog-insite.html?slug=' + a.slug + '" class="text-brand-dark hover:opacity-70 transition-opacity duration-300">' +
+                        '<a href="/blog-insite?slug=' + a.slug + '" class="text-brand-dark hover:opacity-70 transition-opacity duration-300">' +
                         '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>' +
                         '</a></div>';
                 }).join('');
@@ -953,7 +953,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             }
         })();
     </script>
-    <script is:inline src="/hash-cleaner.js"></script>
+        <script is:inline src="/service-case-study-carousel.js" defer></script>
+<script is:inline src="/hash-cleaner.js"></script>
 
     <!-- Google reCAPTCHA API -->
     <script is:inline src="https://www.google.com/recaptcha/api.js" async defer></script>
