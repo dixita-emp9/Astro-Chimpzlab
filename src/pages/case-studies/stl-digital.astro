@@ -47,7 +47,8 @@ import Testimonials from "../../components/Testimonials.tsx";
                 >
                     <div class="overflow-hidden">
                         <span class="block gsap-reveal-text"
-                            >Giving a Global</span>
+                            >Giving a Global</span
+                        >
                     </div>
                     <div class="overflow-hidden">
                         <span class="block text-white/40 gsap-reveal-text"
@@ -56,7 +57,8 @@ import Testimonials from "../../components/Testimonials.tsx";
                     </div>
                     <div class="overflow-hidden">
                         <span class="block gsap-reveal-text"
-                            >Consistent Voice</span>
+                            >Consistent Voice</span
+                        >
                     </div>
                 </h1>
                 <div class="flex items-center gap-4 gsap-reveal">
@@ -493,71 +495,6 @@ import Testimonials from "../../components/Testimonials.tsx";
         </div>
     </div>
 
-    <script
-        is:inline
-        src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"
-    ></script>
-    <script is:inline>
-        document.addEventListener("DOMContentLoaded", function () {
-            if (typeof Swiper !== "undefined") {
-                new Swiper(".auto-scroll-swiper", {
-                    slidesPerView: "auto",
-                    spaceBetween: 32,
-                    loop: true,
-                    speed: 4000,
-                    autoplay: {
-                        delay: 0,
-                        disableOnInteraction: false,
-                        pauseOnMouseEnter: true,
-                    },
-                    grabCursor: false,
-                    allowTouchMove: true,
-                    on: {
-                        click: function (swiper, event) {
-                            const clickedImg = event.target.closest("img");
-                            if (clickedImg) {
-                                openLightbox(clickedImg.src);
-                            }
-                        },
-                    },
-                });
-            }
-        });
-        document.addEventListener("DOMContentLoaded", function () {
-            const imageModal = document.getElementById("image-modal");
-            const modalImage = document.getElementById("modal-image");
-            const closeModalBtn = document.getElementById("close-modal");
-            window.openLightbox = function (src) {
-                if (!imageModal || !modalImage) return;
-                modalImage.src = src;
-                imageModal.classList.remove("hidden");
-                imageModal.classList.add("flex");
-                void imageModal.offsetWidth;
-                imageModal.classList.remove("opacity-0");
-                modalImage.classList.remove("scale-95");
-                document.body.style.overflow = "hidden";
-            };
-            function closeLightbox() {
-                imageModal.classList.add("opacity-0");
-                modalImage.classList.add("scale-95");
-                document.body.style.overflow = "";
-                setTimeout(() => {
-                    imageModal.classList.add("hidden");
-                    imageModal.classList.remove("flex");
-                    modalImage.src = "";
-                }, 300);
-            }
-            if (closeModalBtn && imageModal) {
-                closeModalBtn.addEventListener("click", closeLightbox);
-                imageModal.addEventListener("click", function (e) {
-                    if (e.target === imageModal) {
-                        closeLightbox();
-                    }
-                });
-            }
-        });
-    </script>
-
     <Testimonials client:load />
 
     <section
@@ -586,5 +523,4 @@ import Testimonials from "../../components/Testimonials.tsx";
             </div>
         </div>
     </section>
-
 </BaseLayout>
