@@ -16,12 +16,6 @@ import ContactForm from "../components/sections/ContactForm.astro";
 
         <noscript> </noscript>
 
-        <!-- Tailwind CSS -->
-
-        <!-- GSAP for Animations -->
-
-        <!-- Lenis for Smooth Scrolling -->
-
         <style is:inline>
             .text-huge {
                 font-size: clamp(3rem, 7vw, 7.5rem);
@@ -681,65 +675,4 @@ import ContactForm from "../components/sections/ContactForm.astro";
             </div>
         </div>
     </section>
-
-    <!-- Footer -->
-
-    <Fragment slot="scripts">
-        <script is:inline>
-            // Location Map Modal Functionality
-            (function () {
-                const locationLink = document.getElementById("location-link");
-                const mapModal = document.getElementById("map-modal");
-                const mapModalContent =
-                    document.getElementById("map-modal-content");
-                const closeMapModal =
-                    document.getElementById("close-map-modal");
-
-                if (locationLink && mapModal) {
-                    locationLink.addEventListener("click", (e) => {
-                        e.preventDefault();
-                        mapModal.classList.remove(
-                            "opacity-0",
-                            "pointer-events-none",
-                        );
-                        if (mapModalContent) {
-                            mapModalContent.classList.remove("scale-95");
-                            mapModalContent.classList.add("scale-100");
-                        }
-                    });
-
-                    const closeModal = () => {
-                        mapModal.classList.add(
-                            "opacity-0",
-                            "pointer-events-none",
-                        );
-                        if (mapModalContent) {
-                            mapModalContent.classList.remove("scale-100");
-                            mapModalContent.classList.add("scale-95");
-                        }
-                    };
-
-                    if (closeMapModal) {
-                        closeMapModal.addEventListener("click", closeModal);
-                    }
-
-                    mapModal.addEventListener("click", (e) => {
-                        if (e.target === mapModal) {
-                            closeModal();
-                        }
-                    });
-
-                    document.addEventListener("keydown", (e) => {
-                        if (
-                            e.key === "Escape" &&
-                            !mapModal.classList.contains("pointer-events-none")
-                        ) {
-                            closeModal();
-                        }
-                    });
-                }
-            })();
-        </script>
-        <script is:inline src="/hash-cleaner.js"></script>
-    </Fragment>
 </BaseLayout>

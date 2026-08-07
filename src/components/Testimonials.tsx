@@ -266,9 +266,8 @@ export default function Testimonials() {
                 key={i}
                 type="button"
                 onClick={() => handleDot(i)}
-                className={`testimonial-dot w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                  i === currentSlide ? 'bg-black' : 'bg-gray-300'
-                }`}
+                className={`testimonial-dot w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === currentSlide ? 'bg-black' : 'bg-gray-300'
+                  }`}
                 data-index={i}
                 aria-label={`Go to slide ${i + 1}`}
               ></button>

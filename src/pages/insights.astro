@@ -10,16 +10,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     hideHeader={false}
     hideFooter={false}
 >
-    <Fragment slot="head">
-        <!-- Fonts: Manrope -->
-
-        <!-- Tailwind CSS -->
-
-        <!-- GSAP for Animations -->
-
-        <!-- Lenis for Smooth Scrolling -->
-    </Fragment>
-
     <!-- Hero -->
     <header
         class="pt-36 md:pt-48 pb-16 px-6 md:px-12 relative bg-brand-dark overflow-hidden"
@@ -434,62 +424,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
     <Fragment slot="scripts">
         <script is:inline>
-            // Location Map Modal Functionality
-            (function () {
-                const locationLink = document.getElementById("location-link");
-                const mapModal = document.getElementById("map-modal");
-                const mapModalContent =
-                    document.getElementById("map-modal-content");
-                const closeMapModal =
-                    document.getElementById("close-map-modal");
-
-                if (locationLink && mapModal) {
-                    locationLink.addEventListener("click", (e) => {
-                        e.preventDefault();
-                        mapModal.classList.remove(
-                            "opacity-0",
-                            "pointer-events-none",
-                        );
-                        if (mapModalContent) {
-                            mapModalContent.classList.remove("scale-95");
-                            mapModalContent.classList.add("scale-100");
-                        }
-                    });
-
-                    const closeModal = () => {
-                        mapModal.classList.add(
-                            "opacity-0",
-                            "pointer-events-none",
-                        );
-                        if (mapModalContent) {
-                            mapModalContent.classList.remove("scale-100");
-                            mapModalContent.classList.add("scale-95");
-                        }
-                    };
-
-                    if (closeMapModal) {
-                        closeMapModal.addEventListener("click", closeModal);
-                    }
-
-                    mapModal.addEventListener("click", (e) => {
-                        if (e.target === mapModal) {
-                            closeModal();
-                        }
-                    });
-
-                    document.addEventListener("keydown", (e) => {
-                        if (
-                            e.key === "Escape" &&
-                            !mapModal.classList.contains("pointer-events-none")
-                        ) {
-                            closeModal();
-                        }
-                    });
-                }
-            })();
-        </script>
-
-        <script is:inline>
             // Fetch insights/data.json and render insight cards dynamically
             (async function () {
                 const grid = document.getElementById("insight-grid");
@@ -676,7 +610,5 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                 }
             })();
         </script>
-
-        <script is:inline src="/hash-cleaner.js"></script>
     </Fragment>
 </BaseLayout>

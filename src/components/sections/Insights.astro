@@ -11,68 +11,103 @@ interface InsightItem {
 
 const insights: InsightItem[] = [
     {
-        href: 'blog-insite.html?slug=does-faq-schema-still-matter-2026',
-        cover: 'asset/blogs/first-blog-cover.webp',
-        meta: 'SEO/AEO • 8 Min Read',
-        title: 'Does FAQ Schema Still Matter After Google Removed FAQ Rich Results?',
-        excerpt: 'Google removed FAQ rich results - but FAQPage schema still feeds AI search engines like ChatGPT, Perplexity, and AI Overviews.',
+        href: "blog-insite.html?slug=does-faq-schema-still-matter-2026",
+        cover: "asset/blogs/first-blog-cover.webp",
+        meta: "SEO/AEO • 8 Min Read",
+        title: "Does FAQ Schema Still Matter After Google Removed FAQ Rich Results?",
+        excerpt:
+            "Google removed FAQ rich results - but FAQPage schema still feeds AI search engines like ChatGPT, Perplexity, and AI Overviews.",
     },
     {
-        href: 'blog-insite.html?slug=how-do-ai-answer-engines-choose-sources',
-        cover: 'asset/blogs/2nd-blog.webp',
-        meta: 'SEO/AEO • 16 Min Read',
-        title: 'How Do AI Answer Engines Choose Which Sources to Cite?',
-        excerpt: 'AI answer engines like ChatGPT, Perplexity, and Google AI Overviews each run their own citation logic. Getting cited means treating each engine as a separate channel.',
+        href: "blog-insite.html?slug=how-do-ai-answer-engines-choose-sources",
+        cover: "asset/blogs/2nd-blog.webp",
+        meta: "SEO/AEO • 16 Min Read",
+        title: "How Do AI Answer Engines Choose Which Sources to Cite?",
+        excerpt:
+            "AI answer engines like ChatGPT, Perplexity, and Google AI Overviews each run their own citation logic. Getting cited means treating each engine as a separate channel.",
     },
     {
-        href: 'blog-insite.html?slug=who-is-liable-for-ai-generated-google-ads-2026',
-        cover: 'asset/blogs/3rd-blog.webp',
-        meta: 'Performance Marketing • 14 Min Read',
-        title: 'Who Is Liable for AI-Generated Google Ads in 2026?',
-        excerpt: "Google's revised July 2026 Terms of Service makes advertisers fully liable for AI-generated ad content. Indian advertisers face additional ASCI disclosure rules.",
+        href: "blog-insite.html?slug=who-is-liable-for-ai-generated-google-ads-2026",
+        cover: "asset/blogs/3rd-blog.webp",
+        meta: "Performance Marketing • 14 Min Read",
+        title: "Who Is Liable for AI-Generated Google Ads in 2026?",
+        excerpt:
+            "Google's revised July 2026 Terms of Service makes advertisers fully liable for AI-generated ad content. Indian advertisers face additional ASCI disclosure rules.",
     },
     {
-        href: 'blog-insite.html?slug=best-ai-video-generator-india-2026',
-        cover: 'asset/blogs/4th-blog.webp',
-        meta: 'Video Production • 12 Min Read',
-        title: 'Which AI Video Generator Should an Indian Marketing Team Use in 2026?',
-        excerpt: 'OpenAI shut down Sora. Google Veo 3.1, Kling AI, and Runway Gen-4 are the top alternatives for Indian marketing teams.',
+        href: "blog-insite.html?slug=best-ai-video-generator-india-2026",
+        cover: "asset/blogs/4th-blog.webp",
+        meta: "Video Production • 12 Min Read",
+        title: "Which AI Video Generator Should an Indian Marketing Team Use in 2026?",
+        excerpt:
+            "OpenAI shut down Sora. Google Veo 3.1, Kling AI, and Runway Gen-4 are the top alternatives for Indian marketing teams.",
     },
 ];
 ---
-<section class="py-32 px-6 md:px-12 bg-[#0a0a0a] text-white border-t border-white/10 overflow-hidden" id="insights">
+
+<section
+    class="py-32 px-6 md:px-12 bg-[#0a0a0a] text-white border-t border-white/10 overflow-hidden"
+    id="insights"
+>
     <div class="max-w-[1400px] mx-auto">
         <!-- Header -->
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8 gsap-reveal">
+        <div
+            class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8 gsap-reveal"
+        >
             <div class="max-w-2xl">
-                <h2 class="text-5xl md:text-6xl font-extrabold tracking-tighter mb-4">Insights</h2>
-                <p class="text-gray-400 text-lg md:text-xl font-medium leading-relaxed">Thinking for a changing
-                    communications landscape. From reputation and media visibility to AI search, stakeholder
-                    engagement and brand trust.</p>
+                <h2
+                    class="text-5xl md:text-6xl font-extrabold tracking-tighter mb-4"
+                >
+                    Insights
+                </h2>
+                <p
+                    class="text-gray-400 text-lg md:text-xl font-medium leading-relaxed"
+                >
+                    Thinking for a changing communications landscape. From
+                    reputation and media visibility to AI search, stakeholder
+                    engagement and brand trust.
+                </p>
             </div>
-            <a href="insights.html"
-                class="interactive border-2 border-white text-white hover:bg-white hover:text-black px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 whitespace-nowrap">Explore
-                more</a>
+            <a
+                href="insights.html"
+                class="interactive border-2 border-white text-white hover:bg-white hover:text-black px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 whitespace-nowrap"
+                >Explore more</a
+            >
         </div>
 
         <!-- Blog Swiper Slider -->
         <div class="swiper insights-swiper gsap-reveal">
             <div class="swiper-wrapper">
-                {insights.map((post) => (
-                    <div class="swiper-slide h-auto">
-                        <a href={post.href} class="group interactive block h-full">
-                            <div class="w-full aspect-[4/3] overflow-hidden rounded-xl bg-[#111] mb-6 relative">
-                                <img src={post.cover} alt={post.title} width="1920" height="1080" loading="lazy"
-                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
-                            </div>
-                            <div class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">{post.meta}</div>
-                            <h3
-                                class="text-2xl font-bold tracking-tight mb-3 group-hover:text-gray-300 transition-colors">
-                                {post.title}</h3>
-                            <p class="text-gray-400 font-medium">{post.excerpt}</p>
-                        </a>
-                    </div>
-                ))}
+                {
+                    insights.map((post) => (
+                        <div class="swiper-slide h-auto">
+                            <a
+                                href={post.href}
+                                class="group interactive block h-full"
+                            >
+                                <div class="w-full aspect-[4/3] overflow-hidden rounded-xl bg-[#111] mb-6 relative">
+                                    <img
+                                        src={post.cover}
+                                        alt={post.title}
+                                        width="1920"
+                                        height="1080"
+                                        loading="lazy"
+                                        class="w-full h-full object-cover grayscale group-hover:grayscale-0 opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                                    />
+                                </div>
+                                <div class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">
+                                    {post.meta}
+                                </div>
+                                <h3 class="text-2xl font-bold tracking-tight mb-3 group-hover:text-gray-300 transition-colors">
+                                    {post.title}
+                                </h3>
+                                <p class="text-gray-400 font-medium">
+                                    {post.excerpt}
+                                </p>
+                            </a>
+                        </div>
+                    ))
+                }
             </div>
 
             <!-- Swiper Pagination -->
