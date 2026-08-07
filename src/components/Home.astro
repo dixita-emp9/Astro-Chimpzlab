@@ -7,7 +7,7 @@ import WhatWeHelp from './sections/WhatWeHelp.astro';
 import Services from './sections/Services.astro';
 import OurWork from './sections/OurWork.astro';
 import Insights from './sections/Insights.astro';
-import BookingForm from './sections/BookingForm.astro';
+import HomePageForm from './sections/HomePageForm.astro';
 import Testimonials from './Testimonials.tsx';
 ---
 
@@ -31,8 +31,7 @@ import Testimonials from './Testimonials.tsx';
     <OurWork />
     <Insights />
     <Testimonials client:load />
-    <BookingForm />
-    <BookingForm otp hidden />
+    <HomePageForm />
 
 <Fragment slot="scripts">
     <script is:inline src="/hash-cleaner.js"></script>
