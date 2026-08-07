@@ -1,14 +1,14 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from './sections/Hero.astro';
-import NumbersStrip from './sections/NumbersStrip.astro';
-import WhoWeAre from './sections/WhoWeAre.astro';
-import WhatWeHelp from './sections/WhatWeHelp.astro';
-import Services from './sections/Services.astro';
-import OurWork from './sections/OurWork.astro';
-import Insights from './sections/Insights.astro';
-import HomePageForm from './sections/HomePageForm.astro';
-import Testimonials from './Testimonials.tsx';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "./sections/Hero.astro";
+import NumbersStrip from "./sections/NumbersStrip.astro";
+import WhoWeAre from "./sections/WhoWeAre.astro";
+import WhatWeHelp from "./sections/WhatWeHelp.astro";
+import Services from "./sections/Services.astro";
+import OurWork from "./sections/OurWork.astro";
+import Insights from "./sections/Insights.astro";
+import HomePageForm from "./sections/HomePageForm.astro";
+import Testimonials from "./Testimonials.tsx";
 ---
 
 <BaseLayout
@@ -18,10 +18,15 @@ import Testimonials from './Testimonials.tsx';
     hideHeader={false}
     hideFooter={false}
 >
-<Fragment slot="head">
-    <!-- Preload LCP image -->
-    <link rel="preload" as="image" href="/asset/home-page.webp" fetchpriority="high">
-</Fragment>
+    <Fragment slot="head">
+        <!-- Preload LCP image -->
+        <link
+            rel="preload"
+            as="image"
+            href="/asset/home-page.webp"
+            fetchpriority="high"
+        />
+    </Fragment>
 
     <Hero />
     <NumbersStrip />
@@ -33,33 +38,7 @@ import Testimonials from './Testimonials.tsx';
     <Testimonials client:load />
     <HomePageForm />
 
-<Fragment slot="scripts">
-    <script is:inline src="/hash-cleaner.js"></script>
-
-    <!-- Google reCAPTCHA API -->
-    <script is:inline src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-    <!-- Google reCAPTCHA Validation Logic -->
-    <script is:inline>
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('contactForm');
-            if (!form) return;
-
-            const errorEl = document.getElementById('recaptchaError');
-
-            form.addEventListener('submit', (e) => {
-                const recaptchaResponse = grecaptcha.getResponse();
-                if (recaptchaResponse.length === 0) {
-                    e.preventDefault();
-                    errorEl.classList.remove('hidden');
-                } else {
-                    errorEl.classList.add('hidden');
-                }
-            });
-        });
-    </script>
-
-    <!-- Form Validation -->
-    <script is:inline src="/form-validation.js"></script>
-</Fragment>
+    <Fragment slot="scripts">
+        <script is:inline src="/hash-cleaner.js"></script>
+    </Fragment>
 </BaseLayout>

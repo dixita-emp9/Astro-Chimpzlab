@@ -1,7 +1,8 @@
 ---
-import ContactForm from '../components/sections/ContactForm.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from "../components/sections/ContactForm.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
+
 <BaseLayout
     title="Marketing Insights, Trends & Research | ChimpzLab"
     description="Stay ahead with ChimpzLab's marketing insights - SEO, AI search, social media trends, digital strategy, and industry research for modern marketers."
@@ -9,45 +10,56 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     hideHeader={false}
     hideFooter={false}
 >
-<Fragment slot="head">
-<!-- Fonts: Manrope -->
-    
-    
-    
+    <Fragment slot="head">
+        <!-- Fonts: Manrope -->
 
-    <!-- Tailwind CSS -->
-    
+        <!-- Tailwind CSS -->
 
-    <!-- GSAP for Animations -->
-    
-    
+        <!-- GSAP for Animations -->
 
-    <!-- Lenis for Smooth Scrolling -->
-</Fragment>
-
+        <!-- Lenis for Smooth Scrolling -->
+    </Fragment>
 
     <!-- Hero -->
-    <header class="pt-36 md:pt-48 pb-16 px-6 md:px-12 relative bg-brand-dark overflow-hidden">
+    <header
+        class="pt-36 md:pt-48 pb-16 px-6 md:px-12 relative bg-brand-dark overflow-hidden"
+    >
         <div class="w-full max-w-[1400px] mx-auto">
             <div class="mb-10 gsap-reveal">
-                <span class="text-sm font-bold uppercase tracking-widest border-b-2 border-white pb-2">ChimpzLab
-                    Insights</span>
+                <span
+                    class="text-sm font-bold uppercase tracking-widest border-b-2 border-white pb-2"
+                    >ChimpzLab Insights</span
+                >
             </div>
             <h1
-                class="text-4xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold text-white tracking-tighter uppercase leading-[0.9] mb-8">
-                <div class="overflow-hidden"><span class="block gsap-reveal-text">Perspectives</span></div>
-                <div class="overflow-hidden"><span class="block text-white/40 gsap-reveal-text">That Move</span></div>
-                <div class="overflow-hidden"><span class="block gsap-reveal-text">Markets</span></div>
+                class="text-4xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold text-white tracking-tighter uppercase leading-[0.9] mb-8"
+            >
+                <div class="overflow-hidden">
+                    <span class="block gsap-reveal-text">Perspectives</span>
+                </div>
+                <div class="overflow-hidden">
+                    <span class="block text-white/40 gsap-reveal-text"
+                        >That Move</span
+                    >
+                </div>
+                <div class="overflow-hidden">
+                    <span class="block gsap-reveal-text">Markets</span>
+                </div>
             </h1>
-            <p class="max-w-2xl text-lg md:text-2xl font-light text-gray-300 gsap-reveal">
-                Ideas, frameworks and field notes on reputation, visibility and the communications strategies behind
-                brands that earn lasting trust.
+            <p
+                class="max-w-2xl text-lg md:text-2xl font-light text-gray-300 gsap-reveal"
+            >
+                Ideas, frameworks and field notes on reputation, visibility and
+                the communications strategies behind brands that earn lasting
+                trust.
             </p>
         </div>
     </header>
 
     <!-- Latest Insights Grid -->
-    <section class="px-6 md:px-12 py-16 md:py-24 bg-brand-dark border-t border-white/5">
+    <section
+        class="px-6 md:px-12 py-16 md:py-24 bg-brand-dark border-t border-white/5"
+    >
         <div class="max-w-[1400px] mx-auto">
             <style is:inline>
                 .insight-header-row {
@@ -64,13 +76,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 }
 
                 #insight-filters-wrapper::after {
-                    content: '';
+                    content: "";
                     position: absolute;
                     right: 0;
                     top: 0;
                     bottom: 0;
                     width: 48px;
-                    background: linear-gradient(90deg, transparent, rgba(13, 13, 13, 0.9));
+                    background: linear-gradient(
+                        90deg,
+                        transparent,
+                        rgba(13, 13, 13, 0.9)
+                    );
                     pointer-events: none;
                     z-index: 1;
                 }
@@ -129,396 +145,538 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 }
             </style>
             <div
-                class="sticky top-24 z-40 mb-12 py-3 backdrop-blur-xl bg-brand-dark/85 -mx-2 px-2 rounded-xl border border-white/5">
+                class="sticky top-24 z-40 mb-12 py-3 backdrop-blur-xl bg-brand-dark/85 -mx-2 px-2 rounded-xl border border-white/5"
+            >
                 <div class="insight-header-row">
                     <div id="insight-filters-wrapper">
-                        <div class="flex flex-nowrap items-center gap-1.5 md:gap-2" id="insight-filters" role="tablist"
-                            aria-label="Filter insights by topic">
+                        <div
+                            class="flex flex-nowrap items-center gap-1.5 md:gap-2"
+                            id="insight-filters"
+                            role="tablist"
+                            aria-label="Filter insights by topic"
+                        >
                             <button
                                 class="insight-filter active interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
-                                data-filter="all" role="tab" aria-selected="true">All</button>
+                                data-filter="all"
+                                role="tab"
+                                aria-selected="true">All</button
+                            >
                             <button
                                 class="insight-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
-                                data-filter="seo-aeo" role="tab" aria-selected="false">SEO / AEO</button>
+                                data-filter="seo-aeo"
+                                role="tab"
+                                aria-selected="false">SEO / AEO</button
+                            >
                             <button
                                 class="insight-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
-                                data-filter="performance-marketing" role="tab" aria-selected="false">Performance
-                                Marketing</button>
+                                data-filter="performance-marketing"
+                                role="tab"
+                                aria-selected="false"
+                                >Performance Marketing</button
+                            >
                             <button
                                 class="insight-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
-                                data-filter="video-production" role="tab" aria-selected="false">Video
-                                Production</button>
+                                data-filter="video-production"
+                                role="tab"
+                                aria-selected="false">Video Production</button
+                            >
                             <button
                                 class="insight-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
-                                data-filter="social-media-marketing" role="tab" aria-selected="false">Social Media
-                                Marketing</button>
+                                data-filter="social-media-marketing"
+                                role="tab"
+                                aria-selected="false"
+                                >Social Media Marketing</button
+                            >
                             <button
                                 class="insight-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
-                                data-filter="content-writing" role="tab" aria-selected="false">Content Writing</button>
+                                data-filter="content-writing"
+                                role="tab"
+                                aria-selected="false">Content Writing</button
+                            >
                             <button
                                 class="insight-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
-                                data-filter="influencer-marketing" role="tab" aria-selected="false">Influencer
-                                Marketing</button>
+                                data-filter="influencer-marketing"
+                                role="tab"
+                                aria-selected="false"
+                                >Influencer Marketing</button
+                            >
                             <button
                                 class="insight-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
-                                data-filter="public-relations" role="tab" aria-selected="false">Public
-                                Relations</button>
+                                data-filter="public-relations"
+                                role="tab"
+                                aria-selected="false">Public Relations</button
+                            >
                             <button
                                 class="insight-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
-                                data-filter="email-marketing" role="tab" aria-selected="false">Email Marketing</button>
+                                data-filter="email-marketing"
+                                role="tab"
+                                aria-selected="false">Email Marketing</button
+                            >
                             <button
                                 class="insight-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
-                                data-filter="chatbot-virtual-assistant" role="tab" aria-selected="false">Chatbot &
-                                Virtual Assistant</button>
+                                data-filter="chatbot-virtual-assistant"
+                                role="tab"
+                                aria-selected="false"
+                                >Chatbot & Virtual Assistant</button
+                            >
                             <button
                                 class="insight-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
-                                data-filter="branding" role="tab" aria-selected="false">Branding</button>
+                                data-filter="branding"
+                                role="tab"
+                                aria-selected="false">Branding</button
+                            >
                             <button
                                 class="insight-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
-                                data-filter="corporate-communications" role="tab" aria-selected="false">Corporate
-                                Communications</button>
+                                data-filter="corporate-communications"
+                                role="tab"
+                                aria-selected="false"
+                                >Corporate Communications</button
+                            >
                             <button
                                 class="insight-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
-                                data-filter="employer-branding" role="tab" aria-selected="false">Employer
-                                Branding</button>
+                                data-filter="employer-branding"
+                                role="tab"
+                                aria-selected="false">Employer Branding</button
+                            >
                             <button
                                 class="insight-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
-                                data-filter="web-design-development" role="tab" aria-selected="false">Web Design &
-                                Development</button>
+                                data-filter="web-design-development"
+                                role="tab"
+                                aria-selected="false"
+                                >Web Design & Development</button
+                            >
                             <button
                                 class="insight-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
-                                data-filter="landing-pages" role="tab" aria-selected="false">Landing Pages</button>
+                                data-filter="landing-pages"
+                                role="tab"
+                                aria-selected="false">Landing Pages</button
+                            >
                             <button
                                 class="insight-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
-                                data-filter="vetted-lead-generation" role="tab" aria-selected="false">Vetted Lead
-                                Generation</button>
+                                data-filter="vetted-lead-generation"
+                                role="tab"
+                                aria-selected="false"
+                                >Vetted Lead Generation</button
+                            >
                             <button
                                 class="insight-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
-                                data-filter="design" role="tab" aria-selected="false">Design</button>
+                                data-filter="design"
+                                role="tab"
+                                aria-selected="false">Design</button
+                            >
                         </div>
                     </div>
                     <span
-                        class="insight-count shrink-0 text-xs md:text-sm text-white/40 font-medium tracking-wide whitespace-nowrap"></span>
+                        class="insight-count shrink-0 text-xs md:text-sm text-white/40 font-medium tracking-wide whitespace-nowrap"
+                    ></span>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="insight-grid">
+            <div
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                id="insight-grid"
+            >
                 <!-- Cards rendered dynamically by JS -->
-                <p id="insight-empty"
-                    class="hidden text-center text-gray-500 py-20 text-lg md:col-span-2 lg:col-span-3">No insights in
-                    this category yet - check back soon.</p>
+                <p
+                    id="insight-empty"
+                    class="hidden text-center text-gray-500 py-20 text-lg md:col-span-2 lg:col-span-3"
+                >
+                    No insights in this category yet - check back soon.
+                </p>
             </div>
-    </div></section>
+        </div>
+    </section>
 
     <!-- CTA Band -->
     <section class="px-6 md:px-12 py-24 bg-[#0d0d0d] border-t border-white/10">
         <div class="max-w-[1400px] mx-auto text-center">
-            <h3 class="text-4xl md:text-6xl font-extrabold tracking-tighter uppercase text-white mb-8">Have a
-                perspective to share?</h3>
-            <a href="/booking-form"
-                class="interactive bg-white hover:bg-gray-200 text-black px-10 py-5 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 inline-flex items-center gap-2">Let's
-                start a conversation
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            <h3
+                class="text-4xl md:text-6xl font-extrabold tracking-tighter uppercase text-white mb-8"
+            >
+                Have a perspective to share?
+            </h3>
+            <a
+                href="/booking-form"
+                class="interactive bg-white hover:bg-gray-200 text-black px-10 py-5 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 inline-flex items-center gap-2"
+                >Let's start a conversation
+                <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                 </svg>
             </a>
         </div>
     </section>
 
     <!-- Contact Form Section -->
-    <section class="py-32 px-6 md:px-12 bg-white text-brand-dark" id="booking-form">
+    <section
+        class="py-32 px-6 md:px-12 bg-white text-brand-dark"
+        id="booking-form"
+    >
         <div class="max-w-[1400px] mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-
+            <div
+                class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start"
+            >
                 <!-- Left Side: Copy -->
                 <div>
                     <h2
-                        class="text-5xl md:text-7xl font-extrabold tracking-tighter mb-6 text-black uppercase leading-[0.9]">
-                        Ready to get started?</h2>
-                    <p class="text-xl text-gray-600 mb-12 max-w-lg font-medium">Submit your inquiry and our team will
-                        get back to you within 24 hours.</p>
+                        class="text-5xl md:text-7xl font-extrabold tracking-tighter mb-6 text-black uppercase leading-[0.9]"
+                    >
+                        Ready to get started?
+                    </h2>
+                    <p class="text-xl text-gray-600 mb-12 max-w-lg font-medium">
+                        Submit your inquiry and our team will get back to you
+                        within 24 hours.
+                    </p>
 
                     <div class="space-y-8 max-w-md">
                         <!-- Item -->
                         <div class="flex gap-4 items-start">
                             <div
-                                class="shrink-0 w-6 h-6 rounded-full border-2 border-black flex items-center justify-center mt-1">
-                                <svg class="w-3.5 h-3.5 text-black" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                class="shrink-0 w-6 h-6 rounded-full border-2 border-black flex items-center justify-center mt-1"
+                            >
+                                <svg
+                                    class="w-3.5 h-3.5 text-black"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="3"
                                         d="M5 13l4 4L19 7"></path>
                                 </svg>
                             </div>
                             <div>
-                                <h4 class="text-lg font-bold text-black mb-1">Reputation Strategy</h4>
-                                <p class="text-gray-600 text-sm font-medium">Expert guidance on your brand's market
-                                    narrative.</p>
+                                <h4 class="text-lg font-bold text-black mb-1">
+                                    Reputation Strategy
+                                </h4>
+                                <p class="text-gray-600 text-sm font-medium">
+                                    Expert guidance on your brand's market
+                                    narrative.
+                                </p>
                             </div>
                         </div>
                         <!-- Item -->
                         <div class="flex gap-4 items-start">
                             <div
-                                class="shrink-0 w-6 h-6 rounded-full border-2 border-black flex items-center justify-center mt-1">
-                                <svg class="w-3.5 h-3.5 text-black" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                class="shrink-0 w-6 h-6 rounded-full border-2 border-black flex items-center justify-center mt-1"
+                            >
+                                <svg
+                                    class="w-3.5 h-3.5 text-black"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="3"
                                         d="M5 13l4 4L19 7"></path>
                                 </svg>
                             </div>
                             <div>
-                                <h4 class="text-lg font-bold text-black mb-1">Stakeholder Mapping</h4>
-                                <p class="text-gray-600 text-sm font-medium">Identify and engage the audiences that move
-                                    your business.</p>
+                                <h4 class="text-lg font-bold text-black mb-1">
+                                    Stakeholder Mapping
+                                </h4>
+                                <p class="text-gray-600 text-sm font-medium">
+                                    Identify and engage the audiences that move
+                                    your business.
+                                </p>
                             </div>
                         </div>
                         <!-- Item -->
                         <div class="flex gap-4 items-start">
                             <div
-                                class="shrink-0 w-6 h-6 rounded-full border-2 border-black flex items-center justify-center mt-1">
-                                <svg class="w-3.5 h-3.5 text-black" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                class="shrink-0 w-6 h-6 rounded-full border-2 border-black flex items-center justify-center mt-1"
+                            >
+                                <svg
+                                    class="w-3.5 h-3.5 text-black"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="3"
                                         d="M5 13l4 4L19 7"></path>
                                 </svg>
                             </div>
                             <div>
-                                <h4 class="text-lg font-bold text-black mb-1">Integrated Execution</h4>
-                                <p class="text-gray-600 text-sm font-medium">One team across comms, content, search and
-                                    digital.</p>
+                                <h4 class="text-lg font-bold text-black mb-1">
+                                    Integrated Execution
+                                </h4>
+                                <p class="text-gray-600 text-sm font-medium">
+                                    One team across comms, content, search and
+                                    digital.
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Right Side: Dark Form Container -->
-                <ContactForm theme='light'/>
-                
+                <ContactForm theme="light" />
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    
-<Fragment slot="scripts">
 
+    <Fragment slot="scripts">
+        <script is:inline>
+            // Location Map Modal Functionality
+            (function () {
+                const locationLink = document.getElementById("location-link");
+                const mapModal = document.getElementById("map-modal");
+                const mapModalContent =
+                    document.getElementById("map-modal-content");
+                const closeMapModal =
+                    document.getElementById("close-map-modal");
 
+                if (locationLink && mapModal) {
+                    locationLink.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        mapModal.classList.remove(
+                            "opacity-0",
+                            "pointer-events-none",
+                        );
+                        if (mapModalContent) {
+                            mapModalContent.classList.remove("scale-95");
+                            mapModalContent.classList.add("scale-100");
+                        }
+                    });
 
-    <script is:inline>
-        // Location Map Modal Functionality
-        (function () {
-            const locationLink = document.getElementById('location-link');
-            const mapModal = document.getElementById('map-modal');
-            const mapModalContent = document.getElementById('map-modal-content');
-            const closeMapModal = document.getElementById('close-map-modal');
+                    const closeModal = () => {
+                        mapModal.classList.add(
+                            "opacity-0",
+                            "pointer-events-none",
+                        );
+                        if (mapModalContent) {
+                            mapModalContent.classList.remove("scale-100");
+                            mapModalContent.classList.add("scale-95");
+                        }
+                    };
 
-            if (locationLink && mapModal) {
-                locationLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    mapModal.classList.remove('opacity-0', 'pointer-events-none');
-                    if (mapModalContent) {
-                        mapModalContent.classList.remove('scale-95');
-                        mapModalContent.classList.add('scale-100');
+                    if (closeMapModal) {
+                        closeMapModal.addEventListener("click", closeModal);
                     }
-                });
 
-                const closeModal = () => {
-                    mapModal.classList.add('opacity-0', 'pointer-events-none');
-                    if (mapModalContent) {
-                        mapModalContent.classList.remove('scale-100');
-                        mapModalContent.classList.add('scale-95');
-                    }
-                };
+                    mapModal.addEventListener("click", (e) => {
+                        if (e.target === mapModal) {
+                            closeModal();
+                        }
+                    });
 
-                if (closeMapModal) {
-                    closeMapModal.addEventListener('click', closeModal);
+                    document.addEventListener("keydown", (e) => {
+                        if (
+                            e.key === "Escape" &&
+                            !mapModal.classList.contains("pointer-events-none")
+                        ) {
+                            closeModal();
+                        }
+                    });
+                }
+            })();
+        </script>
+
+        <script is:inline>
+            // Fetch insights/data.json and render insight cards dynamically
+            (async function () {
+                const grid = document.getElementById("insight-grid");
+                const emptyMsg = document.getElementById("insight-empty");
+                if (!grid) return;
+
+                let articles = [];
+                try {
+                    const res = await fetch("/insights/data.json");
+                    const data = await res.json();
+                    articles = data.articles || [];
+                } catch (e) {
+                    console.error("Failed to load insights data:", e);
+                    return;
                 }
 
-                mapModal.addEventListener('click', (e) => {
-                    if (e.target === mapModal) {
-                        closeModal();
-                    }
-                });
+                function capitalize(str) {
+                    return String(str || "")
+                        .split("-")
+                        .map(function (w) {
+                            return w.charAt(0).toUpperCase() + w.slice(1);
+                        })
+                        .join(" ");
+                }
 
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && !mapModal.classList.contains('pointer-events-none')) {
-                        closeModal();
-                    }
-                });
-            }
-        })();
-    </script>
-
-    <script is:inline>
-        // Fetch insights/data.json and render insight cards dynamically
-        (async function () {
-            const grid = document.getElementById('insight-grid');
-            const emptyMsg = document.getElementById('insight-empty');
-            if (!grid) return;
-
-            let articles = [];
-            try {
-                const res = await fetch('/insights/data.json');
-                const data = await res.json();
-                articles = data.articles || [];
-            } catch (e) {
-                console.error('Failed to load insights data:', e);
-                return;
-            }
-
-            function capitalize(str) {
-                return String(str || '').split('-').map(function (w) {
-                    return w.charAt(0).toUpperCase() + w.slice(1);
-                }).join(' ');
-            }
-
-            function renderCards(filter) {
-                const filtered = filter === 'all' ? articles : articles.filter(a => a.category === filter);
-                grid.querySelectorAll('.insight-card').forEach(c => c.remove());
-                filtered.forEach((article, i) => {
-                    const card = document.createElement('a');
-                    card.href = '/blog-insite?slug=' + article.slug;
-                    card.setAttribute('data-category', article.category);
-                    card.className = 'insight-card group interactive block rounded-2xl border border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.07] hover:-translate-y-1.5 hover:border-white/25 transition-all duration-500 overflow-hidden relative';
-                    card.style.transitionDelay = (i % 3) * 0.07 + 's';
-                    card.innerHTML = `
+                function renderCards(filter) {
+                    const filtered =
+                        filter === "all"
+                            ? articles
+                            : articles.filter((a) => a.category === filter);
+                    grid.querySelectorAll(".insight-card").forEach((c) =>
+                        c.remove(),
+                    );
+                    filtered.forEach((article, i) => {
+                        const card = document.createElement("a");
+                        card.href = "/blog-insite?slug=" + article.slug;
+                        card.setAttribute("data-category", article.category);
+                        card.className =
+                            "insight-card group interactive block rounded-2xl border border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.07] hover:-translate-y-1.5 hover:border-white/25 transition-all duration-500 overflow-hidden relative";
+                        card.style.transitionDelay = (i % 3) * 0.07 + "s";
+                        card.innerHTML = `
                         <div class="w-full aspect-[16/10] overflow-hidden relative">
                             <img src="/${article.image}" alt="${article.alt}"
                                 class="w-full h-full object-cover grayscale contrast-110 group-hover:grayscale-0 group-hover:contrast-100 group-hover:scale-110 transition-all duration-700 ease-out">
                         </div>
                         <div class="p-6 pt-5">
-                            <span class="text-[11px] font-bold uppercase tracking-widest text-gray-500 block mb-2.5">${capitalize(article.category)} • ${article.readTime.replace(/\s+/g, ' ').trim()}</span>
-                            <h4 class="text-sm sm:text-base md:text-base lg:text-base xl:text-lg font-bold tracking-tight text-white group-hover:text-white/80 transition-colors leading-snug mb-2.5">${article.titleParts ? article.titleParts.join(' ') : article.titleFull}</h4>
+                            <span class="text-[11px] font-bold uppercase tracking-widest text-gray-500 block mb-2.5">${capitalize(article.category)} • ${article.readTime.replace(/\s+/g, " ").trim()}</span>
+                            <h4 class="text-sm sm:text-base md:text-base lg:text-base xl:text-lg font-bold tracking-tight text-white group-hover:text-white/80 transition-colors leading-snug mb-2.5">${article.titleParts ? article.titleParts.join(" ") : article.titleFull}</h4>
                             <span class="text-xs font-bold uppercase tracking-widest text-white/60 group-hover:text-white transition-colors">Read Article →</span>
                         </div>
                     `;
-                    grid.appendChild(card);
-                });
-                const countEl = document.querySelector('.insight-count');
-                if (countEl) countEl.textContent = filtered.length + (filtered.length === 1 ? ' Insight' : ' Insights');
-                if (emptyMsg) {
-                    if (filtered.length === 0) {
-                        emptyMsg.classList.remove('hidden');
-                        grid.appendChild(emptyMsg);
+                        grid.appendChild(card);
+                    });
+                    const countEl = document.querySelector(".insight-count");
+                    if (countEl)
+                        countEl.textContent =
+                            filtered.length +
+                            (filtered.length === 1 ? " Insight" : " Insights");
+                    if (emptyMsg) {
+                        if (filtered.length === 0) {
+                            emptyMsg.classList.remove("hidden");
+                            grid.appendChild(emptyMsg);
+                        } else {
+                            emptyMsg.classList.add("hidden");
+                        }
+                    }
+                    const newCards = Array.prototype.slice.call(
+                        grid.querySelectorAll(".insight-card"),
+                    );
+                    if ("IntersectionObserver" in window) {
+                        const io = new IntersectionObserver(
+                            (entries) => {
+                                entries.forEach((e) => {
+                                    if (e.isIntersecting) {
+                                        e.target.classList.add("in");
+                                        io.unobserve(e.target);
+                                    }
+                                });
+                            },
+                            { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+                        );
+                        newCards.forEach((c) => io.observe(c));
                     } else {
-                        emptyMsg.classList.add('hidden');
+                        newCards.forEach((c) => c.classList.add("in"));
                     }
                 }
-                const newCards = Array.prototype.slice.call(grid.querySelectorAll('.insight-card'));
-                if ('IntersectionObserver' in window) {
-                    const io = new IntersectionObserver((entries) => {
-                        entries.forEach((e) => {
-                            if (e.isIntersecting) {
-                                e.target.classList.add('in');
-                                io.unobserve(e.target);
-                            }
+
+                renderCards("all");
+
+                const filterBar = document.getElementById("insight-filters");
+                if (filterBar) {
+                    const buttons = Array.prototype.slice.call(
+                        filterBar.querySelectorAll(".insight-filter"),
+                    );
+                    buttons.forEach((btn) => {
+                        btn.addEventListener("click", () => {
+                            buttons.forEach((b) => {
+                                b.classList.remove("active");
+                                b.setAttribute("aria-selected", "false");
+                            });
+                            btn.classList.add("active");
+                            btn.setAttribute("aria-selected", "true");
+                            renderCards(btn.getAttribute("data-filter"));
                         });
-                    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-                    newCards.forEach((c) => io.observe(c));
-                } else {
-                    newCards.forEach((c) => c.classList.add('in'));
-                }
-            }
-
-            renderCards('all');
-
-            const filterBar = document.getElementById('insight-filters');
-            if (filterBar) {
-                const buttons = Array.prototype.slice.call(filterBar.querySelectorAll('.insight-filter'));
-                buttons.forEach((btn) => {
-                    btn.addEventListener('click', () => {
-                        buttons.forEach((b) => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
-                        btn.classList.add('active');
-                        btn.setAttribute('aria-selected', 'true');
-                        renderCards(btn.getAttribute('data-filter'));
                     });
-                });
 
-                // Drag-to-scroll for filter bar with momentum
-                let isDown = false, startX, scrollLeft, vel = 0;
-                let frame = null, lastX = 0, lastTime = 0;
+                    // Drag-to-scroll for filter bar with momentum
+                    let isDown = false,
+                        startX,
+                        scrollLeft,
+                        vel = 0;
+                    let frame = null,
+                        lastX = 0,
+                        lastTime = 0;
 
-                function momentum() {
-                    vel *= 0.95;
-                    filterBar.scrollLeft -= vel;
-                    if (Math.abs(vel) > 0.5) {
-                        frame = requestAnimationFrame(momentum);
-                    } else {
+                    function momentum() {
+                        vel *= 0.95;
+                        filterBar.scrollLeft -= vel;
+                        if (Math.abs(vel) > 0.5) {
+                            frame = requestAnimationFrame(momentum);
+                        } else {
+                            cancelAnimationFrame(frame);
+                            frame = null;
+                        }
+                    }
+
+                    function startDrag(pageX) {
+                        isDown = true;
+                        filterBar.classList.add("dragging");
                         cancelAnimationFrame(frame);
                         frame = null;
+                        vel = 0;
+                        startX = pageX;
+                        lastX = pageX;
+                        scrollLeft = filterBar.scrollLeft;
+                        lastTime = performance.now();
                     }
-                }
 
-                function startDrag(pageX) {
-                    isDown = true;
-                    filterBar.classList.add('dragging');
-                    cancelAnimationFrame(frame);
-                    frame = null;
-                    vel = 0;
-                    startX = pageX;
-                    lastX = pageX;
-                    scrollLeft = filterBar.scrollLeft;
-                    lastTime = performance.now();
-                }
-
-                function moveDrag(pageX) {
-                    if (!isDown) return;
-                    const now = performance.now();
-                    const dt = Math.min(now - lastTime, 50);
-                    const dx = pageX - lastX;
-                    if (dt > 0) {
-                        vel = vel * 0.6 + (dx / dt * 16) * 0.4;
+                    function moveDrag(pageX) {
+                        if (!isDown) return;
+                        const now = performance.now();
+                        const dt = Math.min(now - lastTime, 50);
+                        const dx = pageX - lastX;
+                        if (dt > 0) {
+                            vel = vel * 0.6 + (dx / dt) * 16 * 0.4;
+                        }
+                        filterBar.scrollLeft -= dx * 2.5;
+                        lastX = pageX;
+                        lastTime = now;
                     }
-                    filterBar.scrollLeft -= dx * 2.5;
-                    lastX = pageX;
-                    lastTime = now;
-                }
 
-                function endDrag() {
-                    isDown = false;
-                    filterBar.classList.remove('dragging');
-                    if (Math.abs(vel) > 0.5) {
-                        frame = requestAnimationFrame(momentum);
+                    function endDrag() {
+                        isDown = false;
+                        filterBar.classList.remove("dragging");
+                        if (Math.abs(vel) > 0.5) {
+                            frame = requestAnimationFrame(momentum);
+                        }
                     }
+
+                    filterBar.addEventListener("mousedown", (e) => {
+                        startDrag(e.pageX);
+                        e.preventDefault();
+                    });
+                    filterBar.addEventListener("mousemove", (e) => {
+                        moveDrag(e.pageX);
+                    });
+                    filterBar.addEventListener("mouseup", endDrag);
+                    filterBar.addEventListener("mouseleave", endDrag);
+                    filterBar.addEventListener(
+                        "touchstart",
+                        (e) => {
+                            startDrag(e.touches[0].pageX);
+                        },
+                        { passive: true },
+                    );
+                    filterBar.addEventListener(
+                        "touchmove",
+                        (e) => {
+                            moveDrag(e.touches[0].pageX);
+                        },
+                        { passive: true },
+                    );
+                    filterBar.addEventListener("touchend", endDrag);
                 }
+            })();
+        </script>
 
-                filterBar.addEventListener('mousedown', (e) => { startDrag(e.pageX); e.preventDefault(); });
-                filterBar.addEventListener('mousemove', (e) => { moveDrag(e.pageX); });
-                filterBar.addEventListener('mouseup', endDrag);
-                filterBar.addEventListener('mouseleave', endDrag);
-                filterBar.addEventListener('touchstart', (e) => { startDrag(e.touches[0].pageX); }, { passive: true });
-                filterBar.addEventListener('touchmove', (e) => { moveDrag(e.touches[0].pageX); }, { passive: true });
-                filterBar.addEventListener('touchend', endDrag);
-            }
-        })();
-    </script>
-
-    <script is:inline src="/hash-cleaner.js"></script>
-
-    <!-- Google reCAPTCHA API -->
-    <script is:inline src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <!-- Google reCAPTCHA Validation Logic -->
-    <script is:inline>
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('contactForm');
-            if (!form) return;
-
-            const errorEl = document.getElementById('recaptchaError');
-
-            form.addEventListener('submit', (e) => {
-                const recaptchaResponse = grecaptcha.getResponse();
-                if (recaptchaResponse.length === 0) {
-                    e.preventDefault();
-                    if (errorEl) errorEl.classList.remove('hidden');
-                } else {
-                    if (errorEl) errorEl.classList.add('hidden');
-                }
-            });
-        });
-    </script>
-
-    <!-- Form Validation -->
-    <script is:inline src="/form-validation.js"></script>
-
-</Fragment>
+        <script is:inline src="/hash-cleaner.js"></script>
+    </Fragment>
 </BaseLayout>
