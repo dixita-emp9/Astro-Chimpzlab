@@ -1,6 +1,7 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
+
 <BaseLayout
     title="Page Not Found | ChimpzLab"
     description="The page you're looking for doesn't exist or has been moved. Navigate to our homepage or contact ChimpzLab for assistance."
@@ -9,21 +10,31 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     hideFooter={true}
     bodyClass="bg-[#0a0a0a] min-h-screen flex items-center justify-center px-6"
 >
-<Fragment slot="head">
-<meta name="robots" content="noindex, nofollow">
-</Fragment>
+    <Fragment slot="head">
+        <meta name="robots" content="noindex, nofollow" />
+    </Fragment>
 
     <!-- Custom Cursor -->
     <div id="cursor"></div>
     <div class="text-center max-w-lg">
-        <div class="text-8xl md:text-9xl font-extrabold tracking-tighter text-white/10 mb-6">404</div>
-        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tighter text-white mb-4">Page Not Found</h1>
-        <p class="text-lg text-white/60 mb-10">The page you're looking for doesn't exist or has been moved.</p>
-        <a href="/"
-            class="inline-block bg-white text-[#0a0a0a] px-8 py-4 rounded-full text-sm font-bold tracking-wider hover:bg-white/90 transition-all duration-300">Back
-            to Home</a>
+        <div
+            class="text-8xl md:text-9xl font-extrabold tracking-tighter text-white/10 mb-6"
+        >
+            404
+        </div>
+        <h1
+            class="text-4xl md:text-5xl font-extrabold tracking-tighter text-white mb-4"
+        >
+            Page Not Found
+        </h1>
+        <p class="text-lg text-white/60 mb-10">
+            The page you're looking for doesn't exist or has been moved.
+        </p>
+        <a
+            href="/"
+            class="inline-block bg-white text-[#0a0a0a] px-8 py-4 rounded-full text-sm font-bold tracking-wider hover:bg-white/90 transition-all duration-300"
+            >Back to Home</a
+        >
     </div>
-<script is:inline src="/hash-cleaner.js"></script>
-
-
+    <script is:inline src="/hash-cleaner.js"></script>
 </BaseLayout>
