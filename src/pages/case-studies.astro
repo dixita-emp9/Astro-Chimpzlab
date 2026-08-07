@@ -11,15 +11,6 @@ import ContactForm from "../components/sections/ContactForm.astro";
     hideFooter={false}
 >
     <Fragment slot="head">
-        <!-- Fonts: Manrope -->
-
-        <!-- Tailwind CSS -->
-
-        <!-- GSAP for Animations -->
-
-        <!-- Lenis for Smooth Scrolling -->
-
-        <!-- Masonry & ImagesLoaded -->
         <script
             is:inline
             src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"
@@ -292,62 +283,6 @@ import ContactForm from "../components/sections/ContactForm.astro";
 
     <Fragment slot="scripts">
         <script is:inline>
-            // Location Map Modal Functionality
-            (function () {
-                const locationLink = document.getElementById("location-link");
-                const mapModal = document.getElementById("map-modal");
-                const mapModalContent =
-                    document.getElementById("map-modal-content");
-                const closeMapModal =
-                    document.getElementById("close-map-modal");
-
-                if (locationLink && mapModal) {
-                    locationLink.addEventListener("click", (e) => {
-                        e.preventDefault();
-                        mapModal.classList.remove(
-                            "opacity-0",
-                            "pointer-events-none",
-                        );
-                        if (mapModalContent) {
-                            mapModalContent.classList.remove("scale-95");
-                            mapModalContent.classList.add("scale-100");
-                        }
-                    });
-
-                    const closeModal = () => {
-                        mapModal.classList.add(
-                            "opacity-0",
-                            "pointer-events-none",
-                        );
-                        if (mapModalContent) {
-                            mapModalContent.classList.remove("scale-100");
-                            mapModalContent.classList.add("scale-95");
-                        }
-                    };
-
-                    if (closeMapModal) {
-                        closeMapModal.addEventListener("click", closeModal);
-                    }
-
-                    mapModal.addEventListener("click", (e) => {
-                        if (e.target === mapModal) {
-                            closeModal();
-                        }
-                    });
-
-                    document.addEventListener("keydown", (e) => {
-                        if (
-                            e.key === "Escape" &&
-                            !mapModal.classList.contains("pointer-events-none")
-                        ) {
-                            closeModal();
-                        }
-                    });
-                }
-            })();
-        </script>
-
-        <script is:inline>
             // --- Render case study cards from JSON ---
             document.addEventListener("DOMContentLoaded", function () {
                 const CATS = {
@@ -603,7 +538,5 @@ import ContactForm from "../components/sections/ContactForm.astro";
                 })();
             });
         </script>
-
-        <script is:inline src="/hash-cleaner.js"></script>
     </Fragment>
 </BaseLayout>

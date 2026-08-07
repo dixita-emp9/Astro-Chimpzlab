@@ -1,0 +1,64 @@
+---
+// Shared, SSR-rendered insights carousel that replaces the duplicated inline
+// "Dynamic insights loader" blocks previously copied into every service page.
+// Data is imported at build time (no runtime fetch -> no 404s on nested pages).
+import data from '../../public/insights/data.json';
+
+interface Props {
+    slugs?: string[];
+}
+
+interface Article {
+    slug: string;
+    tag?: string;
+    category: string;
+    titleParts?: string[];
+    titleFull: string;
+}
+
+const { slugs = [] } = Astro.props;
+
+const articles = ((data as { articles?: Article[] }).articles || []) as Article[];
+
+const list: Article[] =
+    slugs.length > 0
+        ? articles
+              .filter((a) => slugs.includes(a.slug))
+              .sort((a, b) => slugs.indexOf(a.slug) - slugs.indexOf(b.slug))
+        : articles.slice(0, 3);
+
+const label = (a: Article) =>
+    a.tag ||
+    (a.category
+        ? a.category.charAt(0).toUpperCase() + a.category.slice(1)
+        : '');
+---
+
+<div
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-5"
+    id="insight-grid"
+>
+    {list.map((a) => (
+        <div class="insight-card-item p-6 md:p-8 border-l border-t md:border-t-0 border-gray-300">
+            <span class="text-gray-500 text-xs font-bold uppercase tracking-widest mb-4 block">
+                {label(a)}
+            </span>
+            <h3 class="text-lg md:text-xl font-bold mb-8 leading-snug">
+                {a.titleParts ? a.titleParts.join(' ') : a.titleFull}
+            </h3>
+            <a
+                href={`/blog-insite?slug=${a.slug}`}
+                class="text-brand-dark hover:opacity-70 transition-opacity duration-300"
+            >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+                    ></path>
+                </svg>
+            </a>
+        </div>
+    ))}
+</div>

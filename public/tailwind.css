@@ -804,6 +804,10 @@ video {
     display: inline-block
 }
 
+.inline {
+    display: inline
+}
+
 .flex {
     display: flex
 }
@@ -3183,11 +3187,6 @@ video {
 .focus\:border-gray-600:focus {
     --tw-border-opacity: 1;
     border-color: rgb(75 85 99/var(--tw-border-opacity, 1))
-}
-
-.focus\:border-white:focus {
-    --tw-border-opacity: 1;
-    border-color: rgb(255 255 255/var(--tw-border-opacity, 1))
 }
 
 .focus\:border-white\/30:focus {

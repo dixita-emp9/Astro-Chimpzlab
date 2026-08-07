@@ -10,11 +10,10 @@
         var prefix = wrapper.dataset.linkPrefix || '../case-studies/';
         var coverPrefix = wrapper.dataset.coverPrefix || '';
 
-        // Resolve the JSON relative to the current page depth:
-        // /services/<name>              -> ./case-studies.json
-        // /services/<group>/<name>      -> ../case-studies.json
-        var segs = (window.location.pathname || '').split('/').filter(Boolean);
-        var jsonPath = (segs.length >= 3 ? '../' : './') + 'case-studies.json';
+        // Resolve the shared services case-study index. Using an absolute path
+        // avoids the broken page-relative resolution that occurred on nested
+        // service routes (the previous depth-based prefix resolved to 404s).
+        var jsonPath = '/services/case-studies.json';
 
         fetch(jsonPath, { cache: 'no-cache' })
             .then(function (r) { return r.json(); })

@@ -1,0 +1,95 @@
+---
+// Shared landing-page behaviours that are NOT covered by GlobalScripts:
+// methodology grid/card animation, methodology timeline line, FAQ accordion
+// and ScrollTrigger refresh. Cursor / Lenis / GSAP-connect / hero reveal /
+// generic scroll-reveal are owned by GlobalScripts.astro, so they are not
+// repeated here (avoids double Lenis/cursor binding).
+---
+
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', function () {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animate methodology grid and services list cards
+        function animateCards(container, staggerDelay, duration) {
+            if (!container || container.offsetParent === null) return;
+            const cards = container.querySelectorAll(':scope > div, :scope > a');
+            if (!cards.length || cards[0].style.opacity === '1') return;
+            const rect = container.getBoundingClientRect();
+            const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+            const anim = () => gsap.fromTo(cards,
+                { opacity: 0, y: 32 },
+                { opacity: 1, y: 0, duration: duration, stagger: staggerDelay, ease: "power2.out" }
+            );
+            if (isInView) {
+                anim();
+            } else {
+                ScrollTrigger.create({
+                    trigger: container,
+                    start: "top 85%",
+                    onEnter: anim,
+                    once: true
+                });
+            }
+        }
+
+        animateCards(document.querySelector('.methodology-grid'), 0.15, 0.6);
+        animateCards(document.querySelector('.services-list'), 0.12, 0.5);
+
+        // Animate methodology timeline line
+        const methodLine = document.getElementById('methodology-line');
+        if (methodLine) {
+            const lineAnim = () => {
+                gsap.to(methodLine, {
+                    scaleX: 1,
+                    duration: 1.5,
+                    ease: 'power1.out'
+                });
+            };
+            const rect = methodLine.closest('.methodology-grid').getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                lineAnim();
+            } else {
+                ScrollTrigger.create({
+                    trigger: methodLine.closest('.methodology-grid'),
+                    start: 'top 80%',
+                    onEnter: lineAnim,
+                    once: true
+                });
+            }
+        }
+
+        // Refresh multiple times to handle Lenis & font loading
+        function refreshST() {
+            ScrollTrigger.refresh();
+            animateCards(document.querySelector('.methodology-grid'), 0.15, 0.6);
+            animateCards(document.querySelector('.services-list'), 0.12, 0.5);
+        }
+        window.addEventListener('load', refreshST);
+        window.addEventListener('resize', refreshST);
+        setTimeout(refreshST, 600);
+
+        // FAQ Accordion Logic
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const button = item.querySelector('button');
+            const answer = item.querySelector('.answer');
+            const icon = item.querySelector('.icon');
+
+            button.addEventListener('click', () => {
+                const isOpen = !answer.classList.contains('hidden');
+
+                // Close all others
+                faqItems.forEach(otherItem => {
+                    otherItem.querySelector('.answer').classList.add('hidden');
+                    otherItem.querySelector('.icon').style.transform = 'rotate(0deg)';
+                });
+
+                if (!isOpen) {
+                    answer.classList.remove('hidden');
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+    });
+</script>

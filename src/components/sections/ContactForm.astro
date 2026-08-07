@@ -5,9 +5,14 @@
 interface Props {
     theme?: "light" | "dark";
     action?: string;
+    redirect?: string;
 }
 
-const { theme = "light", action = "lead-capture.php" } = Astro.props;
+const {
+    theme = "light",
+    action = "/lead-capture.php",
+    redirect = "/thanks.html",
+} = Astro.props;
 
 const dark = theme === "dark";
 
@@ -120,7 +125,7 @@ const btnCls = dark
             name="api_key"
             value="3afc0840e1193e58397159d4af15cf4a15b5b35c"
         />
-        <input type="hidden" name="_redirect" value="thanks.html" />
+        <input type="hidden" name="_redirect" value={redirect} />
         <div class="pt-6">
             <button type="submit" id="submitBtn" class={btnCls}>
                 Send Message
