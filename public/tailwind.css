@@ -1862,11 +1862,6 @@ video {
     background-color: rgb(220 252 231/var(--tw-bg-opacity, 1))
 }
 
-.bg-green-600 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(22 163 74/var(--tw-bg-opacity, 1))
-}
-
 .bg-transparent {
     background-color: transparent
 }
@@ -3104,11 +3099,6 @@ video {
     background-color: rgb(31 41 55/var(--tw-bg-opacity, 1))
 }
 
-.hover\:bg-green-700:hover {
-    --tw-bg-opacity: 1;
-    background-color: rgb(21 128 61/var(--tw-bg-opacity, 1))
-}
-
 .hover\:bg-transparent:hover {
     background-color: transparent
 }
@@ -3218,14 +3208,6 @@ video {
 .focus\:ring-gray-600:focus {
     --tw-ring-opacity: 1;
     --tw-ring-color: rgb(75 85 99/var(--tw-ring-opacity, 1))
-}
-
-.disabled\:cursor-not-allowed:disabled {
-    cursor: not-allowed
-}
-
-.disabled\:opacity-40:disabled {
-    opacity: .4
 }
 
 .group:hover .group-hover\:scale-105 {
@@ -4061,10 +4043,6 @@ video {
         width: 70%
     }
 
-    .lg\:max-w-\[350px\] {
-        max-width: 350px
-    }
-
     .lg\:grid-cols-12 {
         grid-template-columns: repeat(12, minmax(0, 1fr))
     }
@@ -4173,6 +4151,10 @@ video {
 }
 
 @media (min-width:1280px) {
+    .xl\:gap-24 {
+        gap: 6rem
+    }
+
     .xl\:text-6xl {
         font-size: 3.75rem;
         line-height: 1

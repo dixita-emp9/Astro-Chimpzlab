@@ -9,6 +9,8 @@ interface Props {
   canonical?: string;
   hideHeader?: boolean;
   hideFooter?: boolean;
+  bodyClass?: string;
+  activeNav?: string;
 }
 
 const {
@@ -17,6 +19,8 @@ const {
   canonical = '/',
   hideHeader = false,
   hideFooter = false,
+  bodyClass = '',
+  activeNav = '',
 } = Astro.props;
 
 const siteUrl = 'https://chimpzlab.com';
@@ -89,14 +93,14 @@ const url = siteUrl + canonical;
     <slot name="head" />
 </head>
 
-<body class="selection:bg-white selection:text-black">
+<body class={"selection:bg-white selection:text-black " + bodyClass}>
     <noscript is:inline>
         <iframe title="Google Tag Manager" src="https://www.googletagmanager.com/ns.html?id=GTM-MVP2NQBM" height="0" width="0" style="display:none;visibility:hidden"></iframe>
     </noscript>
 
     <div id="cursor"></div>
 
-    {!hideHeader && <Header />}
+    {!hideHeader && <Header activeNav={activeNav} />}
     <slot />
     {!hideFooter && <Footer />}
     <slot name="scripts" />

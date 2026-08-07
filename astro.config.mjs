@@ -7,6 +7,7 @@ import react from '@astrojs/react';
 export default defineConfig({
   integrations: [react()],
   redirects: {
+    '/blog': '/insights',
     '/casestudy/ajmera-realty': '/case-studies/ajmera-realty',
     '/casestudy/blue-star': '/case-studies/blue-star',
     '/casestudy/carnelian-capital': '/case-studies/carnelian-capital',

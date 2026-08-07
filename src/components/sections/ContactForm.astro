@@ -1,0 +1,169 @@
+---
+// Reusable right-side contact form. `theme` controls the light/dark styling:
+//  - light  -> matches the home page form (white container, dark accents)
+//  - dark   -> matches the about page form (dark container, white text)
+interface Props {
+    theme?: "light" | "dark";
+    action?: string;
+}
+
+const { theme = "light", action = "lead-capture.php" } = Astro.props;
+
+const dark = theme === "dark";
+
+const wrapCls = dark
+    ? "bg-[#1a1a1a] border border-white/5 rounded-3xl p-8 md:p-12 shadow-2xl gsap-reveal"
+    : "bg-gray-50 border border-gray-200 rounded-2xl p-8 md:p-12 shadow-xl gsap-reveal";
+
+const inputCls = dark
+    ? "w-full bg-[#111111] border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-white/30 transition-colors"
+    : "w-full bg-white border border-gray-300 rounded-xl px-5 py-4 text-brand-dark placeholder-gray-500 focus:outline-none focus:border-brand-dark transition-colors";
+
+const btnCls = dark
+    ? "interactive w-fit bg-white hover:bg-gray-200 text-black px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2"
+    : "interactive w-fit bg-brand-dark hover:bg-black text-white px-8 py-4 rounded-full text-sm font-bold tracking-wider transition-all duration-300 flex items-center gap-2";
+---
+
+<div class={wrapCls}>
+    <form id="contactForm" class="space-y-6" method="POST" action={action}>
+        <!-- Top Row Fields -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Your Name *"
+                    minlength="2"
+                    maxlength="100"
+                    pattern="[A-Za-zÀ-ÿ\s\.\-']+"
+                    title="Please enter a valid name (letters, spaces, hyphens only)"
+                    class={inputCls}
+                    required
+                />
+                <p class="error-msg text-red-500 text-xs mt-1 hidden">
+                    Please enter your full name.
+                </p>
+            </div>
+            <div>
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Email *"
+                    maxlength="254"
+                    pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+                    title="Please enter a valid email address"
+                    class={inputCls}
+                    required
+                />
+                <p class="error-msg text-red-500 text-xs mt-1 hidden">
+                    Please enter a valid email address.
+                </p>
+            </div>
+        </div>
+        <div>
+            <input
+                type="tel"
+                name="phone"
+                placeholder="Phone *"
+                minlength="10"
+                maxlength="15"
+                pattern="[0-9]{10,15}"
+                inputmode="numeric"
+                title="Please enter a valid phone number (10-15 digits)"
+                class={inputCls}
+                required
+            />
+            <p class="error-msg text-red-500 text-xs mt-1 hidden">
+                Please enter a valid phone number (min 10 digits).
+            </p>
+        </div>
+        <div>
+            <textarea
+                name="message"
+                placeholder="Tell us about your project *"
+                rows="4"
+                minlength="10"
+                maxlength="2000"
+                class={inputCls + " resize-none"}
+                required></textarea>
+            <p class="error-msg text-red-500 text-xs mt-1 hidden">
+                Message must be at least 10 characters.
+            </p>
+        </div>
+
+        <!-- Honeypot: invisible to humans, bots love it -->
+        <div
+            style="position:absolute;left:-9999px;top:-9999px"
+            aria-hidden="true"
+        >
+            <label>Leave this blank</label>
+            <input type="text" name="_hp" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <!-- Google reCAPTCHA -->
+        <div class="pt-2">
+            <div
+                class="g-recaptcha"
+                data-sitekey="6Ld5s24tAAAAABcGfuai8DbOmn6JAS9kARQonH1h"
+            >
+            </div>
+            <p
+                id="recaptchaError"
+                class="error-msg text-red-500 text-xs mt-1 hidden"
+            >
+                Please complete the CAPTCHA.
+            </p>
+        </div>
+
+        <input
+            type="hidden"
+            name="api_key"
+            value="3afc0840e1193e58397159d4af15cf4a15b5b35c"
+        />
+        <input type="hidden" name="_redirect" value="thanks.html" />
+        <div class="pt-6">
+            <button type="submit" id="submitBtn" class={btnCls}>
+                Send Message
+                <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Google reCAPTCHA API -->
+<script is:inline src="https://www.google.com/recaptcha/api.js" async defer
+></script>
+
+<!-- Google reCAPTCHA Validation Logic -->
+<script is:inline>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("contactForm");
+        if (!form) return;
+
+        const errorEl = document.getElementById("recaptchaError");
+
+        form.addEventListener("submit", (e) => {
+            const recaptchaResponse = grecaptcha.getResponse();
+            if (recaptchaResponse.length === 0) {
+                e.preventDefault();
+                errorEl.classList.remove("hidden");
+            } else {
+                errorEl.classList.add("hidden");
+            }
+        });
+    });
+</script>
+
+<!-- Form Validation -->
+<script is:inline src="/form-validation.js"></script>

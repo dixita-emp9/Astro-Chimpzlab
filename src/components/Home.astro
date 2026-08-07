@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "./sections/Hero.astro";
+import NumbersStrip from "./sections/NumbersStrip.astro";
+import WhoWeAre from "./sections/WhoWeAre.astro";
+import WhatWeHelp from "./sections/WhatWeHelp.astro";
+import Services from "./sections/Services.astro";
+import OurWork from "./sections/OurWork.astro";
+import Insights from "./sections/Insights.astro";
+import HomePageForm from "./sections/HomePageForm.astro";
+import Testimonials from "./Testimonials.tsx";
+---
+
+<BaseLayout
+    title="Digital Marketing Agency in Thane | ChimpzLab"
+    description="ChimpzLab is a full-service digital marketing agency offering SEO, social media, performance marketing, branding, PR, and web development for brands in Thane."
+    canonical="/"
+    hideHeader={false}
+    hideFooter={false}
+>
+    <Fragment slot="head">
+        <!-- Preload LCP image -->
+        <link
+            rel="preload"
+            as="image"
+            href="/asset/home-page.webp"
+            fetchpriority="high"
+        />
+    </Fragment>
+
+    <Hero />
+    <NumbersStrip />
+    <WhoWeAre />
+    <WhatWeHelp />
+    <Services />
+    <OurWork />
+    <Insights />
+    <Testimonials client:load />
+    <HomePageForm />
+
+    <Fragment slot="scripts">
+        <script is:inline src="/hash-cleaner.js"></script>
+    </Fragment>
+</BaseLayout>

@@ -1,6 +1,8 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ContactForm from "../components/sections/ContactForm.astro";
 ---
+
 <BaseLayout
     title="Client Case Studies & Success Stories | ChimpzLab"
     description="Explore ChimpzLab's portfolio of client success stories across real estate, tech, FMCG, healthcare, and more. Real results. Real brands. Real digital impact."
@@ -8,59 +10,72 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     hideHeader={false}
     hideFooter={false}
 >
-<Fragment slot="head">
-<!-- Fonts: Manrope -->
-    
-    
-    
+    <Fragment slot="head">
+        <!-- Fonts: Manrope -->
 
-    <!-- Tailwind CSS -->
-    
+        <!-- Tailwind CSS -->
 
-    <!-- GSAP for Animations -->
-    
-    
+        <!-- GSAP for Animations -->
 
-    <!-- Lenis for Smooth Scrolling -->
-    
+        <!-- Lenis for Smooth Scrolling -->
 
-    <!-- Masonry & ImagesLoaded -->
-    <script is:inline src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-    <script is:inline src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
-</Fragment>
-
+        <!-- Masonry & ImagesLoaded -->
+        <script
+            is:inline
+            src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"
+        ></script>
+        <script
+            is:inline
+            src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"
+        ></script>
+    </Fragment>
 
     <!-- Hero -->
-    <section class="pt-44 md:pt-56 pb-14 px-6 md:px-12 relative overflow-hidden bg-brand-dark">
+    <section
+        class="pt-44 md:pt-56 pb-14 px-6 md:px-12 relative overflow-hidden bg-brand-dark"
+    >
         <div class="absolute inset-0 z-0 opacity-20 pointer-events-none">
             <div
-                class="absolute top-[-10%] right-[-5%] w-[60vw] h-[60vw] rounded-full bg-gradient-to-br from-white/10 to-transparent blur-3xl">
+                class="absolute top-[-10%] right-[-5%] w-[60vw] h-[60vw] rounded-full bg-gradient-to-br from-white/10 to-transparent blur-3xl"
+            >
             </div>
             <div
-                class="absolute bottom-[-20%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-gradient-to-tr from-white/5 to-transparent blur-3xl">
+                class="absolute bottom-[-20%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-gradient-to-tr from-white/5 to-transparent blur-3xl"
+            >
             </div>
-            <div class="absolute inset-0 bg-[url('../asset/grid-pattern.svg')] bg-repeat opacity-10 mix-blend-overlay">
+            <div
+                class="absolute inset-0 bg-[url('../asset/grid-pattern.svg')] bg-repeat opacity-10 mix-blend-overlay"
+            >
             </div>
         </div>
         <div class="max-w-[1400px] mx-auto w-full relative z-10">
             <div class="flex items-center gap-4 mb-8">
                 <div class="w-12 h-[1px] bg-white/30"></div>
-                <span class="text-xs font-bold uppercase tracking-[0.2em] text-white/70">Selected Work</span>
+                <span
+                    class="text-xs font-bold uppercase tracking-[0.2em] text-white/70"
+                    >Selected Work</span
+                >
             </div>
             <h1
-                class="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold text-white tracking-tighter uppercase leading-[0.9] mb-8">
+                class="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold text-white tracking-tighter uppercase leading-[0.9] mb-8"
+            >
                 <span class="block gsap-reveal-text">Case</span>
-                <span class="block text-white/40 gsap-reveal-text">Studies</span>
+                <span class="block text-white/40 gsap-reveal-text">Studies</span
+                >
             </h1>
-            <p class="max-w-2xl text-lg md:text-xl text-white/70 font-light leading-relaxed gsap-reveal">
-                A cross-section of the brands we've positioned, designed, and grown - filterable by the
-                discipline that matters to you.
+            <p
+                class="max-w-2xl text-lg md:text-xl text-white/70 font-light leading-relaxed gsap-reveal"
+            >
+                A cross-section of the brands we've positioned, designed, and
+                grown - filterable by the discipline that matters to you.
             </p>
         </div>
     </section>
 
     <!-- Filter + Grid -->
-    <section class="px-6 md:px-12 py-12 md:py-16 bg-brand-dark border-t border-white/10">
+    <section
+        class="px-6 md:px-12 py-12 md:py-16 bg-brand-dark border-t border-white/10"
+    >
         <div class="max-w-[1400px] mx-auto">
             <style is:inline>
                 .cs-header-row {
@@ -77,13 +92,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 }
 
                 #cs-filters-wrapper::after {
-                    content: '';
+                    content: "";
                     position: absolute;
                     right: 0;
                     top: 0;
                     bottom: 0;
                     width: 48px;
-                    background: linear-gradient(90deg, transparent, rgba(13, 13, 13, 0.9));
+                    background: linear-gradient(
+                        90deg,
+                        transparent,
+                        rgba(13, 13, 13, 0.9)
+                    );
                     pointer-events: none;
                     z-index: 1;
                 }
@@ -143,338 +162,448 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 }
             </style>
             <div
-                class="sticky top-24 z-40 mb-12 py-3 backdrop-blur-xl bg-brand-dark/85 -mx-2 px-2 rounded-xl border border-white/5">
+                class="sticky top-24 z-40 mb-12 py-3 backdrop-blur-xl bg-brand-dark/85 -mx-2 px-2 rounded-xl border border-white/5"
+            >
                 <div class="cs-header-row">
                     <div id="cs-filters-wrapper">
-                        <div class="flex flex-nowrap items-center gap-1.5 md:gap-2" id="cs-filters" role="tablist"
-                            aria-label="Filter case studies by discipline">
-                            <button data-filter="all"
-                                class="cs-filter active interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300">All</button>
-                            <button data-filter="corporate-communications"
-                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300">Corporate
-                                Communications</button>
-                            <button data-filter="public-relations"
-                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300">Public
-                                Relations</button>
-                            <button data-filter="thought-leadership"
-                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300">Thought
-                                Leadership</button>
-                            <button data-filter="employer-branding"
-                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300">Employer
-                                Branding</button>
-                            <button data-filter="social-media-marketing"
-                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300">Social
-                                Media Marketing</button>
-                            <button data-filter="seo-aeo"
-                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300">SEO
-                                / AEO</button>
-                            <button data-filter="content-writing"
-                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300">Content
-                                Writing</button>
-                            <button data-filter="influencer-marketing"
-                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300">Influencer
-                                Marketing</button>
-                            <button data-filter="branding"
-                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300">Branding</button>
-                            <button data-filter="design"
-                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300">Design</button>
-                            <button data-filter="performance-marketing"
-                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300">Performance
-                                Marketing</button>
-                            <button data-filter="vetted-lead-generation"
-                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300">Vetted
-                                Lead Generation</button>
-                            <button data-filter="chatbot-virtual-assistant"
-                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300">Chatbot
-                                & Virtual Assistant</button>
+                        <div
+                            class="flex flex-nowrap items-center gap-1.5 md:gap-2"
+                            id="cs-filters"
+                            role="tablist"
+                            aria-label="Filter case studies by discipline"
+                        >
+                            <button
+                                data-filter="all"
+                                class="cs-filter active interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
+                                >All</button
+                            >
+                            <button
+                                data-filter="corporate-communications"
+                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
+                                >Corporate Communications</button
+                            >
+                            <button
+                                data-filter="public-relations"
+                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
+                                >Public Relations</button
+                            >
+                            <button
+                                data-filter="thought-leadership"
+                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
+                                >Thought Leadership</button
+                            >
+                            <button
+                                data-filter="employer-branding"
+                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
+                                >Employer Branding</button
+                            >
+                            <button
+                                data-filter="social-media-marketing"
+                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
+                                >Social Media Marketing</button
+                            >
+                            <button
+                                data-filter="seo-aeo"
+                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
+                                >SEO / AEO</button
+                            >
+                            <button
+                                data-filter="content-writing"
+                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
+                                >Content Writing</button
+                            >
+                            <button
+                                data-filter="influencer-marketing"
+                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
+                                >Influencer Marketing</button
+                            >
+                            <button
+                                data-filter="branding"
+                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
+                                >Branding</button
+                            >
+                            <button
+                                data-filter="design"
+                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
+                                >Design</button
+                            >
+                            <button
+                                data-filter="performance-marketing"
+                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
+                                >Performance Marketing</button
+                            >
+                            <button
+                                data-filter="vetted-lead-generation"
+                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
+                                >Vetted Lead Generation</button
+                            >
+                            <button
+                                data-filter="chatbot-virtual-assistant"
+                                class="cs-filter interactive shrink-0 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300"
+                                >Chatbot & Virtual Assistant</button
+                            >
                         </div>
                     </div>
                     <span
-                        class="cs-count shrink-0 text-xs md:text-sm text-white/40 font-medium tracking-wide whitespace-nowrap"></span>
+                        class="cs-count shrink-0 text-xs md:text-sm text-white/40 font-medium tracking-wide whitespace-nowrap"
+                    ></span>
                 </div>
             </div>
 
-            <div id="cs-grid" class="cs-masonry">
-            </div>
+            <div id="cs-grid" class="cs-masonry"></div>
 
-            <p id="cs-empty" class="hidden text-center text-white/40 py-20 text-lg">No case studies in this category
-                yet.</p>
+            <p
+                id="cs-empty"
+                class="hidden text-center text-white/40 py-20 text-lg"
+            >
+                No case studies in this category yet.
+            </p>
         </div>
     </section>
 
-    
-<Fragment slot="scripts">
+    <section
+        class="py-32 px-6 md:px-12 bg-brand-dark text-white border-t border-white/10"
+        id="booking-form"
+    >
+        <div class="max-w-[1400px] mx-auto">
+            <div
+                class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center"
+            >
+                <!-- Left Side: Copy -->
+                <div class="gsap-reveal">
+                    <h2
+                        class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tighter mb-8 uppercase leading-[0.9]"
+                    >
+                        Ready to start your next project?
+                    </h2>
+                    <p
+                        class="text-lg md:text-2xl text-gray-400 mb-12 max-w-lg font-light"
+                    >
+                        Let's discuss how ChimpzLab can help you build
+                        reputation, visibility, and trust.
+                    </p>
+                </div>
 
+                <!-- Right Side: Shared Form (dark) -->
+                <ContactForm theme="dark" />
+            </div>
+        </div>
+    </section>
 
+    <Fragment slot="scripts">
+        <script is:inline>
+            // Location Map Modal Functionality
+            (function () {
+                const locationLink = document.getElementById("location-link");
+                const mapModal = document.getElementById("map-modal");
+                const mapModalContent =
+                    document.getElementById("map-modal-content");
+                const closeMapModal =
+                    document.getElementById("close-map-modal");
 
-    <script is:inline>
-        // Location Map Modal Functionality
-        (function () {
-            const locationLink = document.getElementById('location-link');
-            const mapModal = document.getElementById('map-modal');
-            const mapModalContent = document.getElementById('map-modal-content');
-            const closeMapModal = document.getElementById('close-map-modal');
+                if (locationLink && mapModal) {
+                    locationLink.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        mapModal.classList.remove(
+                            "opacity-0",
+                            "pointer-events-none",
+                        );
+                        if (mapModalContent) {
+                            mapModalContent.classList.remove("scale-95");
+                            mapModalContent.classList.add("scale-100");
+                        }
+                    });
 
-            if (locationLink && mapModal) {
-                locationLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    mapModal.classList.remove('opacity-0', 'pointer-events-none');
-                    if (mapModalContent) {
-                        mapModalContent.classList.remove('scale-95');
-                        mapModalContent.classList.add('scale-100');
+                    const closeModal = () => {
+                        mapModal.classList.add(
+                            "opacity-0",
+                            "pointer-events-none",
+                        );
+                        if (mapModalContent) {
+                            mapModalContent.classList.remove("scale-100");
+                            mapModalContent.classList.add("scale-95");
+                        }
+                    };
+
+                    if (closeMapModal) {
+                        closeMapModal.addEventListener("click", closeModal);
                     }
-                });
 
-                const closeModal = () => {
-                    mapModal.classList.add('opacity-0', 'pointer-events-none');
-                    if (mapModalContent) {
-                        mapModalContent.classList.remove('scale-100');
-                        mapModalContent.classList.add('scale-95');
-                    }
+                    mapModal.addEventListener("click", (e) => {
+                        if (e.target === mapModal) {
+                            closeModal();
+                        }
+                    });
+
+                    document.addEventListener("keydown", (e) => {
+                        if (
+                            e.key === "Escape" &&
+                            !mapModal.classList.contains("pointer-events-none")
+                        ) {
+                            closeModal();
+                        }
+                    });
+                }
+            })();
+        </script>
+
+        <script is:inline>
+            // --- Render case study cards from JSON ---
+            document.addEventListener("DOMContentLoaded", function () {
+                const CATS = {
+                    "corporate-communications": "Corporate Communications",
+                    "public-relations": "Public Relations",
+                    "thought-leadership": "Thought Leadership",
+                    "employer-branding": "Employer Branding",
+                    "social-media-marketing": "Social Media Marketing",
+                    "seo-aeo": "SEO / AEO",
+                    "content-writing": "Content Writing",
+                    "influencer-marketing": "Influencer Marketing",
+                    branding: "Branding",
+                    design: "Design",
+                    "performance-marketing": "Performance Marketing",
+                    "vetted-lead-generation": "Vetted Lead Generation",
+                    "chatbot-virtual-assistant": "Chatbot & Virtual Assistant",
                 };
 
-                if (closeMapModal) {
-                    closeMapModal.addEventListener('click', closeModal);
+                const grid = document.getElementById("cs-grid");
+                const emptyMsg = document.getElementById("cs-empty");
+                const countEl = document.querySelector(".cs-count");
+                if (!grid) return;
+
+                function renderCards(data) {
+                    grid.innerHTML = "";
+                    data = data.filter((item) => !item.draft);
+                    data.forEach((item, i) => {
+                        const idx = String(i + 1).padStart(2, "0");
+                        const tags = item.cats
+                            ? '<span class="cs-tag">' + item.cats + "</span>"
+                            : item.categoryKeys
+                                  .map(
+                                      (k) =>
+                                          '<span class="cs-tag">' +
+                                          (CATS[k] || k) +
+                                          "</span>",
+                                  )
+                                  .join("");
+                        const card = document.createElement("a");
+                        card.href = item.link;
+                        card.setAttribute(
+                            "data-cats",
+                            item.categoryKeys.join(" "),
+                        );
+                        card.className =
+                            "cs-card group relative block rounded-2xl overflow-hidden border border-white/10 bg-[#101010]";
+                        card.innerHTML =
+                            '<div class="relative overflow-hidden">' +
+                            '<img src="' +
+                            item.cover +
+                            '" alt="' +
+                            item.title +
+                            '" class="w-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" loading="lazy">' +
+                            "</div>" +
+                            '<div class="p-5 sm:p-6">' +
+                            '<h3 class="text-lg sm:text-xl md:text-2xl font-extrabold uppercase tracking-tight leading-[1.05] text-white">' +
+                            item.title +
+                            "</h3>" +
+                            '<div class="flex flex-wrap gap-2 mt-3 mb-2">' +
+                            tags +
+                            "</div>" +
+                            '<span class="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white/85 mt-2">View Case Study' +
+                            '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H8m9 0v9"/></svg>' +
+                            "</span>" +
+                            "</div>";
+                        grid.appendChild(card);
+                    });
                 }
 
-                mapModal.addEventListener('click', (e) => {
-                    if (e.target === mapModal) {
-                        closeModal();
-                    }
-                });
+                let msnry = null;
 
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && !mapModal.classList.contains('pointer-events-none')) {
-                        closeModal();
-                    }
-                });
-            }
-        })();
-    </script>
+                function getGutter() {
+                    return window.innerWidth >= 1024 ? 32 : 24;
+                }
 
-    <script is:inline>
-        // --- Render case study cards from JSON ---
-        document.addEventListener('DOMContentLoaded', function () {
-            const CATS = {
-                "corporate-communications": "Corporate Communications",
-                "public-relations": "Public Relations",
-                "thought-leadership": "Thought Leadership",
-                "employer-branding": "Employer Branding",
-                "social-media-marketing": "Social Media Marketing",
-                "seo-aeo": "SEO / AEO",
-                "content-writing": "Content Writing",
-                "influencer-marketing": "Influencer Marketing",
-                "branding": "Branding",
-                "design": "Design",
-                "performance-marketing": "Performance Marketing",
-                "vetted-lead-generation": "Vetted Lead Generation",
-                "chatbot-virtual-assistant": "Chatbot & Virtual Assistant"
-            };
-
-            const grid = document.getElementById('cs-grid');
-            const emptyMsg = document.getElementById('cs-empty');
-            const countEl = document.querySelector('.cs-count');
-            if (!grid) return;
-
-            function renderCards(data) {
-                grid.innerHTML = '';
-                data = data.filter(item => !item.draft);
-                data.forEach((item, i) => {
-                    const idx = String(i + 1).padStart(2, '0');
-                    const tags = item.cats
-                        ? '<span class="cs-tag">' + item.cats + '</span>'
-                        : item.categoryKeys.map(k => '<span class="cs-tag">' + (CATS[k] || k) + '</span>').join('');
-                    const card = document.createElement('a');
-                    card.href = item.link;
-                    card.setAttribute('data-cats', item.categoryKeys.join(' '));
-                    card.className = 'cs-card group relative block rounded-2xl overflow-hidden border border-white/10 bg-[#101010]';
-                    card.innerHTML =
-                        '<div class="relative overflow-hidden">' +
-                        '<img src="' + item.cover + '" alt="' + item.title + '" class="w-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" loading="lazy">' +
-                        '</div>' +
-                        '<div class="p-5 sm:p-6">' +
-                        '<h3 class="text-lg sm:text-xl md:text-2xl font-extrabold uppercase tracking-tight leading-[1.05] text-white">' + item.title + '</h3>' +
-                        '<div class="flex flex-wrap gap-2 mt-3 mb-2">' + tags + '</div>' +
-                        '<span class="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white/85 mt-2">View Case Study' +
-                        '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H8m9 0v9"/></svg>' +
-                        '</span>' +
-                        '</div>';
-                    grid.appendChild(card);
-                });
-            }
-
-            let msnry = null;
-
-            function getGutter() {
-                return window.innerWidth >= 1024 ? 32 : 24;
-            }
-
-            // Load data from external JSON file
-            fetch('/case-studies.json', { cache: 'no-cache' })
-                .then(r => r.json())
-                .then(data => {
-                    renderCards(data);
-                    imagesLoaded(grid, () => {
-                        msnry = new Masonry(grid, {
-                            itemSelector: '.cs-card',
-                            columnWidth: '.cs-card',
-                            percentPosition: true,
-                            gutter: getGutter(),
-                            transitionDuration: 0,
+                // Load data from external JSON file
+                fetch("/case-studies.json", { cache: "no-cache" })
+                    .then((r) => r.json())
+                    .then((data) => {
+                        renderCards(data);
+                        imagesLoaded(grid, () => {
+                            msnry = new Masonry(grid, {
+                                itemSelector: ".cs-card",
+                                columnWidth: ".cs-card",
+                                percentPosition: true,
+                                gutter: getGutter(),
+                                transitionDuration: 0,
+                            });
+                            grid.classList.add("cs-masonry-ready");
+                            initReveal();
+                            updateCount();
                         });
-                        grid.classList.add('cs-masonry-ready');
-                        initReveal();
-                        updateCount();
+                    })
+                    .catch(() => {
+                        grid.innerHTML =
+                            '<p class="text-center text-white/40 py-20">Failed to load case studies.</p>';
                     });
-                })
-                .catch(() => {
-                    grid.innerHTML = '<p class="text-center text-white/40 py-20">Failed to load case studies.</p>';
-                });
 
-            function initReveal() {
-                const cards = document.querySelectorAll('.cs-card');
-                if ('IntersectionObserver' in window) {
-                    const io = new IntersectionObserver((entries) => {
-                        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-                    }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
-                    cards.forEach(c => io.observe(c));
-                } else {
-                    cards.forEach(c => c.classList.add('in'));
-                }
-            }
-
-            // Filtering with crossfade
-            const filterBtns = document.querySelectorAll('.cs-filter');
-
-            function updateCount() {
-                const visible = grid.querySelectorAll('.cs-card:not(.hidden)').length;
-                countEl.textContent = visible + (visible === 1 ? ' Project' : ' Projects');
-                emptyMsg.classList.toggle('hidden', visible > 0);
-            }
-
-            let filterBusy = false;
-            filterBtns.forEach(btn => btn.addEventListener('click', () => {
-                if (btn.classList.contains('active') || filterBusy) return;
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const f = btn.dataset.filter;
-
-                filterBusy = true;
-                grid.style.transition = 'opacity .28s ease';
-                grid.style.opacity = '0';
-
-                setTimeout(() => {
-                    const cards = grid.querySelectorAll('.cs-card');
-                    cards.forEach(card => {
-                        const match = f === 'all' || card.dataset.cats.split(' ').includes(f);
-                        card.classList.toggle('hidden', !match);
-                        if (match) card.classList.add('in'); else card.classList.remove('in');
-                    });
-                    updateCount();
-                    if (msnry) msnry.destroy();
-                    msnry = new Masonry(grid, {
-                        itemSelector: '.cs-card:not(.hidden)',
-                        columnWidth: '.cs-card:not(.hidden)',
-                        percentPosition: true,
-                        gutter: getGutter(),
-                        transitionDuration: 0,
-                    });
-                    requestAnimationFrame(() => {
-                        grid.style.opacity = '1';
-                        setTimeout(() => { filterBusy = false; }, 280);
-                    });
-                }, 280);
-            }));
-
-            // Drag-to-scroll for case study filters
-            (function () {
-                const el = document.getElementById('cs-filters');
-                if (!el) return;
-                let isDown = false, startX, scrollLeft, vel = 0;
-                let frame = null, lastX = 0, lastTime = 0;
-
-                function momentum() {
-                    vel *= 0.95;
-                    el.scrollLeft -= vel;
-                    if (Math.abs(vel) > 0.5) {
-                        frame = requestAnimationFrame(momentum);
+                function initReveal() {
+                    const cards = document.querySelectorAll(".cs-card");
+                    if ("IntersectionObserver" in window) {
+                        const io = new IntersectionObserver(
+                            (entries) => {
+                                entries.forEach((e) => {
+                                    if (e.isIntersecting) {
+                                        e.target.classList.add("in");
+                                        io.unobserve(e.target);
+                                    }
+                                });
+                            },
+                            { threshold: 0.1, rootMargin: "0px 0px -8% 0px" },
+                        );
+                        cards.forEach((c) => io.observe(c));
                     } else {
+                        cards.forEach((c) => c.classList.add("in"));
+                    }
+                }
+
+                // Filtering with crossfade
+                const filterBtns = document.querySelectorAll(".cs-filter");
+
+                function updateCount() {
+                    const visible = grid.querySelectorAll(
+                        ".cs-card:not(.hidden)",
+                    ).length;
+                    countEl.textContent =
+                        visible + (visible === 1 ? " Project" : " Projects");
+                    emptyMsg.classList.toggle("hidden", visible > 0);
+                }
+
+                let filterBusy = false;
+                filterBtns.forEach((btn) =>
+                    btn.addEventListener("click", () => {
+                        if (btn.classList.contains("active") || filterBusy)
+                            return;
+                        filterBtns.forEach((b) => b.classList.remove("active"));
+                        btn.classList.add("active");
+                        const f = btn.dataset.filter;
+
+                        filterBusy = true;
+                        grid.style.transition = "opacity .28s ease";
+                        grid.style.opacity = "0";
+
+                        setTimeout(() => {
+                            const cards = grid.querySelectorAll(".cs-card");
+                            cards.forEach((card) => {
+                                const match =
+                                    f === "all" ||
+                                    card.dataset.cats.split(" ").includes(f);
+                                card.classList.toggle("hidden", !match);
+                                if (match) card.classList.add("in");
+                                else card.classList.remove("in");
+                            });
+                            updateCount();
+                            if (msnry) msnry.destroy();
+                            msnry = new Masonry(grid, {
+                                itemSelector: ".cs-card:not(.hidden)",
+                                columnWidth: ".cs-card:not(.hidden)",
+                                percentPosition: true,
+                                gutter: getGutter(),
+                                transitionDuration: 0,
+                            });
+                            requestAnimationFrame(() => {
+                                grid.style.opacity = "1";
+                                setTimeout(() => {
+                                    filterBusy = false;
+                                }, 280);
+                            });
+                        }, 280);
+                    }),
+                );
+
+                // Drag-to-scroll for case study filters
+                (function () {
+                    const el = document.getElementById("cs-filters");
+                    if (!el) return;
+                    let isDown = false,
+                        startX,
+                        scrollLeft,
+                        vel = 0;
+                    let frame = null,
+                        lastX = 0,
+                        lastTime = 0;
+
+                    function momentum() {
+                        vel *= 0.95;
+                        el.scrollLeft -= vel;
+                        if (Math.abs(vel) > 0.5) {
+                            frame = requestAnimationFrame(momentum);
+                        } else {
+                            cancelAnimationFrame(frame);
+                            frame = null;
+                        }
+                    }
+
+                    function startDrag(pageX) {
+                        isDown = true;
+                        el.classList.add("dragging");
                         cancelAnimationFrame(frame);
                         frame = null;
+                        vel = 0;
+                        startX = pageX;
+                        lastX = pageX;
+                        scrollLeft = el.scrollLeft;
+                        lastTime = performance.now();
                     }
-                }
 
-                function startDrag(pageX) {
-                    isDown = true;
-                    el.classList.add('dragging');
-                    cancelAnimationFrame(frame);
-                    frame = null;
-                    vel = 0;
-                    startX = pageX;
-                    lastX = pageX;
-                    scrollLeft = el.scrollLeft;
-                    lastTime = performance.now();
-                }
-
-                function moveDrag(pageX) {
-                    if (!isDown) return;
-                    const now = performance.now();
-                    const dt = Math.min(now - lastTime, 50);
-                    const dx = pageX - lastX;
-                    if (dt > 0) {
-                        vel = vel * 0.6 + (dx / dt * 16) * 0.4;
+                    function moveDrag(pageX) {
+                        if (!isDown) return;
+                        const now = performance.now();
+                        const dt = Math.min(now - lastTime, 50);
+                        const dx = pageX - lastX;
+                        if (dt > 0) {
+                            vel = vel * 0.6 + (dx / dt) * 16 * 0.4;
+                        }
+                        el.scrollLeft -= dx * 2.5;
+                        lastX = pageX;
+                        lastTime = now;
                     }
-                    el.scrollLeft -= dx * 2.5;
-                    lastX = pageX;
-                    lastTime = now;
-                }
 
-                function endDrag() {
-                    isDown = false;
-                    el.classList.remove('dragging');
-                    if (Math.abs(vel) > 0.5) {
-                        frame = requestAnimationFrame(momentum);
+                    function endDrag() {
+                        isDown = false;
+                        el.classList.remove("dragging");
+                        if (Math.abs(vel) > 0.5) {
+                            frame = requestAnimationFrame(momentum);
+                        }
                     }
-                }
 
-                el.addEventListener('mousedown', (e) => { startDrag(e.pageX); e.preventDefault(); });
-                el.addEventListener('mousemove', (e) => { moveDrag(e.pageX); });
-                el.addEventListener('mouseup', endDrag);
-                el.addEventListener('mouseleave', endDrag);
-                el.addEventListener('touchstart', (e) => { startDrag(e.touches[0].pageX); }, { passive: true });
-                el.addEventListener('touchmove', (e) => { moveDrag(e.touches[0].pageX); }, { passive: true });
-                el.addEventListener('touchend', endDrag);
-            })();
-        });
-    </script>
-
-    <script is:inline src="/hash-cleaner.js"></script>
-
-    <!-- Google reCAPTCHA API -->
-    <script is:inline src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-    <!-- Google reCAPTCHA Validation Logic -->
-    <script is:inline>
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('contactForm');
-            if (!form) return;
-
-            const errorEl = document.getElementById('recaptchaError');
-
-            form.addEventListener('submit', (e) => {
-                const recaptchaResponse = grecaptcha.getResponse();
-                if (recaptchaResponse.length === 0) {
-                    e.preventDefault();
-                    if (errorEl) errorEl.classList.remove('hidden');
-                } else {
-                    if (errorEl) errorEl.classList.add('hidden');
-                }
+                    el.addEventListener("mousedown", (e) => {
+                        startDrag(e.pageX);
+                        e.preventDefault();
+                    });
+                    el.addEventListener("mousemove", (e) => {
+                        moveDrag(e.pageX);
+                    });
+                    el.addEventListener("mouseup", endDrag);
+                    el.addEventListener("mouseleave", endDrag);
+                    el.addEventListener(
+                        "touchstart",
+                        (e) => {
+                            startDrag(e.touches[0].pageX);
+                        },
+                        { passive: true },
+                    );
+                    el.addEventListener(
+                        "touchmove",
+                        (e) => {
+                            moveDrag(e.touches[0].pageX);
+                        },
+                        { passive: true },
+                    );
+                    el.addEventListener("touchend", endDrag);
+                })();
             });
-        });
-    </script>
+        </script>
 
-    <!-- Form Validation -->
-    <script is:inline src="/form-validation.js"></script>
-
-</Fragment>
+        <script is:inline src="/hash-cleaner.js"></script>
+    </Fragment>
 </BaseLayout>
