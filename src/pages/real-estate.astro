@@ -1910,7 +1910,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                         <input
                             type="hidden"
                             name="_redirect"
-                            value="thanks.html"
+                            value="/thanks"
                         />
 
                         <div class="pt-2">
@@ -2303,6 +2303,20 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             });
         </script>
 
+        <script is:inline>
+            // On localhost, swap to Google's always-pass test site key so the
+            // form can be tested without registering the domain.
+            (function () {
+                var h = location.hostname;
+                if (h !== "localhost" && h !== "127.0.0.1") return;
+                document.querySelectorAll(".g-recaptcha").forEach(function (el) {
+                    el.setAttribute(
+                        "data-sitekey",
+                        "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
+                    );
+                });
+            })();
+        </script>
         <script
             is:inline
             src="https://www.google.com/recaptcha/api.js"

@@ -10,6 +10,7 @@
     "build:css": "tailwindcss -i ./src/styles/tailwind.css -o ./public/tailwind.css --minify",
     "build": "npm run build:css && astro build",
     "preview": "astro preview",
+    "serve:php": "npm run build && php dist/crm/bin/register-site.php && php -S localhost:8000 -t dist",
     "astro": "astro"
   },
   "dependencies": {

@@ -3,13 +3,20 @@
 
 // Honeypot check
 if (!empty($_POST['_hp'])) {
-    header('Location: ' . ($_POST['_redirect'] ?? 'thanks.html'));
+    header('Location: ' . ($_POST['_redirect'] ?? '/thanks'));
     exit;
 }
 
 $env = [];
 // Google reCAPTCHA Verification
-$recaptchaSecret = '6Ld5s24tAAAAAH4MDkioXeo7QcWR5mE-3oYyBUUs';
+// Use Google's official always-pass test secret on localhost so the form can
+// be tested locally without registering the domain in the reCAPTCHA console.
+$host = (string) ($_SERVER['HTTP_HOST'] ?? '');
+$host = preg_replace('/:\d+$/', '', $host); // strip port: "localhost:8000" -> "localhost"
+$isLocalhost = in_array($host, ['localhost', '127.0.0.1'], true);
+$recaptchaSecret = $isLocalhost
+    ? '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'
+    : '6Ld5s24tAAAAAH4MDkioXeo7QcWR5mE-3oYyBUUs';
 $recaptchaResponse = $_POST['g-recaptcha-response'] ?? '';
 
 if (empty($recaptchaResponse)) {
@@ -57,7 +64,7 @@ $name = trim($_POST['name'] ?? '');
 $email = trim($_POST['email'] ?? '');
 $phone = trim($_POST['phone'] ?? '');
 $message = trim($_POST['message'] ?? '');
-$redirect = $_POST['_redirect'] ?? 'thanks.html';
+$redirect = $_POST['_redirect'] ?? '/thanks';
 
 // Validate API key
 $stmt = $pdo->prepare('SELECT id, name, success_message FROM sites WHERE api_key = ? AND active = 1');

@@ -124,9 +124,17 @@ const url = siteUrl + canonical;
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
+            rel="preload"
             href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700;800&display=swap"
-            rel="stylesheet"
+            as="style"
+            onload="this.onload=null;this.rel='stylesheet'"
         />
+        <noscript>
+            <link
+                href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700;800&display=swap"
+                rel="stylesheet"
+            />
+        </noscript>
         <link rel="stylesheet" href="/tailwind.css" />
         <script
             defer
@@ -141,9 +149,17 @@ const url = siteUrl + canonical;
             src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"
             is:inline></script>
         <link
-            rel="stylesheet"
+            rel="preload"
             href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+            as="style"
+            onload="this.onload=null;this.rel='stylesheet'"
         />
+        <noscript>
+            <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+            />
+        </noscript>
         <link rel="stylesheet" href="/style.css" />
         <style is:inline>
             html.lenis {

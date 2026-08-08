@@ -424,7 +424,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
     <Fragment slot="scripts">
         <script is:inline>
-            // Fetch insights/data.json and render insight cards dynamically
+            // Fetch insights/articles/index.json and render insight cards dynamically
             (async function () {
                 const grid = document.getElementById("insight-grid");
                 const emptyMsg = document.getElementById("insight-empty");
@@ -432,7 +432,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
                 let articles = [];
                 try {
-                    const res = await fetch("/insights/data.json");
+                    const res = await fetch("/insights/articles/index.json");
                     const data = await res.json();
                     articles = data.articles || [];
                 } catch (e) {
