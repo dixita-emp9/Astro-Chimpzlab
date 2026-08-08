@@ -1,0 +1,118 @@
+{
+  "slug": "who-is-liable-for-ai-generated-google-ads-2026",
+  "category": "performance-marketing",
+  "tag": "Performance Marketing",
+  "readTime": "14 Min Read",
+  "date": "July 2026",
+  "titleParts": [
+    "Who Is Liable for",
+    "AI-Generated Google Ads",
+    "in 2026?"
+  ],
+  "titleFull": "Who Is Liable for AI-Generated Google Ads?",
+  "image": "asset/blogs/3rd-blog.jpg",
+  "alt": "AI-generated Google Ads liability - gavel and digital advertising interface",
+  "intro": "As AI writes more Google Ads, questions of liability are rising. Who's responsible when AI-generated ad copy misleads users - advertiser, agency, or platform?",
+  "takeaways": [
+    "Google's July 2026 Terms of Service update makes advertisers fully liable for AI-generated ad content",
+    "The terms apply automatically to every Google Ads account with no acceptance step required",
+    "India adds a second obligation: ASCI's draft AI disclosure guidelines use a three-tier risk framework",
+    "AI-generated assets must be reviewed and approved by humans - treating them as finished output is a liability risk"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "The advertiser is liable, not Google. Google's revised Google Ads Terms of Service, which took effect automatically on every account on July 1, 2026, explicitly states that advertisers remain fully responsible for reviewing, approving, editing, or removing campaigns and ad assets, including those generated automatically by Google's own AI tools. The expanded automation does not shift any of that liability onto Google."
+    },
+    {
+      "type": "p",
+      "text": "For any business or agency running live Google Ads accounts, this is not a footnote to skim past. It is the first substantive rewrite of Google Ads' Terms of Service in roughly eight years, and it changes what \"responsible account management\" actually requires in 2026."
+    },
+    {
+      "type": "h2",
+      "text": "What Changed on July 1, 2026"
+    },
+    {
+      "type": "p",
+      "text": "Google applied the updated terms to every Google Ads account automatically, with no login prompt, no checkbox, and no acceptance step required (Search Engine Land, June 2026; Digital Applied, 2026). The previous substantive terms dated back to roughly April 2018, so this update reflects eight years of automation moving from an optional program feature into a default, contractually authorized part of how the platform operates (Digital Applied, 2026). The core mechanical change is that the terms now formally authorize Google to use automated systems to format, select, or generate targets, ads, or destinations on the advertiser's behalf as a default, not an opt-in feature that can be fully switched off at the terms level, even though individual settings like Final URL Expansion or Automatically Created Assets can still be toggled at the campaign level (Common Thread Co, 2026)."
+    },
+    {
+      "type": "p",
+      "text": "The update applies specifically to Google Ads accounts and does not affect other Google products such as Workspace or Cloud Identity (Search Engine Land, June 2026)."
+    },
+    {
+      "type": "h2",
+      "text": "Who Actually Carries Legal Responsibility When AI Makes a Mistake in a Campaign"
+    },
+    {
+      "type": "p",
+      "text": "The advertiser does, in full. Google's Help Center language restates the advertiser's continued obligation to review, approve, or remove all campaigns and ad assets generated automatically by Google Ads features (Digital Applied, 2026). If an AI-generated ad runs copy that violates a brand's voice, makes a claim that was never approved, or targets an audience segment a business intended to exclude, the Terms of Service place that responsibility squarely on the advertiser, not on Google's automation (Common Thread Co, 2026)."
+    },
+    {
+      "type": "p",
+      "text": "This extends to AI ad labeling specifically. Google's separate July 2026 rollout of AI labeling settings placed the full legal responsibility for AI-content disclosure on the advertiser building the ad, while both Google and any publisher hosting the ad carry none of that disclosure duty themselves (PPC Land, July 2026)."
+    },
+    {
+      "type": "blockquote",
+      "text": "\"Google gains expanded system authority to generate and reuse advertiser inputs across its automation products, while the advertiser keeps the legal liability for what that system produces.\""
+    },
+    {
+      "type": "h2",
+      "text": "Can an Advertiser Opt Out of This AI Automation"
+    },
+    {
+      "type": "p",
+      "text": "Not at the terms level. A business can restrict specific automation features, such as turning off Automatically Created Assets in Performance Max campaigns, but that limits what AI generates without changing the underlying authorization written into the account-wide terms (Common Thread Co, 2026). Not everyone in the industry sees this as neutral housekeeping. Anthony Higman, founder of AdSQUIRE, has argued the changes further erode advertiser control, and that combined with updates to arbitration language in some regions, the revisions signal a continued shift of decision-making authority from advertisers toward Google's automated systems (Search Engine Land, June 2026)."
+    },
+    {
+      "type": "h2",
+      "text": "What Does This Mean Specifically for Advertisers Running Campaigns in India"
+    },
+    {
+      "type": "p",
+      "text": "India adds a second, independent layer on top of Google's own terms: domestic advertising regulation. The Advertising Standards Council of India published Draft Guidelines for Responsible Labelling of AI-Generated Content in Advertising on May 8, 2026, open for public comment until June 13, 2026 (Mondaq, May 2026). The draft uses a risk-based, three-tier framework rather than a blanket disclosure rule. High-risk uses, such as fabricated endorsements, AI-generated figures implying medical authority, or deepfakes used without consent, are prohibited outright regardless of whether a disclosure label is present. Medium-risk uses, such as synthetically generated influencers, AI-recreated realistic settings, or AI-generated product performance visuals, require a clear, prominent disclosure or the advertisement is treated as misleading under ASCI's existing code (Mondaq, May 2026; Ahlawat Associates, May 2026)."
+    },
+    {
+      "type": "p",
+      "text": "This aligns with the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Amendment Rules 2026, which brought synthetically generated information, including deepfakes, formally within India's IT Rules due diligence framework as of February 2026 (Medianama, June 2026). Google's own AI labeling documentation names India directly as one of the jurisdictions, alongside the European Union and New York, whose emerging AI transparency regulations its new labeling tools are designed to help advertisers comply with (Google Advertising Policies Help, updated 2026). In practice, that means an Indian advertiser or agency running Google Ads in mid-2026 is answering to two overlapping obligations at once: Google's Terms of Service, which places review and approval liability on the advertiser, and ASCI's forthcoming AI disclosure framework, which places labeling and honesty obligations on the same advertiser under India's own advertising code."
+    },
+    {
+      "type": "h2",
+      "text": "What Advertisers and Agencies Should Actually Do"
+    },
+    {
+      "type": "p",
+      "text": "Treat AI-generated assets as drafts requiring human sign-off, not finished output, since the Terms of Service make that review the advertiser's legal obligation regardless of how the asset was produced. Build an internal approval step specifically for anything Performance Max or other automated campaign types generate without direct human authorship. Track ASCI's guidelines as they move from draft to final, since the medium-risk disclosure requirements will likely apply to a meaningful share of AI-assisted creative already running in Indian accounts. And treat this as a governance and process update for account management, not a one-time reading exercise, since the underlying automation authorized here will keep expanding."
+    },
+    {
+      "type": "h2",
+      "text": "Frequently Asked Questions"
+    },
+    {
+      "type": "p",
+      "text": "<strong>Do I need to accept the new Google Ads Terms of Service manually?</strong><br>No. Google applied the updated terms automatically to every account on July 1, 2026, with no login prompt or acceptance step required. The terms govern the account regardless of whether anyone actively reviewed them."
+    },
+    {
+      "type": "p",
+      "text": "<strong>If Google's AI generates an ad that violates my brand guidelines, who is responsible?</strong><br>The advertiser is. Google's revised terms explicitly state that advertisers remain responsible for reviewing, approving, editing, or removing any AI-generated campaign or ad asset, and the automation itself does not shift liability to Google."
+    },
+    {
+      "type": "p",
+      "text": "<strong>Can I turn off AI automation in my Google Ads account entirely?</strong><br>Not at the account-terms level. Specific features like Automatically Created Assets can be restricted at the campaign level, but the underlying authorization for Google's systems to generate and format ad elements applies to the account as a whole."
+    },
+    {
+      "type": "p",
+      "text": "<strong>Does this change affect advertisers outside Google Ads, like Google Workspace users?</strong><br>No. The July 2026 terms update applies specifically to Google Ads accounts and does not extend to other Google products such as Workspace or Cloud Identity."
+    },
+    {
+      "type": "p",
+      "text": "<strong>What are ASCI's new AI disclosure rules for Indian advertisers?</strong><br>ASCI's Draft Guidelines for Responsible Labelling of AI-Generated Content, published May 8, 2026, use a risk-based framework. High-risk AI use in ads, like fabricated endorsements or deepfakes without consent, is prohibited outright. Medium-risk use, like synthetic influencers or AI-generated realistic settings, requires a clear, prominent disclosure or the ad is considered misleading."
+    },
+    {
+      "type": "p",
+      "text": "<strong>Do Google's Terms of Service and India's ASCI guidelines cover the same thing?</strong><br>No, they address different obligations. Google's terms govern liability and review responsibility for content generated on its platform. ASCI's guidelines govern consumer-facing honesty and disclosure requirements under Indian advertising law. An advertiser running Google Ads in India needs to satisfy both."
+    }
+  ],
+  "audioDuration": "14:00",
+  "description": "Google's revised July 2026 Google Ads Terms of Service makes advertisers fully liable for AI-generated ad content. Indian advertisers face additional ASCI disclosure rules."
+}

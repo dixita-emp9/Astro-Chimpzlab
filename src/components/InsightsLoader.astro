@@ -2,7 +2,7 @@
 // Shared, SSR-rendered insights carousel that replaces the duplicated inline
 // "Dynamic insights loader" blocks previously copied into every service page.
 // Data is imported at build time (no runtime fetch -> no 404s on nested pages).
-import data from '../../public/insights/data.json';
+import data from '../../public/insights/articles/index.json';
 
 interface Props {
     slugs?: string[];

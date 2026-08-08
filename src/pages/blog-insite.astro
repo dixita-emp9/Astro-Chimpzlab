@@ -1209,12 +1209,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </script>
 
     <script is:inline>
-        // Article loader - reads slug from URL and renders content from insights/data.json
+        // Article loader - reads slug from URL, loads metadata index + single article
         (async function () {
             try {
-                const res = await fetch("insights/data.json");
+                const res = await fetch("insights/articles/index.json");
                 const data = await res.json();
-                if (!data.articles || data.articles.length === 0) return;
+                const meta = data.articles || [];
+                if (meta.length === 0) return;
 
                 const params = new URLSearchParams(window.location.search);
                 let slug = params.get("slug");
@@ -1223,10 +1224,16 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                         window.location.pathname.match(/\/blog\/([^/]+)/);
                     if (pathMatch) slug = pathMatch[1];
                 }
-                let article = slug
-                    ? data.articles.find((a) => a.slug === slug)
+                let metaArticle = slug
+                    ? meta.find((a) => a.slug === slug)
                     : null;
-                if (!article) article = data.articles[0];
+                if (!metaArticle) metaArticle = meta[0];
+                if (!metaArticle) return;
+
+                const articleRes = await fetch(
+                    "insights/articles/" + metaArticle.slug + ".json",
+                );
+                const article = await articleRes.json();
                 if (!article) return;
 
                 // Update page title
@@ -1417,13 +1424,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                 }
 
                 // --- Related Articles ---
-                var sameCat = data.articles.filter(function (a) {
+                var sameCat = meta.filter(function (a) {
                     return (
                         a.category === article.category &&
                         a.slug !== article.slug
                     );
                 });
-                var otherCat = data.articles.filter(function (a) {
+                var otherCat = meta.filter(function (a) {
                     return (
                         a.category !== article.category &&
                         a.slug !== article.slug

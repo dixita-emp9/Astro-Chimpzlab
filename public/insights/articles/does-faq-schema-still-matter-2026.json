@@ -1,0 +1,122 @@
+{
+  "slug": "does-faq-schema-still-matter-2026",
+  "category": "seo-aeo",
+  "tag": "SEO/AEO",
+  "readTime": "8 Min Read",
+  "date": "July 2026",
+  "titleParts": [
+    "Does FAQ Schema",
+    "Still Matter After Google",
+    "Removed FAQ Rich Results?"
+  ],
+  "titleFull": "Does FAQ Schema Still Matter in 2026?",
+  "image": "asset/blogs/first-blog-cover.jpg",
+  "alt": "FAQ Schema and AI Search - puzzle piece with search icon and digital network",
+  "intro": "Google reduced FAQ rich results in 2023, but FAQ schema still plays a role in AI search and AEO. Here's what matters for your schema strategy in 2026.",
+  "takeaways": [
+    "Google removed FAQ rich results on May 7, 2026 - but did not deprecate FAQPage schema itself",
+    "AI systems like ChatGPT, Perplexity, and Google AI Overviews still read structured FAQ content",
+    "Rewrite thin 30-word FAQ answers into complete 80–150-word responses for AI citation readiness",
+    "India's AI search adoption is outpacing business preparedness - creating a wider competitive window"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "Yes, FAQ schema still matters, but not for the reason most website owners built it in the first place. Google stopped showing FAQ rich results in Search on May 7, 2026, which means the expandable question-and-answer dropdowns that used to appear under organic listings are gone for good. What Google did not do is deprecate the FAQPage markup itself. The schema still works, it still validates, and it is now read mainly by AI systems like ChatGPT, Perplexity, and Google's own AI Overviews rather than by the classic Google SERP."
+    },
+    {
+      "type": "p",
+      "text": "That distinction, between a display feature and a comprehension signal, is the whole story here. Understanding it is the difference between panicking over a Search Console report going blank and actually adjusting a content strategy for how discovery works in 2026."
+    },
+    {
+      "type": "h2",
+      "text": "What Exactly Changed on May 7, 2026"
+    },
+    {
+      "type": "p",
+      "text": "Google quietly added a note to its FAQ structured data documentation confirming that FAQ rich results no longer appear in Search results. There was no dedicated announcement blog post, just a documentation update, which is itself telling about how minor Google considers the change (Search Engine Land, May 8, 2026). The rollout is happening in three stages. FAQ rich results stopped showing in the SERP on May 7. In June 2026, Google is retiring the FAQ search-appearance filter, the FAQ rich result report, and FAQ support inside the Rich Results Test tool. In August 2026, FAQ rich result support disappears from the Search Console API entirely, so any dashboard or BigQuery pipeline pulling that data will start returning nulls (The HOTH, May 2026)."
+    },
+    {
+      "type": "p",
+      "text": "For most commercial sites, agencies, and blogs, this will feel like a smaller shock than the headlines suggest. Google had already restricted FAQ rich results to a narrow set of authoritative government and health websites back in August 2023, following widespread abuse where marketers bolted generic FAQ blocks onto pages purely to grab extra SERP real estate (Elementera, May 2026). The May 2026 change simply removes the feature for that last remaining group too. If a business lost its FAQ dropdown visibility years ago and never noticed, this update changes almost nothing for them operationally."
+    },
+    {
+      "type": "h2",
+      "text": "Should a Business Remove FAQ Schema from Its Site"
+    },
+    {
+      "type": "p",
+      "text": "No. Google has said explicitly that leaving FAQPage markup in place causes no problems, throws no errors, and triggers no manual action (Google Search Central documentation, referenced across multiple May 2026 reports). The schema was never confirmed as a Google ranking signal in the first place, so removing it will not move rankings, and keeping it will not create risk. The only thing that changes is that the code no longer earns a visual reward in Google's own results page."
+    },
+    {
+      "type": "p",
+      "text": "What is worth doing instead of ripping the markup out is auditing whether the underlying FAQ content is actually good. If a page's FAQ section only ever existed to game a rich result, this is the moment that becomes obvious, because the cosmetic cover for weak content just disappeared (The HOTH, May 2026)."
+    },
+    {
+      "type": "h2",
+      "text": "Do AI Search Engines Still Use FAQ Schema"
+    },
+    {
+      "type": "p",
+      "text": "They use the structure, even where they do not rely on the schema tag itself as a formal signal. Google's own AI features guidance states there is no special schema.org markup required for AI Overviews or AI Mode, but any structured data used should match the visible page content exactly (Google Search Central, cited in Elementera's May 2026 analysis). What AI systems do consistently reward is content that is already organized as clear, self-contained questions and answers, because that format mirrors how a user phrases a query to ChatGPT or Perplexity in the first place."
+    },
+    {
+      "type": "p",
+      "text": "Practitioners tracking this directly are seeing the pattern play out. One AEO monitoring tool reported that sites with well-structured FAQ schema and answers written between 80 and 150 words are showing up more often in ChatGPT and Perplexity citations than sites that kept their answers short and telegraphic, a habit left over from writing for Google's old accordion display (SEOcrawl, May 2026). That is a meaningful shift in intent even if the markup itself is unchanged. FAQ content used to be written short because the rich result only had room for a snippet. Now that the recipient is more often a language model assembling a fuller answer, a complete response with context and supporting detail has a better shot at being lifted directly."
+    },
+    {
+      "type": "blockquote",
+      "text": "\"FAQ content used to be written short because the rich result only had room for a snippet. Now that the recipient is more often a language model assembling a fuller answer, a complete response with context and supporting detail has a better shot at being lifted directly.\""
+    },
+    {
+      "type": "h2",
+      "text": "What This Means for India Specifically"
+    },
+    {
+      "type": "p",
+      "text": "India sits in an unusual position on AI search adoption. Reported adoption figures vary by source and methodology, but multiple 2026 industry analyses place India among the fastest-growing markets globally for AI-assistant use, with buyers increasingly asking tools like ChatGPT and Perplexity direct questions such as \"best CA firm in Kochi\" or \"top real estate advisory in Mumbai\" and acting on whichever handful of brands the AI names (Adexorb, 2026; SEONova, June 2026). Most Indian small and mid-sized businesses have done close to zero preparation for this shift, according to multiple India-focused AEO guides published in 2026, which means the competitive window for FAQ-driven AI visibility is currently wider in India than in more saturated markets like the US or UK."
+    },
+    {
+      "type": "p",
+      "text": "This is exactly where the FAQ rich results removal creates an opening rather than a setback. Businesses that keep writing thin, rich-result-era FAQ answers will keep losing ground quietly. Businesses that rebuild their FAQ sections as genuinely complete, well-sourced answers are positioning themselves for a discovery layer that barely existed eighteen months ago and is still comparatively uncrowded in the Indian market."
+    },
+    {
+      "type": "h2",
+      "text": "The Practical Move"
+    },
+    {
+      "type": "p",
+      "text": "Keep the FAQPage schema if it is already implemented correctly and matches the visible page content. Stop treating it as a SERP-feature shortcut, since that feature is gone. Rewrite thin, thirty-word answers that were built to fit inside an old Google accordion into fuller, 80-to-150-word answers that stand alone as complete responses. Group questions by what a buyer genuinely needs to know, whether that is a definition, a comparison, pricing, timing, or eligibility, rather than padding a page with generic questions nobody asked. And treat this as one part of a broader shift, not a standalone fix, since FAQ structure only helps if the rest of the page is also written to be understood and cited by an AI system rather than just crawled by Google."
+    },
+    {
+      "type": "h2",
+      "text": "Frequently Asked Questions"
+    },
+    {
+      "type": "p",
+      "text": "<strong>Should I remove FAQ schema from my website after the May 2026 Google update?</strong><br>No. Google has confirmed that FAQPage markup remains valid and causes no errors or ranking issues if left in place. The only change is that it no longer produces a visible rich result in Google Search."
+    },
+    {
+      "type": "p",
+      "text": "<strong>Does FAQ content still help with SEO in 2026?</strong><br>Yes. FAQ content still improves page clarity, reduces user friction, supports topical relevance, and helps both search engines and AI systems interpret what a page covers, even without the visible rich-result snippet."
+    },
+    {
+      "type": "p",
+      "text": "<strong>Will other search engines or AI tools still use FAQ schema?</strong><br>Google has removed FAQ rich results from its own Search experience specifically, but AI answer engines like ChatGPT, Perplexity, and Gemini continue to read and extract structured Q&A content, which is a separate mechanism from Google's rich-result display."
+    },
+    {
+      "type": "p",
+      "text": "<strong>What happened to FAQ rich results before this 2026 change?</strong><br>Google restricted FAQ rich results to a narrow set of authoritative government and health websites in August 2023, following widespread misuse where sites added generic FAQ blocks purely to gain extra space in search results. The May 2026 update removes the feature for that remaining group as well."
+    },
+    {
+      "type": "p",
+      "text": "<strong>How should FAQ answers be written for AI search visibility in 2026?</strong><br>Answers should be complete and self-contained, generally in the 80-to-150-word range, addressing one specific question directly without requiring the reader to consult other parts of the page for context."
+    },
+    {
+      "type": "p",
+      "text": "<strong>Is this change different for businesses in India?</strong><br>The underlying mechanics are global, but India's AI search adoption is growing faster than most markets while business preparedness for AI visibility remains comparatively low, which creates a larger near-term opportunity for Indian businesses that rebuild FAQ content properly now."
+    }
+  ],
+  "audioDuration": "8:15",
+  "description": "Google removed FAQ rich results - but FAQPage schema still feeds AI search engines like ChatGPT, Perplexity, and AI Overviews. Here's what changed, what to keep, and what to rewrite."
+}
