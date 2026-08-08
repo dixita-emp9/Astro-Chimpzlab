@@ -17,6 +17,10 @@ pnpm-debug.log*
 .env
 .env.production
 
+# CRM runtime data (database is created on first run, never commit it)
+public/crm/storage/*.sqlite
+public/crm/storage/*.sqlite-*
+
 # macOS-specific files
 .DS_Store
 
