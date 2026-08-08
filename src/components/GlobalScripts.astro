@@ -113,6 +113,117 @@
             });
         }
 
+        // Video Portfolio Carousel (Video Work)
+        const videoSwiperEl = document.querySelector(".video-carousel");
+        if (videoSwiperEl && !videoSwiperEl.swiper) {
+            const videoSwiper = new Swiper(videoSwiperEl, {
+                slidesPerView: 1,
+                spaceBetween: 12,
+                centeredSlides: true,
+                loop: true,
+                speed: 700,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                grabCursor: true,
+                pagination: {
+                    el: ".video-carousel .swiper-pagination",
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: ".video-carousel-outer .swiper-button-next",
+                    prevEl: ".video-carousel-outer .swiper-button-prev",
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 1.2,
+                        spaceBetween: 16,
+                    },
+                    768: {
+                        slidesPerView: 1.6,
+                        spaceBetween: 20,
+                    },
+                    1024: {
+                        slidesPerView: 2.2,
+                        spaceBetween: 24,
+                    },
+                    1280: {
+                        slidesPerView: 2.5,
+                        spaceBetween: 28,
+                    },
+                },
+            });
+        }
+
+        // Video Lightbox
+        const videoLightbox = document.getElementById("videoLightbox");
+        const videoIframe = document.getElementById("lightboxIframe");
+        const lightboxCloseBtn = document.getElementById("lightboxClose");
+        if (videoLightbox && videoIframe) {
+            let lightboxOpen = false;
+            let dragStartX = 0;
+            let dragStartY = 0;
+            let lightboxDragged = false;
+
+            function openVideoLightbox(videoId) {
+                videoIframe.src =
+                    "https://www.youtube.com/embed/" +
+                    videoId +
+                    "?autoplay=1&rel=0";
+                videoLightbox.classList.add("active");
+                document.body.style.overflow = "hidden";
+                if (window.lenis && typeof window.lenis.stop === "function")
+                    window.lenis.stop();
+                lightboxOpen = true;
+            }
+
+            function closeVideoLightbox() {
+                videoLightbox.classList.remove("active");
+                videoIframe.src = "";
+                document.body.style.overflow = "";
+                if (window.lenis && typeof window.lenis.start === "function")
+                    window.lenis.start();
+                lightboxOpen = false;
+            }
+
+            const videoSlides = document.querySelectorAll(
+                ".video-carousel .swiper-slide[data-video-id]",
+            );
+            videoSlides.forEach((slide) => {
+                slide.addEventListener("pointerdown", (e) => {
+                    dragStartX = e.clientX;
+                    dragStartY = e.clientY;
+                    lightboxDragged = false;
+                });
+                slide.addEventListener("pointermove", (e) => {
+                    if (
+                        Math.abs(e.clientX - dragStartX) > 8 ||
+                        Math.abs(e.clientY - dragStartY) > 8
+                    ) {
+                        lightboxDragged = true;
+                    }
+                });
+                slide.addEventListener("click", () => {
+                    if (lightboxDragged) return;
+                    openVideoLightbox(slide.dataset.videoId);
+                });
+            });
+
+            if (lightboxCloseBtn)
+                lightboxCloseBtn.addEventListener(
+                    "click",
+                    closeVideoLightbox,
+                );
+            videoLightbox.addEventListener("click", (e) => {
+                if (e.target === videoLightbox) closeVideoLightbox();
+            });
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape" && lightboxOpen)
+                    closeVideoLightbox();
+            });
+        }
+
         // GSAP Animations
         // 1. Hero Text Reveal
         if (document.querySelectorAll(".gsap-reveal-text").length) {
