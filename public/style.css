@@ -2391,7 +2391,8 @@ section.bg-white ::selection {
 
 .video-carousel .swiper-slide-active {
   opacity: 1;
-  transform: scale(1);
+  transform: scale(1.06);
+  z-index: 2;
 }
 
 .video-carousel .swiper-slide:not(.swiper-slide-active) {

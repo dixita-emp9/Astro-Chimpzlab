@@ -29,7 +29,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             <div id="filter-bar"
                 class="flex flex-wrap gap-3 mb-12 py-2 backdrop-blur-md bg-brand-dark/80 -mx-2 px-2 rounded-xl sticky top-24 z-40">
             </div>
-            <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <div id="project-grid"
+                data-projects-json="/services/digital-experiences/landing-pages-case-studies.json"
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             </div>
             <p id="cs-empty" class="hidden text-center text-white/40 py-20 text-lg">No projects in this category yet.
             </p>
@@ -37,6 +39,6 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     </section>
 
 <Fragment slot="scripts">
-
+    <script is:inline src="/services/digital-experiences/website-design-projects.js" defer></script>
 </Fragment>
 </BaseLayout>

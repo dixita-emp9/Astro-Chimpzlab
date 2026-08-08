@@ -430,7 +430,8 @@ import Testimonials from '../../../components/Testimonials.tsx';
             </div>
 
             <div class="case-study-carousel-outer relative">
-                <div class="swiper case-study-carousel gsap-reveal">
+                <div class="swiper case-study-carousel gsap-reveal"
+                    data-projects-json="/services/digital-experiences/landing-pages-case-studies.json">
                     <div class="swiper-wrapper"></div>
                     <div class="swiper-pagination !relative !bottom-auto mt-10 md:mt-12"></div>
                 </div>
@@ -544,6 +545,6 @@ import Testimonials from '../../../components/Testimonials.tsx';
     </section>
 
 <Fragment slot="scripts">
-
+    <script is:inline src="/services/digital-experiences/website-design-projects.js" defer></script>
 </Fragment>
 </BaseLayout>
