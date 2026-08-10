@@ -139,7 +139,6 @@
     function init() {
         fetch(
             '/services/demand-generation/email-marketing-case-studies.json',
-            { cache: 'no-cache' },
         )
             .then(function (r) { return r.json(); })
             .then(function (data) {

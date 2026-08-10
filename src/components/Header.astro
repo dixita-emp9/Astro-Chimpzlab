@@ -1,4 +1,6 @@
 ---
+import { site } from "../config/site";
+
 const { activeNav = "" } = Astro.props;
 const linkClass = (nav: string) =>
     `interactive text-sm transition-colors ${nav === activeNav ? "text-white font-bold" : "text-gray-300 hover:text-white font-medium"}`;
@@ -15,15 +17,15 @@ const linkClass = (nav: string) =>
         aria-label="Home"
     >
         <img
-            src="/asset/chimpzlab-white.png"
-            alt="ChimpzLab"
+            src={site.logo.header}
+            alt={site.name}
             class="h-7 md:h-9 object-contain"
             onerror="this.style.display='none'; document.getElementById('text-logo').style.display='block';"
         />
         <span
             id="text-logo"
             class="hidden text-white font-extrabold text-2xl md:text-3xl tracking-tighter"
-            >CHIMPZLAB</span
+            >{site.name}</span
         >
     </a>
 

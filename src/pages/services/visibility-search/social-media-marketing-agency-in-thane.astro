@@ -1,11 +1,11 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import InsightsLoader from '../../../components/InsightsLoader.astro';
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import InsightsLoader from "../../../components/InsightsLoader.astro";
 
-import ContactForm from '../../../components/sections/ContactForm.astro';
-import Testimonials from '../../../components/Testimonials.tsx';
-
+import ContactForm from "../../../components/sections/ContactForm.astro";
+import Testimonials from "../../../components/Testimonials.tsx";
 ---
+
 <BaseLayout
     title="Social Media Marketing Agency in Thane | ChimpzLab"
     description="ChimpzLab manages and grows social media for brands across Instagram, LinkedIn, X, and Facebook - with strategy, content, and performance tracking built in."
@@ -13,36 +13,58 @@ import Testimonials from '../../../components/Testimonials.tsx';
     hideHeader={false}
     hideFooter={false}
 >
-
     <header
-        class="min-h-screen flex flex-col justify-center px-6 md:px-12 pt-32 pb-20 relative bg-brand-dark overflow-hidden">
+        class="min-h-screen flex flex-col justify-center px-6 md:px-12 pt-32 pb-20 relative bg-brand-dark overflow-hidden"
+    >
         <div class="w-full max-w-[1400px] mx-auto z-10">
             <div class="flex items-center gap-4 mb-8 gsap-reveal-text">
                 <div class="w-12 h-[1px] bg-white/30"></div>
-                <span class="block text-xs font-bold uppercase tracking-[0.2em] text-white/70">Social Media
-                    Marketing</span>
+                <span
+                    class="block text-xs font-bold uppercase tracking-[0.2em] text-white/70"
+                    >Social Media Marketing</span
+                >
             </div>
             <h1
-                class="text-4xl sm:text-6xl md:text-8xl max-w-[1000px] font-extrabold text-white mb-12 tracking-tighter uppercase">
-                <div class="overflow-hidden"><span class="block gsap-reveal-text">Social media tied to business goals,
-                        not post counts</span></div>
+                class="text-4xl sm:text-6xl md:text-8xl max-w-[1000px] font-extrabold text-white mb-12 tracking-tighter uppercase"
+            >
+                <div class="overflow-hidden">
+                    <span class="block gsap-reveal-text"
+                        >Social media tied to business goals, not post counts</span
+                    >
+                </div>
             </h1>
             <div class="gsap-reveal">
                 <div>
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-8">
-                        <a href="/booking-form"
-                            class="interactive bg-white hover:bg-gray-200 text-black px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2">
+                    <div
+                        class="flex flex-col sm:flex-row items-start sm:items-center gap-8"
+                    >
+                        <a
+                            href="/booking-form"
+                            class="interactive bg-white hover:bg-gray-200 text-black px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2"
+                        >
                             Book a Strategy Call
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            <svg
+                                class="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
                                     d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                             </svg>
                         </a>
                         <div class="flex flex-col">
-                            <span class="text-xs font-bold uppercase tracking-widest text-white/50 mb-1">The
-                                Agenda</span>
-                            <span class="text-sm font-medium text-gray-400 leading-tight">30 minutes. Aligning your
-                                corporate narrative.</span>
+                            <span
+                                class="text-xs font-bold uppercase tracking-widest text-white/50 mb-1"
+                                >The Agenda</span
+                            >
+                            <span
+                                class="text-sm font-medium text-gray-400 leading-tight"
+                                >30 minutes. Aligning your corporate narrative.</span
+                            >
                         </div>
                     </div>
                 </div>
@@ -55,31 +77,58 @@ import Testimonials from '../../../components/Testimonials.tsx';
             <div class="grid grid-cols-1 lg:grid-cols-12 items-stretch">
                 <div class="lg:col-span-6 order-2 lg:order-none gsap-reveal">
                     <div class="relative h-full overflow-hidden md:mr-12">
-                        <img src="/services/image/visibility-and-search/social-media.png"
+                        <img
+                            src="/services/image/visibility-and-search/social-media.png"
                             alt="Social Media Marketing Agency in India"
-                            class="w-full h-full object-contain object-bottom min-h-[300px] lg:min-h-full">
+                            class="w-full h-full object-contain object-bottom min-h-[300px] lg:min-h-full"
+                        />
                     </div>
                 </div>
-                <div class="lg:col-span-6 order-1 lg:order-none py-16 md:py-24 px-6 md:px-0 gsap-reveal">
+                <div
+                    class="lg:col-span-6 order-1 lg:order-none py-16 md:py-24 px-6 md:px-0 gsap-reveal"
+                >
                     <div class="flex items-center gap-4 mb-8">
                         <div class="w-12 h-[1px] bg-gray-300"></div>
-                        <span class="block text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Our
-                            Approach</span>
+                        <span
+                            class="block text-xs font-bold uppercase tracking-[0.2em] text-gray-500"
+                            >Our Approach</span
+                        >
                     </div>
-                    <p class="text-lg md:text-2xl font-light leading-relaxed text-gray-600 mb-8 max-w-3xl">Social media
-                        marketing is the practice of building and running platform-specific content and community that
-                        ties back to a real business goal, whether that is visibility, engagement or leads. Posting
-                        consistently is not a strategy on its own. We build programmes with a point, and we measure them
-                        against it.</p>
-                    <p class="text-lg md:text-2xl font-light leading-relaxed text-gray-600 mb-10 max-w-3xl">Where your
-                        audience actually is decides where we invest, not a one-size template that spreads you thin
-                        across every platform.</p>
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-8">
-                        <a href="/booking-form"
-                            class="interactive bg-brand-dark hover:bg-gray-800 text-white px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2">
+                    <p
+                        class="text-lg md:text-2xl font-light leading-relaxed text-gray-600 mb-8 max-w-3xl"
+                    >
+                        Social media marketing is the practice of building and
+                        running platform-specific content and community that
+                        ties back to a real business goal, whether that is
+                        visibility, engagement or leads. Posting consistently is
+                        not a strategy on its own. We build programmes with a
+                        point, and we measure them against it.
+                    </p>
+                    <p
+                        class="text-lg md:text-2xl font-light leading-relaxed text-gray-600 mb-10 max-w-3xl"
+                    >
+                        Where your audience actually is decides where we invest,
+                        not a one-size template that spreads you thin across
+                        every platform.
+                    </p>
+                    <div
+                        class="flex flex-col sm:flex-row items-start sm:items-center gap-8"
+                    >
+                        <a
+                            href="/booking-form"
+                            class="interactive bg-brand-dark hover:bg-gray-800 text-white px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2"
+                        >
                             Book a Strategy Call
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            <svg
+                                class="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
                                     d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                             </svg>
                         </a>
@@ -89,107 +138,178 @@ import Testimonials from '../../../components/Testimonials.tsx';
         </div>
     </section>
 
-    <section class="py-32 px-6 md:px-12 bg-brand-dark text-white border-t border-white/10 overflow-hidden">
+    <section
+        class="py-32 px-6 md:px-12 bg-brand-dark text-white border-t border-white/10 overflow-hidden"
+    >
         <div class="max-w-[1400px] mx-auto">
             <div class="flex items-center gap-4 mb-8 gsap-reveal">
                 <div class="w-12 h-[1px] bg-white/30"></div>
-                <span class="text-xs font-bold uppercase tracking-[0.2em] text-white/50">What This Includes</span>
+                <span
+                    class="text-xs font-bold uppercase tracking-[0.2em] text-white/50"
+                    >What This Includes</span
+                >
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-16">
                 <div class="lg:col-span-5 gsap-reveal">
                     <h2
-                        class="text-3xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl font-extrabold tracking-tighter uppercase leading-[0.9]">
-                        Everything you get</h2>
+                        class="text-3xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl font-extrabold tracking-tighter uppercase leading-[0.9]"
+                    >
+                        Everything you get
+                    </h2>
                 </div>
                 <div class="lg:col-span-7 gsap-reveal">
-                    <p class="text-lg md:text-xl text-gray-400 font-light max-w-xl leading-relaxed">Every message is
-                        crafted to build trust and authority across all your stakeholder groups.</p>
+                    <p
+                        class="text-lg md:text-xl text-gray-400 font-light max-w-xl leading-relaxed"
+                    >
+                        Every message is crafted to build trust and authority
+                        across all your stakeholder groups.
+                    </p>
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-5">
-
                 <div class="md:col-span-3 group relative">
                     <div
-                        class="h-full bg-white/[0.03] border border-white/10 rounded-2xl p-10 md:p-12 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-500">
+                        class="h-full bg-white/[0.03] border border-white/10 rounded-2xl p-10 md:p-12 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-500"
+                    >
                         <div class="flex items-start gap-5">
                             <div
-                                class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-white/20 transition-all duration-500">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-white/20 transition-all duration-500"
+                            >
+                                <svg
+                                    class="w-5 h-5 text-white"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
                                         d="M5 13l4 4L19 7"></path>
                                 </svg>
                             </div>
                             <p
-                                class="text-gray-300 font-medium text-base md:text-lg leading-relaxed group-hover:text-white transition-colors duration-500">
-                                Platform strategy across Instagram, LinkedIn and more</p>
+                                class="text-gray-300 font-medium text-base md:text-lg leading-relaxed group-hover:text-white transition-colors duration-500"
+                            >
+                                Platform strategy across Instagram, LinkedIn and
+                                more
+                            </p>
                         </div>
                     </div>
                 </div>
                 <div class="md:col-span-2 group relative">
                     <div
-                        class="h-full bg-white/[0.03] border border-white/10 rounded-2xl p-10 md:p-12 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-500">
+                        class="h-full bg-white/[0.03] border border-white/10 rounded-2xl p-10 md:p-12 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-500"
+                    >
                         <div class="flex items-start gap-5">
                             <div
-                                class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-white/20 transition-all duration-500">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-white/20 transition-all duration-500"
+                            >
+                                <svg
+                                    class="w-5 h-5 text-white"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
                                         d="M5 13l4 4L19 7"></path>
                                 </svg>
                             </div>
                             <p
-                                class="text-gray-300 font-medium text-base md:text-lg leading-relaxed group-hover:text-white transition-colors duration-500">
-                                Content calendars and scheduled posting</p>
+                                class="text-gray-300 font-medium text-base md:text-lg leading-relaxed group-hover:text-white transition-colors duration-500"
+                            >
+                                Content calendars and scheduled posting
+                            </p>
                         </div>
                     </div>
                 </div>
                 <div class="md:col-span-2 group relative">
                     <div
-                        class="h-full bg-white/[0.03] border border-white/10 rounded-2xl p-10 md:p-12 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-500">
+                        class="h-full bg-white/[0.03] border border-white/10 rounded-2xl p-10 md:p-12 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-500"
+                    >
                         <div class="flex items-start gap-5">
                             <div
-                                class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-white/20 transition-all duration-500">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-white/20 transition-all duration-500"
+                            >
+                                <svg
+                                    class="w-5 h-5 text-white"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
                                         d="M5 13l4 4L19 7"></path>
                                 </svg>
                             </div>
                             <p
-                                class="text-gray-300 font-medium text-base md:text-lg leading-relaxed group-hover:text-white transition-colors duration-500">
-                                Community management and response</p>
+                                class="text-gray-300 font-medium text-base md:text-lg leading-relaxed group-hover:text-white transition-colors duration-500"
+                            >
+                                Community management and response
+                            </p>
                         </div>
                     </div>
                 </div>
                 <div class="md:col-span-3 group relative">
                     <div
-                        class="h-full bg-white/[0.03] border border-white/10 rounded-2xl p-10 md:p-12 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-500">
+                        class="h-full bg-white/[0.03] border border-white/10 rounded-2xl p-10 md:p-12 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-500"
+                    >
                         <div class="flex items-start gap-5">
                             <div
-                                class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-white/20 transition-all duration-500">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-white/20 transition-all duration-500"
+                            >
+                                <svg
+                                    class="w-5 h-5 text-white"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
                                         d="M5 13l4 4L19 7"></path>
                                 </svg>
                             </div>
                             <p
-                                class="text-gray-300 font-medium text-base md:text-lg leading-relaxed group-hover:text-white transition-colors duration-500">
-                                Paid social amplification</p>
+                                class="text-gray-300 font-medium text-base md:text-lg leading-relaxed group-hover:text-white transition-colors duration-500"
+                            >
+                                Paid social amplification
+                            </p>
                         </div>
                     </div>
                 </div>
                 <div class="md:col-span-5 group relative">
                     <div
-                        class="h-full bg-white/[0.03] border border-white/10 rounded-2xl p-10 md:p-12 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-500">
+                        class="h-full bg-white/[0.03] border border-white/10 rounded-2xl p-10 md:p-12 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-500"
+                    >
                         <div class="flex items-start gap-5">
                             <div
-                                class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-white/20 transition-all duration-500">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-white/20 transition-all duration-500"
+                            >
+                                <svg
+                                    class="w-5 h-5 text-white"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
                                         d="M5 13l4 4L19 7"></path>
                                 </svg>
                             </div>
                             <p
-                                class="text-gray-300 font-medium text-base md:text-lg leading-relaxed group-hover:text-white transition-colors duration-500">
-                                Performance reporting tied to goals</p>
+                                class="text-gray-300 font-medium text-base md:text-lg leading-relaxed group-hover:text-white transition-colors duration-500"
+                            >
+                                Performance reporting tied to goals
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -197,74 +317,122 @@ import Testimonials from '../../../components/Testimonials.tsx';
         </div>
     </section>
 
-    <section class="py-32 px-6 md:px-12 bg-white text-brand-dark border-t border-gray-200 overflow-hidden">
+    <section
+        class="py-32 px-6 md:px-12 bg-white text-brand-dark border-t border-gray-200 overflow-hidden"
+    >
         <div class="max-w-[1400px] mx-auto">
             <div class="flex items-center gap-4 mb-8 gsap-reveal">
                 <div class="w-12 h-[1px] bg-gray-300"></div>
-                <span class="text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Our Process</span>
+                <span
+                    class="text-xs font-bold uppercase tracking-[0.2em] text-gray-500"
+                    >Our Process</span
+                >
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-16">
                 <div class="lg:col-span-5 gsap-reveal">
                     <h2
-                        class="text-3xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl font-extrabold tracking-tighter uppercase leading-[0.9]">
-                        How it works</h2>
+                        class="text-3xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl font-extrabold tracking-tighter uppercase leading-[0.9]"
+                    >
+                        How it works
+                    </h2>
                 </div>
                 <div class="lg:col-span-7 gsap-reveal">
-                    <p class="text-lg md:text-xl text-gray-500 font-light max-w-xl leading-relaxed">A strategic approach
-                        to unifying your corporate voice and messaging framework.</p>
+                    <p
+                        class="text-lg md:text-xl text-gray-500 font-light max-w-xl leading-relaxed"
+                    >
+                        A strategic approach to unifying your corporate voice
+                        and messaging framework.
+                    </p>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6 relative process-grid">
-
+            <div
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6 relative process-grid"
+            >
                 <div class="gsap-reveal relative process-step">
                     <div
-                        class="bg-white rounded-2xl p-7 shadow-[0_4px_24px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 text-center md:text-left">
+                        class="bg-white rounded-2xl p-7 shadow-[0_4px_24px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 text-center md:text-left"
+                    >
                         <div
-                            class="w-14 h-14 rounded-2xl bg-brand-dark text-white flex items-center justify-center mx-auto md:mx-0 mb-5 text-xl font-extrabold shadow-lg relative z-10">
-                            01</div>
+                            class="w-14 h-14 rounded-2xl bg-brand-dark text-white flex items-center justify-center mx-auto md:mx-0 mb-5 text-xl font-extrabold shadow-lg relative z-10"
+                        >
+                            01
+                        </div>
                         <div class="relative">
-                            <div class="w-12 h-[2px] bg-gray-200 mx-auto md:mx-0 mb-5"></div>
-                            <p class="text-gray-700 font-medium text-base md:text-lg leading-relaxed">Platform and
-                                audience audit</p>
+                            <div
+                                class="w-12 h-[2px] bg-gray-200 mx-auto md:mx-0 mb-5"
+                            >
+                            </div>
+                            <p
+                                class="text-gray-700 font-medium text-base md:text-lg leading-relaxed"
+                            >
+                                Platform and audience audit
+                            </p>
                         </div>
                     </div>
                 </div>
                 <div class="gsap-reveal relative process-step">
                     <div
-                        class="bg-white rounded-2xl p-7 shadow-[0_4px_24px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 text-center md:text-left">
+                        class="bg-white rounded-2xl p-7 shadow-[0_4px_24px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 text-center md:text-left"
+                    >
                         <div
-                            class="w-14 h-14 rounded-2xl bg-brand-dark text-white flex items-center justify-center mx-auto md:mx-0 mb-5 text-xl font-extrabold shadow-lg relative z-10">
-                            02</div>
+                            class="w-14 h-14 rounded-2xl bg-brand-dark text-white flex items-center justify-center mx-auto md:mx-0 mb-5 text-xl font-extrabold shadow-lg relative z-10"
+                        >
+                            02
+                        </div>
                         <div class="relative">
-                            <div class="w-12 h-[2px] bg-gray-200 mx-auto md:mx-0 mb-5"></div>
-                            <p class="text-gray-700 font-medium text-base md:text-lg leading-relaxed">Content strategy
-                                and calendar</p>
+                            <div
+                                class="w-12 h-[2px] bg-gray-200 mx-auto md:mx-0 mb-5"
+                            >
+                            </div>
+                            <p
+                                class="text-gray-700 font-medium text-base md:text-lg leading-relaxed"
+                            >
+                                Content strategy and calendar
+                            </p>
                         </div>
                     </div>
                 </div>
                 <div class="gsap-reveal relative process-step">
                     <div
-                        class="bg-white rounded-2xl p-7 shadow-[0_4px_24px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 text-center md:text-left">
+                        class="bg-white rounded-2xl p-7 shadow-[0_4px_24px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 text-center md:text-left"
+                    >
                         <div
-                            class="w-14 h-14 rounded-2xl bg-brand-dark text-white flex items-center justify-center mx-auto md:mx-0 mb-5 text-xl font-extrabold shadow-lg relative z-10">
-                            03</div>
+                            class="w-14 h-14 rounded-2xl bg-brand-dark text-white flex items-center justify-center mx-auto md:mx-0 mb-5 text-xl font-extrabold shadow-lg relative z-10"
+                        >
+                            03
+                        </div>
                         <div class="relative">
-                            <div class="w-12 h-[2px] bg-gray-200 mx-auto md:mx-0 mb-5"></div>
-                            <p class="text-gray-700 font-medium text-base md:text-lg leading-relaxed">Content production
-                                and posting</p>
+                            <div
+                                class="w-12 h-[2px] bg-gray-200 mx-auto md:mx-0 mb-5"
+                            >
+                            </div>
+                            <p
+                                class="text-gray-700 font-medium text-base md:text-lg leading-relaxed"
+                            >
+                                Content production and posting
+                            </p>
                         </div>
                     </div>
                 </div>
                 <div class="gsap-reveal relative process-step">
                     <div
-                        class="bg-white rounded-2xl p-7 shadow-[0_4px_24px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 text-center md:text-left">
+                        class="bg-white rounded-2xl p-7 shadow-[0_4px_24px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 text-center md:text-left"
+                    >
                         <div
-                            class="w-14 h-14 rounded-2xl bg-brand-dark text-white flex items-center justify-center mx-auto md:mx-0 mb-5 text-xl font-extrabold shadow-lg relative z-10">
-                            04</div>
+                            class="w-14 h-14 rounded-2xl bg-brand-dark text-white flex items-center justify-center mx-auto md:mx-0 mb-5 text-xl font-extrabold shadow-lg relative z-10"
+                        >
+                            04
+                        </div>
                         <div class="relative">
-                            <div class="w-12 h-[2px] bg-gray-200 mx-auto md:mx-0 mb-5"></div>
-                            <p class="text-gray-700 font-medium text-base md:text-lg leading-relaxed">Reporting and
-                                optimisation</p>
+                            <div
+                                class="w-12 h-[2px] bg-gray-200 mx-auto md:mx-0 mb-5"
+                            >
+                            </div>
+                            <p
+                                class="text-gray-700 font-medium text-base md:text-lg leading-relaxed"
+                            >
+                                Reporting and optimisation
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -431,31 +599,56 @@ import Testimonials from '../../../components/Testimonials.tsx';
     </section> -->
     <!-- Case Studies Grid Version (Active by default) -->
     <section
-        class="py-16 md:py-32 px-4 sm:px-6 md:px-12 bg-brand-dark text-white border-t border-white/10 overflow-hidden">
+        class="py-16 md:py-32 px-4 sm:px-6 md:px-12 bg-brand-dark text-white border-t border-white/10 overflow-hidden"
+    >
         <div class="max-w-[1400px] mx-auto">
             <div class="flex items-center gap-4 mb-4 gsap-reveal">
                 <div class="w-12 h-[1px] bg-white/30"></div>
-                <span class="text-xs font-bold uppercase tracking-[0.2em] text-white/50">Case Studies</span>
+                <span
+                    class="text-xs font-bold uppercase tracking-[0.2em] text-white/50"
+                    >Case Studies</span
+                >
             </div>
-            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16 gsap-reveal">
-                <h2 class="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tighter uppercase m-0">
+            <div
+                class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16 gsap-reveal"
+            >
+                <h2
+                    class="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tighter uppercase m-0"
+                >
                     Featured Work
                 </h2>
-                <a href="/case-studies"
-                    class="inline-flex items-center gap-2 text-white font-bold text-sm hover:gap-3 transition-all duration-300 pb-1 border-b border-white/30 hover:border-white shrink-0 uppercase tracking-wider">
+                <a
+                    href="/case-studies"
+                    class="inline-flex items-center gap-2 text-white font-bold text-sm hover:gap-3 transition-all duration-300 pb-1 border-b border-white/30 hover:border-white shrink-0 uppercase tracking-wider"
+                >
                     View All Case Studies
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    <svg
+                        class="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
                             d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                     </svg>
                 </a>
             </div>
             <div class="case-study-carousel-outer relative">
                 <div class="swiper case-study-carousel gsap-reveal">
-                    <div class="swiper-wrapper"
+                    <div
+                        class="swiper-wrapper"
                         data-slugs="imbesharam,ghci-2024,stl-digital,nasscom-konnect,nasscom-member-connect,blue-star,evershine-builders,munns-mars"
-                        data-link-prefix="../../case-studies/" data-cover-prefix="../"></div>
-                    <div class="swiper-pagination !relative !bottom-auto mt-10 md:mt-12"></div>
+                        data-link-prefix="../../case-studies/"
+                        data-cover-prefix="../"
+                    >
+                    </div>
+                    <div
+                        class="swiper-pagination !relative !bottom-auto mt-10 md:mt-12"
+                    >
+                    </div>
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
@@ -464,111 +657,195 @@ import Testimonials from '../../../components/Testimonials.tsx';
     </section>
 
     <!-- Insights Section -->
-    <section class="py-16 px-4 sm:px-6 md:px-12 bg-[#f5f5f5] text-brand-dark border-t border-gray-200">
+    <section
+        class="py-16 px-4 sm:px-6 md:px-12 bg-[#f5f5f5] text-brand-dark border-t border-gray-200"
+    >
         <div class="max-w-[1400px] mx-auto">
-            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 gsap-reveal">
-                <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tighter uppercase m-0">
+            <div
+                class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 gsap-reveal"
+            >
+                <h2
+                    class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tighter uppercase m-0"
+                >
                     Insights
                 </h2>
-                <a href="/insights"
-                    class="interactive border-2 border-brand-dark text-brand-dark hover:bg-brand-dark hover:text-white px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 inline-block shrink-0 whitespace-nowrap">Explore
-                    more</a>
+                <a
+                    href="/insights"
+                    class="interactive border-2 border-brand-dark text-brand-dark hover:bg-brand-dark hover:text-white px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 inline-block shrink-0 whitespace-nowrap"
+                    >Explore more</a
+                >
             </div>
 
             <InsightsLoader slugs={["social-seo-india-2026"]} />
-    </div></section>
+        </div>
+    </section>
 
-    <section class="py-32 px-6 md:px-12 bg-white text-brand-dark border-t border-gray-200">
+    <section
+        class="py-32 px-6 md:px-12 bg-white text-brand-dark border-t border-gray-200"
+    >
         <div class="max-w-[1000px] mx-auto">
-            <h2 class="text-4xl md:text-5xl font-extrabold tracking-tighter mb-16 uppercase gsap-reveal">FAQ's</h2>
+            <h2
+                class="text-4xl md:text-5xl font-extrabold tracking-tighter mb-16 uppercase gsap-reveal"
+            >
+                FAQ's
+            </h2>
             <div class="border-t border-gray-200">
-                <div class="gsap-reveal border-b border-gray-200 faq-item group">
+                <div
+                    class="gsap-reveal border-b border-gray-200 faq-item group"
+                >
                     <button
-                        class="w-full text-left py-6 font-bold text-base md:text-xl flex justify-between items-center interactive focus:outline-none tracking-tight pr-4">
+                        class="w-full text-left py-6 font-bold text-base md:text-xl flex justify-between items-center interactive focus:outline-none tracking-tight pr-4"
+                    >
                         Which platforms do you manage?
-                        <svg class="w-6 h-6 transform transition-transform duration-300 icon text-gray-400 group-hover:text-black shrink-0 ml-4"
-                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                        <svg
+                            class="w-6 h-6 transform transition-transform duration-300 icon text-gray-400 group-hover:text-black shrink-0 ml-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 9l-7 7-7-7"
+                            >
                             </path>
                         </svg>
                     </button>
-                    <div class="pb-6 text-gray-600 font-medium text-base leading-relaxed hidden answer max-w-3xl">
-                        Mainly Instagram and LinkedIn, with the choice driven by where your actual audience is rather
-                        than a fixed package.
+                    <div
+                        class="pb-6 text-gray-600 font-medium text-base leading-relaxed hidden answer max-w-3xl"
+                    >
+                        Mainly Instagram and LinkedIn, with the choice driven by
+                        where your actual audience is rather than a fixed
+                        package.
                     </div>
                 </div>
-                <div class="gsap-reveal border-b border-gray-200 faq-item group">
+                <div
+                    class="gsap-reveal border-b border-gray-200 faq-item group"
+                >
                     <button
-                        class="w-full text-left py-6 font-bold text-base md:text-xl flex justify-between items-center interactive focus:outline-none tracking-tight pr-4">
+                        class="w-full text-left py-6 font-bold text-base md:text-xl flex justify-between items-center interactive focus:outline-none tracking-tight pr-4"
+                    >
                         Do you also run paid social ads?
-                        <svg class="w-6 h-6 transform transition-transform duration-300 icon text-gray-400 group-hover:text-black shrink-0 ml-4"
-                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                        <svg
+                            class="w-6 h-6 transform transition-transform duration-300 icon text-gray-400 group-hover:text-black shrink-0 ml-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 9l-7 7-7-7"
+                            >
                             </path>
                         </svg>
                     </button>
-                    <div class="pb-6 text-gray-600 font-medium text-base leading-relaxed hidden answer max-w-3xl">
-                        Yes. Paid social amplification is available within this service, or integrated with our
-                        performance marketing team for bigger campaigns.
+                    <div
+                        class="pb-6 text-gray-600 font-medium text-base leading-relaxed hidden answer max-w-3xl"
+                    >
+                        Yes. Paid social amplification is available within this
+                        service, or integrated with our performance marketing
+                        team for bigger campaigns.
                     </div>
                 </div>
-                <div class="gsap-reveal border-b border-gray-200 faq-item group">
+                <div
+                    class="gsap-reveal border-b border-gray-200 faq-item group"
+                >
                     <button
-                        class="w-full text-left py-6 font-bold text-base md:text-xl flex justify-between items-center interactive focus:outline-none tracking-tight pr-4">
+                        class="w-full text-left py-6 font-bold text-base md:text-xl flex justify-between items-center interactive focus:outline-none tracking-tight pr-4"
+                    >
                         Do you create the content, or do we?
-                        <svg class="w-6 h-6 transform transition-transform duration-300 icon text-gray-400 group-hover:text-black shrink-0 ml-4"
-                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                        <svg
+                            class="w-6 h-6 transform transition-transform duration-300 icon text-gray-400 group-hover:text-black shrink-0 ml-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 9l-7 7-7-7"
+                            >
                             </path>
                         </svg>
                     </button>
-                    <div class="pb-6 text-gray-600 font-medium text-base leading-relaxed hidden answer max-w-3xl">
-                        We can produce it end to end, or work alongside your in-house team and lead the strategy and
-                        calendar. Both models work.
+                    <div
+                        class="pb-6 text-gray-600 font-medium text-base leading-relaxed hidden answer max-w-3xl"
+                    >
+                        We can produce it end to end, or work alongside your
+                        in-house team and lead the strategy and calendar. Both
+                        models work.
                     </div>
                 </div>
-                <div class="gsap-reveal border-b border-gray-200 faq-item group">
+                <div
+                    class="gsap-reveal border-b border-gray-200 faq-item group"
+                >
                     <button
-                        class="w-full text-left py-6 font-bold text-base md:text-xl flex justify-between items-center interactive focus:outline-none tracking-tight pr-4">
+                        class="w-full text-left py-6 font-bold text-base md:text-xl flex justify-between items-center interactive focus:outline-none tracking-tight pr-4"
+                    >
                         How do you measure social media success?
-                        <svg class="w-6 h-6 transform transition-transform duration-300 icon text-gray-400 group-hover:text-black shrink-0 ml-4"
-                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                        <svg
+                            class="w-6 h-6 transform transition-transform duration-300 icon text-gray-400 group-hover:text-black shrink-0 ml-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 9l-7 7-7-7"
+                            >
                             </path>
                         </svg>
                     </button>
-                    <div class="pb-6 text-gray-600 font-medium text-base leading-relaxed hidden answer max-w-3xl">
-                        Against the goal we set at the start, whether that is reach, engagement, followers of the right
-                        kind, or leads. We do not report vanity numbers that do not connect to the business.
+                    <div
+                        class="pb-6 text-gray-600 font-medium text-base leading-relaxed hidden answer max-w-3xl"
+                    >
+                        Against the goal we set at the start, whether that is
+                        reach, engagement, followers of the right kind, or
+                        leads. We do not report vanity numbers that do not
+                        connect to the business.
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-        <Testimonials client:load />
+    <Testimonials client:visible />
 
-    <section class="py-16 md:py-20 px-6 md:px-12 bg-brand-dark text-white border-t border-white/10" id="booking-form"
-        style="min-height: 100dvh; align-items: center; display: flex; flex-wrap: wrap;">
+    <section
+        class="py-16 md:py-20 px-6 md:px-12 bg-brand-dark text-white border-t border-white/10"
+        id="booking-form"
+        style="min-height: 100dvh; align-items: center; display: flex; flex-wrap: wrap;"
+    >
         <div class="max-w-[1400px] mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            <div
+                class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center"
+            >
                 <!-- Left Side: Copy -->
                 <div class="gsap-reveal">
                     <h2
-                        class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tighter mb-8 uppercase leading-[0.9]">
+                        class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tighter mb-8 uppercase leading-[0.9]"
+                    >
                         Stop chasing plain clicks. Start owning the answers.
                     </h2>
-                    <p class="text-lg md:text-2xl text-gray-400 mb-12 max-w-lg font-light">Let us look at how
-                        discoverable you really are, across search and AI, and build a plan to fix it.</p>
+                    <p
+                        class="text-lg md:text-2xl text-gray-400 mb-12 max-w-lg font-light"
+                    >
+                        Let us look at how discoverable you really are, across
+                        search and AI, and build a plan to fix it.
+                    </p>
                 </div>
                 <ContactForm theme="dark" />
             </div>
         </div>
     </section>
 
-<Fragment slot="scripts">
-
+    <Fragment slot="scripts">
         <script is:inline src="/service-case-study-carousel.js" defer></script>
-
-</Fragment>
+    </Fragment>
 </BaseLayout>

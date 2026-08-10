@@ -2,12 +2,25 @@
 // Shared page-level behaviours: custom cursor, Lenis smooth scroll,
 // GSAP scroll animations, Swiper sliders, map modal and the mobile
 // off-canvas menu. Mirrors the behaviour of the reference chimpzlab site.
+//
+// All animation-library usage is guarded so content-only pages can skip
+// loading GSAP / Lenis / Swiper entirely (BaseLayout loadAnimations=false).
+interface Props {
+    loadAnimations?: boolean;
+}
+
+const { loadAnimations = true } = Astro.props;
 ---
 
-<script
-    is:inline
-    defer
-    src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+{
+    loadAnimations && (
+        <script
+            is:inline
+            defer
+            src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"
+        />
+    )
+}
 
 <script is:inline>
     document.addEventListener("DOMContentLoaded", function () {
@@ -34,8 +47,9 @@
             });
         }
 
-        // Initialize Lenis Smooth Scrolling (only if the page hasn't already)
-        if (!window.lenis) {
+        // Initialize Lenis Smooth Scrolling (only if the page hasn't already
+        // and the library was loaded).
+        if (typeof Lenis !== "undefined" && !window.lenis) {
             window.lenis = new Lenis({
                 wrapper: window,
                 content: document.documentElement,
@@ -58,14 +72,20 @@
         }
 
         // Connect GSAP to Lenis
-        gsap.registerPlugin(ScrollTrigger);
-        if (window.lenis) {
-            lenis.on("scroll", ScrollTrigger.update);
+        if (typeof gsap !== "undefined") {
+            gsap.registerPlugin(ScrollTrigger);
+            if (window.lenis) {
+                lenis.on("scroll", ScrollTrigger.update);
+            }
         }
 
         // Our Work Swiper
         const workSwiperEl = document.querySelector(".work-swiper");
-        if (workSwiperEl && !workSwiperEl.swiper) {
+        if (
+            typeof Swiper !== "undefined" &&
+            workSwiperEl &&
+            !workSwiperEl.swiper
+        ) {
             const workSwiper = new Swiper(".work-swiper", {
                 loop: true,
                 slidesPerView: 1.2,
@@ -90,7 +110,11 @@
 
         // Insights Swiper
         const insightsSwiperEl = document.querySelector(".insights-swiper");
-        if (insightsSwiperEl && !insightsSwiperEl.swiper) {
+        if (
+            typeof Swiper !== "undefined" &&
+            insightsSwiperEl &&
+            !insightsSwiperEl.swiper
+        ) {
             const insightsSwiper = new Swiper(".insights-swiper", {
                 loop: true,
                 slidesPerView: 1,
@@ -115,7 +139,11 @@
 
         // Video Portfolio Carousel (Video Work)
         const videoSwiperEl = document.querySelector(".video-carousel");
-        if (videoSwiperEl && !videoSwiperEl.swiper) {
+        if (
+            typeof Swiper !== "undefined" &&
+            videoSwiperEl &&
+            !videoSwiperEl.swiper
+        ) {
             const videoSwiper = new Swiper(videoSwiperEl, {
                 slidesPerView: 1,
                 spaceBetween: 12,
@@ -211,90 +239,88 @@
             });
 
             if (lightboxCloseBtn)
-                lightboxCloseBtn.addEventListener(
-                    "click",
-                    closeVideoLightbox,
-                );
+                lightboxCloseBtn.addEventListener("click", closeVideoLightbox);
             videoLightbox.addEventListener("click", (e) => {
                 if (e.target === videoLightbox) closeVideoLightbox();
             });
             document.addEventListener("keydown", (e) => {
-                if (e.key === "Escape" && lightboxOpen)
-                    closeVideoLightbox();
+                if (e.key === "Escape" && lightboxOpen) closeVideoLightbox();
             });
         }
 
         // GSAP Animations
-        // 1. Hero Text Reveal
-        if (document.querySelectorAll(".gsap-reveal-text").length) {
-            gsap.from(".gsap-reveal-text", {
-                y: 100,
-                opacity: 0,
-                duration: 1,
-                stagger: 0.15,
-                ease: "power4.out",
-                delay: 0.2,
+        if (typeof gsap !== "undefined") {
+            // 1. Hero Text Reveal
+            if (document.querySelectorAll(".gsap-reveal-text").length) {
+                gsap.from(".gsap-reveal-text", {
+                    y: 100,
+                    opacity: 0,
+                    duration: 1,
+                    stagger: 0.15,
+                    ease: "power4.out",
+                    delay: 0.2,
+                });
+            }
+
+            // 2. Scroll Reveals for all other elements
+            const revealElements = document.querySelectorAll(".gsap-reveal");
+            revealElements.forEach((el) => {
+                if (el.dataset.gsRevealed) return;
+                el.dataset.gsRevealed = "1";
+                gsap.to(el, {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse",
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "power3.out",
+                });
+            });
+
+            // 3. Number Counter Animation
+            const counters = document.querySelectorAll(".counter-value");
+            counters.forEach((counter) => {
+                if (counter.dataset.gsCounted) return;
+                counter.dataset.gsCounted = "1";
+                const target = parseInt(counter.getAttribute("data-target"));
+                gsap.to(counter, {
+                    scrollTrigger: {
+                        trigger: counter.closest(".gsap-reveal"),
+                        start: "top 85%",
+                    },
+                    innerHTML: target,
+                    duration: 2,
+                    ease: "power3.out",
+                    snap: { innerHTML: 1 },
+                    onUpdate: function () {
+                        counter.innerHTML = Math.round(
+                            gsap.getProperty(counter, "innerHTML"),
+                        );
+                    },
+                });
+            });
+
+            // 4. Fade Up Reveal for pillars
+            const fadeUpElements = document.querySelectorAll(".fade-up");
+            fadeUpElements.forEach((el) => {
+                if (el.dataset.gsFaded) return;
+                el.dataset.gsFaded = "1";
+                gsap.to(el, {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse",
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "power3.out",
+                });
             });
         }
-
-        // 2. Scroll Reveals for all other elements
-        const revealElements = document.querySelectorAll(".gsap-reveal");
-        revealElements.forEach((el) => {
-            if (el.dataset.gsRevealed) return;
-            el.dataset.gsRevealed = "1";
-            gsap.to(el, {
-                scrollTrigger: {
-                    trigger: el,
-                    start: "top 85%",
-                    toggleActions: "play none none reverse",
-                },
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "power3.out",
-            });
-        });
-
-        // 3. Number Counter Animation
-        const counters = document.querySelectorAll(".counter-value");
-        counters.forEach((counter) => {
-            if (counter.dataset.gsCounted) return;
-            counter.dataset.gsCounted = "1";
-            const target = parseInt(counter.getAttribute("data-target"));
-            gsap.to(counter, {
-                scrollTrigger: {
-                    trigger: counter.closest(".gsap-reveal"),
-                    start: "top 85%",
-                },
-                innerHTML: target,
-                duration: 2,
-                ease: "power3.out",
-                snap: { innerHTML: 1 },
-                onUpdate: function () {
-                    counter.innerHTML = Math.round(
-                        gsap.getProperty(counter, "innerHTML"),
-                    );
-                },
-            });
-        });
-
-        // 4. Fade Up Reveal for pillars
-        const fadeUpElements = document.querySelectorAll(".fade-up");
-        fadeUpElements.forEach((el) => {
-            if (el.dataset.gsFaded) return;
-            el.dataset.gsFaded = "1";
-            gsap.to(el, {
-                scrollTrigger: {
-                    trigger: el,
-                    start: "top 85%",
-                    toggleActions: "play none none reverse",
-                },
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "power3.out",
-            });
-        });
 
         // Location Map Modal Functionality
         const locationLink = document.getElementById("location-link");

@@ -53,6 +53,10 @@ function app_config(): array
             'min_submit_seconds' => (int) ($env['MIN_SUBMIT_SECONDS'] ?? 3),
             'max_token_age_seconds' => (int) ($env['MAX_TOKEN_AGE_SECONDS'] ?? 3600),
             'trust_proxy' => ($env['TRUST_PROXY'] ?? '0') === '1',
+            'admin_login' => [
+                'max_attempts' => (int) ($env['ADMIN_LOGIN_MAX_ATTEMPTS'] ?? 10),
+                'window_seconds' => (int) ($env['ADMIN_LOGIN_WINDOW'] ?? 900),
+            ],
         ];
 
         if ($config['app_key'] === '' && PHP_SAPI !== 'cli') {
@@ -304,11 +308,16 @@ function geoip_country(PDO $pdo, string $ip): ?string
  */
 function render_lead_form_snippet(array $site, array $fields): string
 {
+    // Every interpolated value is HTML-escaped. This snippet is the literal
+    // code an admin copy-pastes onto their own sites, so a stray quote or
+    // angle bracket in a label/option/redirect must never become markup.
+    $e = static fn($v) => htmlspecialchars((string) $v, ENT_QUOTES, 'UTF-8');
+
     $base = site_base_url();
-    $out = '<form method="post" action="' . $base . '/api/leads">' . "\n";
-    $out .= '  <input type="hidden" name="api_key" value="' . $site['api_key'] . '">' . "\n";
+    $out = '<form method="post" action="' . $e($base) . '/api/leads">' . "\n";
+    $out .= '  <input type="hidden" name="api_key" value="' . $e($site['api_key']) . '">' . "\n";
     if (!empty($site['redirect_url'])) {
-        $out .= '  <input type="hidden" name="_redirect" value="' . $site['redirect_url'] . '">' . "\n";
+        $out .= '  <input type="hidden" name="_redirect" value="' . $e($site['redirect_url']) . '">' . "\n";
     }
 
     $hasCustomFields = false;
@@ -337,18 +346,18 @@ function render_lead_form_snippet(array $site, array $fields): string
         $required = !empty($f['required']) ? ' required' : '';
 
         if (($f['type'] ?? 'text') === 'hidden') {
-            $out .= '  <input type="hidden" name="' . $name . '" value="' . ($f['value'] ?? '') . '">' . "\n";
+            $out .= '  <input type="hidden" name="' . $e($name) . '" value="' . $e($f['value'] ?? '') . '">' . "\n";
         } elseif (($f['type'] ?? 'text') === 'textarea') {
-            $out .= '  <label>' . $label . ' <textarea name="' . $name . '"' . $required . '></textarea></label>' . "\n";
+            $out .= '  <label>' . $e($label) . ' <textarea name="' . $e($name) . '"' . $required . '></textarea></label>' . "\n";
         } elseif (($f['type'] ?? 'text') === 'select') {
-            $out .= '  <label>' . $label . ' <select name="' . $name . '"' . $required . '>' . "\n";
+            $out .= '  <label>' . $e($label) . ' <select name="' . $e($name) . '"' . $required . '>' . "\n";
             $out .= '    <option value="">Select…</option>' . "\n";
             foreach (($f['options'] ?? []) as $o) {
-                $out .= '    <option value="' . ($o['value'] ?? '') . '">' . ($o['label'] ?? ($o['value'] ?? '')) . '</option>' . "\n";
+                $out .= '    <option value="' . $e($o['value'] ?? '') . '">' . $e($o['label'] ?? ($o['value'] ?? '')) . '</option>' . "\n";
             }
             $out .= '  </select></label>' . "\n";
         } else {
-            $out .= '  <label>' . $label . ' <input type="' . ($f['type'] ?: 'text') . '" name="' . $name . '"' . $required . '></label>' . "\n";
+            $out .= '  <label>' . $e($label) . ' <input type="' . $e($f['type'] ?: 'text') . '" name="' . $e($name) . '"' . $required . '></label>' . "\n";
         }
     }
 
@@ -380,6 +389,28 @@ function generate_api_key(): string
     return bin2hex(random_bytes(20));
 }
 
+/**
+ * Returns the set of fully-qualified origins (scheme+host) configured as
+ * allowed_domain across all active sites. Used to restrict CORS preflight
+ * reflection to known partners instead of echoing any Origin.
+ */
+function capture_allowed_origins(PDO $pdo): array
+{
+    $origins = [];
+    $rows = $pdo->query(
+        "SELECT allowed_domain FROM sites WHERE allowed_domain IS NOT NULL AND allowed_domain != ''"
+    )->fetchAll();
+    foreach ($rows as $row) {
+        foreach (explode(',', (string) $row['allowed_domain']) as $domain) {
+            $domain = rtrim(trim($domain), '/');
+            if ($domain !== '') {
+                $origins[] = $domain;
+            }
+        }
+    }
+    return array_values(array_unique($origins));
+}
+
 function get_site_by_key(PDO $pdo, string $key): ?array
 {
     if ($key === '') {
@@ -407,10 +438,35 @@ function client_ip(): string
 function site_base_url(): string
 {
     $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $host = (string) ($_SERVER['HTTP_HOST'] ?? 'localhost');
+    // Validate the Host header so attacker-controlled values can't poison the
+    // generated embed snippets / endpoint URLs (host-header injection).
+    if (!preg_match('/^[a-z0-9.-]+(:\d{1,5})?$/i', $host)) {
+        $host = 'localhost';
+    }
     $path = dirname($_SERVER['SCRIPT_NAME']);
     $path = $path !== '/' && $path !== '.' ? $path : '';
     return $scheme . '://' . $host . $path;
+}
+
+/**
+ * Restricts a redirect target to a same-origin, relative path. Blocks
+ * protocol-relative (//host), absolute (https://host) and backslash (\host)
+ * values, which browsers otherwise normalise into open redirects.
+ */
+function safe_local_url(string $url, string $fallback = '/'): string
+{
+    $url = trim($url);
+    if (
+        $url === ''
+        || !str_starts_with($url, '/')
+        || str_starts_with($url, '//')
+        || str_contains($url, '\\')
+        || str_contains($url, '://')
+    ) {
+        return $fallback;
+    }
+    return $url;
 }
 
 function json_error(string $message, int $code = 400): void

@@ -74,17 +74,36 @@ Flight::route('POST /login', function () {
     $username = trim((string) ($req->data->username ?? ''));
     $password = (string) ($req->data->password ?? '');
 
-    $stmt = db()->prepare('SELECT * FROM admin_users WHERE username = ?');
+    $pdo = db();
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+
+    // Brute-force protection: max N failed login attempts per IP per window,
+    // tracked in the same rate_log table used by the public capture endpoint.
+    // Successful logins prune stale rows.
+    $loginGuard = app_config()['admin_login'];
+    $maxAttempts = $loginGuard['max_attempts'];
+    $windowSeconds = $loginGuard['window_seconds'];
+
+    if (!\App\SpamFilter::withinRateLimit($pdo, $ip, $maxAttempts, $windowSeconds)) {
+        render_view('login', ['error' => 'Too many failed attempts. Please try again later.'], false);
+        return;
+    }
+
+    $stmt = $pdo->prepare('SELECT * FROM admin_users WHERE username = ?');
     $stmt->execute([$username]);
     $user = $stmt->fetch();
 
     if ($user && password_verify($password, $user['password_hash'])) {
+        \App\SpamFilter::pruneRateLog($pdo);
         session_regenerate_id(true);
         $_SESSION['admin_user_id'] = $user['id'];
         Flight::redirect('/dashboard');
         return;
     }
 
+    // Record only the IP, never the attempted username (don't leak which
+    // usernames exist). site_id 0 = admin auth attempt, not a lead capture.
+    \App\SpamFilter::logRequest($pdo, $ip, 0);
     render_view('login', ['error' => 'Invalid username or password.'], false);
 });
 
@@ -362,10 +381,7 @@ Flight::route('POST /leads/bulk', function () {
     $ids = array_values(array_filter(array_map('intval', (array) ($req->data->ids ?? [])), fn($n) => $n > 0));
     $action = (string) ($req->data->bulk_action ?? '');
 
-    $back = (string) ($req->data->_back ?? '/leads');
-    if (!str_starts_with($back, '/') || str_starts_with($back, '//')) {
-        $back = '/leads';
-    }
+    $back = safe_local_url((string) ($req->data->_back ?? '/leads'), '/leads');
 
     if (!$ids) {
         flash('error', 'No leads selected.');
@@ -894,8 +910,8 @@ Flight::route('POST /leads/@id/not-spam', function (string $id) {
     }
 
     flash('success', 'Lead #' . (int) $id . ' restored to the inbox.');
-    $back = (string) (Flight::request()->data->_back ?? '');
-    Flight::redirect(str_starts_with($back, '/') && !str_starts_with($back, '//') ? $back : '/leads?status=spam');
+    $back = safe_local_url((string) (Flight::request()->data->_back ?? ''), '/leads?status=spam');
+    Flight::redirect($back);
 });
 
 Flight::route('POST /leads/spam/empty', function () {
