@@ -1,71 +1,51 @@
 <?php
-// Real-estate landing page lead capture - no email field, uses company/challenge/description
+// Real-estate landing page lead capture - no email field, uses
+// company/challenge/description. All configuration (reCAPTCHA secrets, SMTP,
+// DB_PATH, rate limits) comes from crm/.env at request time.
+
+declare(strict_types=1);
+
+require_once __DIR__ . '/capture-common.php';
+
+$env = capture_env();
 
 // Honeypot check
 if (!empty($_POST['_hp'])) {
-    header('Location: ' . ($_POST['_redirect'] ?? '/thanks'));
+    header('Location: ' . capture_safe_redirect((string) ($_POST['_redirect'] ?? '')));
     exit;
 }
 
-$env = [];
-// Google reCAPTCHA Verification
-// Use Google's official always-pass test secret on localhost so the form can
-// be tested locally without registering the domain in the reCAPTCHA console.
-$host = (string) ($_SERVER['HTTP_HOST'] ?? '');
-$host = preg_replace('/:\d+$/', '', $host); // strip port: "localhost:8000" -> "localhost"
-$isLocalhost = in_array($host, ['localhost', '127.0.0.1'], true);
-$recaptchaSecret = $isLocalhost
-    ? '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'
-    : '6Ld5s24tAAAAAH4MDkioXeo7QcWR5mE-3oYyBUUs';
-$recaptchaResponse = $_POST['g-recaptcha-response'] ?? '';
-
-if (empty($recaptchaResponse)) {
-    die('Please complete the CAPTCHA.');
+// Google reCAPTCHA Verification (secret from crm/.env, test key on localhost)
+$recaptchaSecret = capture_recaptcha_secret($env);
+if ($recaptchaSecret === null) {
+    http_response_code(500);
+    die('The form is not configured for this host. Please contact the site owner.');
 }
-
-$verifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
-$verifyData = [
-    'secret' => $recaptchaSecret,
-    'response' => $recaptchaResponse,
-    'remoteip' => $_SERVER['REMOTE_ADDR']
-];
-
-$options = [
-    'http' => [
-        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-        'method'  => 'POST',
-        'content' => http_build_query($verifyData)
-    ]
-];
-$context  = stream_context_create($options);
-$result = file_get_contents($verifyUrl, false, $context);
-$responseData = json_decode($result, true);
-
-if (!$responseData['success']) {
+if (!capture_verify_recaptcha($recaptchaSecret, (string) ($_POST['g-recaptcha-response'] ?? ''))) {
     die('CAPTCHA verification failed. Please try again.');
-}
-if (is_file(__DIR__ . '/crm/.env')) {
-    foreach (file(__DIR__ . '/crm/.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
-        $line = trim($line);
-        if ($line === '' || str_starts_with($line, '#')) continue;
-        $parts = explode('=', $line, 2);
-        if (count($parts) === 2) $env[trim($parts[0])] = trim(trim($parts[1]), "\"'");
-    }
 }
 
 $dbPath = $env['DB_PATH'] ?? 'crm/storage/database.sqlite';
-if (!str_starts_with($dbPath, '/')) $dbPath = __DIR__ . '/crm/' . $dbPath;
+if (!str_starts_with($dbPath, '/')) {
+    $dbPath = __DIR__ . '/crm/' . $dbPath;
+}
+
+// Rate limit (per-IP) BEFORE doing any expensive work.
+if (!capture_within_rate_limit($env, $dbPath, capture_client_ip($env))) {
+    http_response_code(429);
+    die('Too many submissions from your network. Please try again later.');
+}
 
 $pdo = new PDO('sqlite:' . $dbPath);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$apiKey = $_POST['api_key'] ?? '';
-$name = trim($_POST['name'] ?? '');
-$phone = trim($_POST['phone'] ?? '');
-$company = trim($_POST['company'] ?? '');
-$challenge = trim($_POST['challenge'] ?? '');
-$description = trim($_POST['description'] ?? '');
-$redirect = $_POST['_redirect'] ?? '/thanks';
+$apiKey = capture_text($_POST['api_key'] ?? '', 64);
+$name = capture_text($_POST['name'] ?? '', 200);
+$phone = capture_text($_POST['phone'] ?? '', 30);
+$company = capture_text($_POST['company'] ?? '', 200);
+$challenge = capture_text($_POST['challenge'] ?? '', 50);
+$description = capture_text($_POST['description'] ?? '', 5000);
+$redirect = capture_safe_redirect((string) ($_POST['_redirect'] ?? ''));
 
 // Validate API key
 $stmt = $pdo->prepare('SELECT id, name, success_message FROM sites WHERE api_key = ? AND active = 1');
@@ -73,11 +53,12 @@ $stmt->execute([$apiKey]);
 $site = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$site) {
+    http_response_code(403);
     die('Invalid form key.');
 }
 
 // Validate required fields
-if (empty($name) || empty($phone) || empty($company) || empty($challenge)) {
+if ($name === '' || $phone === '' || $company === '' || $challenge === '') {
     die('Please fill in all required fields.');
 }
 
@@ -93,7 +74,8 @@ $challengeLabel = $challengeLabels[$challenge] ?? $challenge;
 
 $message = "Company / Project: {$company}\n"
     . "Biggest challenge right now: {$challengeLabel}\n"
-    . ($description !== '' ? "Requirements:\n{$description}" : '');$extra = [
+    . ($description !== '' ? "Requirements:\n{$description}" : '');
+$extra = [
     'company' => $company,
     'challenge' => $challengeLabel,
     'description' => $description,
@@ -109,12 +91,12 @@ $stmt->execute([
     $message,
     json_encode($extra),
     $_SERVER['REMOTE_ADDR'] ?? '',
-    $_SERVER['HTTP_USER_AGENT'] ?? '',
-    $_SERVER['HTTP_REFERER'] ?? '',
+    substr((string) ($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 500),
+    substr((string) ($_SERVER['HTTP_REFERER'] ?? ''), 0, 500),
     'new'
 ]);
 
-$leadId = $pdo->lastInsertId();
+$leadId = (int) $pdo->lastInsertId();
 
 // Log activity
 $stmt = $pdo->prepare('INSERT INTO lead_activity (lead_id, type, body) VALUES (?, \'created\', ?)');

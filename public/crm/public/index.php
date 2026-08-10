@@ -2,8 +2,23 @@
 
 declare(strict_types=1);
 
+// Hardened session cookie: HttpOnly, SameSite=Lax, Secure over HTTPS.
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'httponly' => true,
+    'samesite' => 'Lax',
+    'secure' => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
+]);
 session_start();
 date_default_timezone_set('Asia/Kolkata');
+
+// Basic security headers so the CRM is never sniffed or framed even if the
+// hosting Apache config is more permissive than the site root's .htaccess.
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: SAMEORIGIN');
+header('Referrer-Policy: strict-origin-when-cross-origin');
+header('Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()');
 
 // Fix subdirectory routing - strip /{folder}/crm/public/ from REQUEST_URI
 $scriptDir = dirname($_SERVER['SCRIPT_NAME']); // e.g., /chimpzlab-2/crm/public

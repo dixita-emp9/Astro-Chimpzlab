@@ -1,11 +1,17 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 import react from '@astrojs/react';
 
+const siteUrl = (process.env.PUBLIC_SITE_URL || 'https://chimpzlab.com').replace(/\/$/, '');
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react()],
+  site: siteUrl,
+  integrations: [react(), sitemap({
+    filter: (page) => !page.includes('/thanks') && !page.includes('/404'),
+  })],
   redirects: {
     '/blog': '/insights',
     '/casestudy/ajmera-realty': '/case-studies/ajmera-realty',

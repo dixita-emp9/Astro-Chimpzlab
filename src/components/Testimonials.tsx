@@ -1,6 +1,10 @@
 import type * as React from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+// Single source of truth: public/data/testimonials.json (bundled at build
+// time — no runtime fetch, no duplicated fallback array to keep in sync).
+import testimonialsData from '../../public/data/testimonials.json';
+
 type Testimonial = {
   quote: string;
   author: string;
@@ -9,54 +13,25 @@ type Testimonial = {
   letter: string;
 };
 
-const fallbackData: Testimonial[] = [
-  {
-    quote: "ChimpzLab team has delivered an exceptional UI/UX upgrade for CIRL. Your ability to blend sophisticated design with functional simplicity is remarkable. The intuitive interface they crafted has significantly enhanced the experience for our customers. I would highly recommended any organization looking to elevate their digital presence to try Chimpzlab.",
-    author: "Latesh A Shetty",
-    title: "MD & CEO, Centrico Insurance Repository Limited",
-    image: "",
-    letter: "LS",
-  },
-  {
-    quote: "Partnering with Chimpzlab has been an excellent experience. Their strategic thinking, creative excellence, and commitment to quality have consistently elevated our brand communication. A dependable team that truly understands premium real estate marketing.",
-    author: "Lachman Ludhani",
-    title: "Chairman & Managing Director, Evershine Group",
-    image: "",
-    letter: "LL",
-  },
-  {
-    quote: "Chimpzlab has been a commendable partner for us. Their creative approach and timely delivery of services make our collaboration seamless and highly effective. We truly appreciate their professionalism and the value they bring to our initiatives.",
-    author: "Dr Sriram Birudavolu",
-    title: "CEO, Cybersecurity Centre of Excellence, Hyderabad",
-    image: "",
-    letter: "SB",
-  },
-  {
-    quote: "Working with the Chimpzlab team has been a seamless experience. They have consistently delivered high-quality work with professionalism and responsiveness. The team is proactive, easy to work with, and quick to understand our requirements, ensuring that updates are implemented efficiently. We value their commitment, reliability, and continued support, and would be happy to recommend them to any organization looking for a dependable digital partner.",
-    author: "Palak Nanjani",
-    title: "Director, Paradigm ARQ",
-    image: "",
-    letter: "PN",
-  },
-  {
-    quote: "Our experience working with the Chimpzlab team has been nothing short of outstanding. They possess a unique ability to bridge the gap between complex financial communication and highly effective digital strategy, a truly dependable team.",
-    author: "Ananya Deshmukh",
-    title: "VP of Corporate Strategy, FinVantage Capital",
-    image: "",
-    letter: "AD",
-  },
-];
+type Props = {
+  data?: Testimonial[];
+};
 
 const AUTOPLAY_MS = 5000;
 
-export default function Testimonials() {
+export default function Testimonials({ data: dataProp }: Props = {}) {
+  const initialData: Testimonial[] =
+    Array.isArray(dataProp) && dataProp.length > 0
+      ? dataProp
+      : (testimonialsData as Testimonial[]);
+
   const trackRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
-  const [data, setData] = useState<Testimonial[]>(fallbackData);
+  const [data] = useState<Testimonial[]>(initialData);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const currentSlideRef = useRef(0);
-  const totalSlidesRef = useRef(fallbackData.length);
+  const totalSlidesRef = useRef(initialData.length);
   const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const dragRef = useRef<{ startX: number; deltaX: number; isDragging: boolean }>({
     startX: 0,
@@ -87,33 +62,6 @@ export default function Testimonials() {
   const startAutoplay = useCallback(() => {
     stopAutoplay();
     autoplayRef.current = setInterval(() => goToSlide(currentSlideRef.current + 1), AUTOPLAY_MS);
-  }, [goToSlide, stopAutoplay]);
-
-  // Load testimonial data
-  useEffect(() => {
-    let active = true;
-    fetch('/data/testimonials.json')
-      .then((res) => {
-        if (!res.ok) throw new Error('bad response');
-        return res.json();
-      })
-      .then((json: Testimonial[]) => {
-        if (!active) return;
-        const list = json && json.length ? json : fallbackData;
-        setData(list);
-        totalSlidesRef.current = list.length;
-        requestAnimationFrame(() => goToSlide(0));
-      })
-      .catch((err) => {
-        console.warn('Failed to fetch testimonials JSON, using fallback data:', err);
-        if (!active) return;
-        totalSlidesRef.current = fallbackData.length;
-        requestAnimationFrame(() => goToSlide(0));
-      });
-    return () => {
-      active = false;
-      stopAutoplay();
-    };
   }, [goToSlide, stopAutoplay]);
 
   // Animate the section header in on mount (replaces the gsap-reveal behaviour

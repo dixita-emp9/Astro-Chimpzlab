@@ -2,6 +2,7 @@
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import GlobalScripts from "../components/GlobalScripts.astro";
+import { site } from "../config/site";
 
 interface Props {
     title?: string;
@@ -11,26 +12,30 @@ interface Props {
     hideFooter?: boolean;
     bodyClass?: string;
     activeNav?: string;
+    // Set to false on content-only pages (privacy, thanks, 404, …) so the
+    // GSAP / Lenis / Swiper CDN scripts are not downloaded at all.
+    loadAnimations?: boolean;
 }
 
 const {
-    title = "ChimpzLab | Digital Marketing Agency in Thane",
-    description = "ChimpzLab is a full-service digital marketing agency offering SEO, social media, performance marketing, branding, PR, and web development.",
+    title = `${site.name} | ${site.tagline}`,
+    description = `${site.name} is a full-service digital marketing agency offering SEO, social media, performance marketing, branding, PR, and web development.`,
     canonical = "/",
     hideHeader = false,
     hideFooter = false,
     bodyClass = "",
     activeNav = "",
+    loadAnimations = true,
 } = Astro.props;
 
-const siteUrl = "https://chimpzlab.com";
-const url = siteUrl + canonical;
+const url = site.url + canonical;
+const gtmId = site.gtmId;
 ---
 
 <!doctype html>
 <html lang="en">
     <head>
-        <script is:inline>
+        <script is:inline define:vars={{ gtmId }}>
             (function (w, d, s, l, i) {
                 w[l] = w[l] || [];
                 w[l].push({
@@ -43,7 +48,7 @@ const url = siteUrl + canonical;
                 j.async = true;
                 j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
                 f.parentNode.insertBefore(j, f);
-            })(window, document, "script", "dataLayer", "GTM-MVP2NQBM");
+            })(window, document, "script", "dataLayer", gtmId);
         </script>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -51,13 +56,13 @@ const url = siteUrl + canonical;
         <title>{title}</title>
 
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="ChimpzLab" />
+        <meta property="og:site_name" content={site.name} />
         <meta property="og:url" content={url} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta
             property="og:image"
-            content={siteUrl + "/asset/favicon-512.png"}
+            content={site.url + site.logo.ogImage}
         />
         <meta property="og:image:type" content="image/png" />
         <meta name="twitter:card" content="summary" />
@@ -67,7 +72,7 @@ const url = siteUrl + canonical;
         <meta name="twitter:description" content={description} />
         <meta
             name="twitter:image"
-            content={siteUrl + "/asset/favicon-512.png"}
+            content={site.url + site.logo.ogImage}
         />
 
         <link rel="icon" href="/favicon.ico" sizes="32x32" />
@@ -136,45 +141,49 @@ const url = siteUrl + canonical;
             />
         </noscript>
         <link rel="stylesheet" href="/tailwind.css" />
-        <script
-            defer
-            src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
-            is:inline></script>
-        <script
-            defer
-            src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"
-            is:inline></script>
-        <script
-            defer
-            src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"
-            is:inline></script>
-        <link
-            rel="preload"
-            href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-            as="style"
-            onload="this.onload=null;this.rel='stylesheet'"
-        />
-        <noscript>
-            <link
-                rel="stylesheet"
-                href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-            />
-        </noscript>
+        {loadAnimations && (
+            <>
+                <script
+                    defer
+                    src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
+                    is:inline></script>
+                <script
+                    defer
+                    src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"
+                    is:inline></script>
+                <script
+                    defer
+                    src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"
+                    is:inline></script>
+                <link
+                    rel="preload"
+                    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+                    as="style"
+                    onload="this.onload=null;this.rel='stylesheet'"
+                />
+                <noscript>
+                    <link
+                        rel="stylesheet"
+                        href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+                    />
+                </noscript>
+                <style is:inline>
+                    html.lenis {
+                        height: auto;
+                    }
+                    .lenis.lenis-smooth {
+                        scroll-behavior: auto !important;
+                    }
+                    .lenis.lenis-stopped {
+                        overflow: hidden;
+                    }
+                    .lenis.lenis-scrolling iframe {
+                        pointer-events: none;
+                    }
+                </style>
+            </>
+        )}
         <link rel="stylesheet" href="/style.css" />
-        <style is:inline>
-            html.lenis {
-                height: auto;
-            }
-            .lenis.lenis-smooth {
-                scroll-behavior: auto !important;
-            }
-            .lenis.lenis-stopped {
-                overflow: hidden;
-            }
-            .lenis.lenis-scrolling iframe {
-                pointer-events: none;
-            }
-        </style>
         <slot name="head" />
     </head>
 
@@ -185,7 +194,7 @@ const url = siteUrl + canonical;
         <noscript>
             <iframe
                 title="Google Tag Manager"
-                src="https://www.googletagmanager.com/ns.html?id=GTM-MVP2NQBM"
+                src={"https://www.googletagmanager.com/ns.html?id=" + gtmId}
                 height="0"
                 width="0"
                 style="display:none;visibility:hidden"></iframe>
@@ -195,7 +204,7 @@ const url = siteUrl + canonical;
 
         {!hideFooter && <Footer />}
         <slot name="scripts" />
-        <GlobalScripts />
+        <GlobalScripts loadAnimations={loadAnimations} />
 
         <Fragment slot="scripts">
             <script is:inline src="/hash-cleaner.js"></script>

@@ -64,13 +64,29 @@ Flight::route('GET /embed/@key/widget.js', function (string $key) {
     ], false);
 });
 
-// Safety net in case a browser sends a CORS preflight for /api/leads.
-Flight::route('OPTIONS /api/leads', function () {
-    header('Access-Control-Allow-Origin: ' . ($_SERVER['HTTP_ORIGIN'] ?? '*'));
+// CORS preflight for /api/leads. Flight short-circuits OPTIONS requests to a
+// bare 204 before any route handler runs, so we handle the headers here, before
+// the framework starts. The origin is reflected ONLY when it matches a site's
+// configured allowed_domain; when no domain-restricted sites exist the endpoint
+// is deliberately wildcard (write-only + server-side validation + rate limits).
+// Always sets Vary: Origin so shared caches never serve a cross-origin answer.
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'OPTIONS'
+    && str_contains($_SERVER['REQUEST_URI'] ?? '', '/api/leads')) {
+    $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+    $allowed = capture_allowed_origins(db());
+
+    if ($allowed === []) {
+        header('Access-Control-Allow-Origin: *');
+    } elseif ($origin !== '' && in_array(rtrim($origin, '/'), $allowed, true)) {
+        header('Access-Control-Allow-Origin: ' . $origin);
+        header('Vary: Origin');
+    }
     header('Access-Control-Allow-Methods: POST, OPTIONS');
     header('Access-Control-Allow-Headers: Content-Type');
-    Flight::json(['ok' => true]);
-});
+    header('Access-Control-Max-Age: 86400');
+    http_response_code(204);
+    exit;
+}
 
 Flight::route('POST /api/leads', function () {
     $pdo = db();
@@ -91,9 +107,18 @@ Flight::route('POST /api/leads', function () {
     $apiKey = trim((string) ($data['api_key'] ?? $req->query->api_key ?? ''));
     $site = get_site_by_key($pdo, $apiKey);
 
-    // CORS: if the site has a domain configured, only reflect that exact
-    // origin; otherwise allow any origin, since this endpoint only accepts
-    // writes and every submission is validated + rate limited server-side.
+    if (!$site) {
+        json_error('Invalid form key.', 403);
+        return;
+    }
+    if (!(int) $site['active']) {
+        json_error('This form is currently disabled.', 403);
+        return;
+    }
+
+    // CORS: emit ONLY after the site is validated. If the site has a domain
+    // configured, reflect exactly that origin; otherwise allow any origin
+    // (write-only endpoint, every submission validated + rate limited).
     $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
     if ($site && !empty($site['allowed_domain'])) {
         if ($origin !== '') {
@@ -102,21 +127,13 @@ Flight::route('POST /api/leads', function () {
             foreach ($allowedDomains as $domain) {
                 if ($originClean === rtrim($domain, '/')) {
                     header('Access-Control-Allow-Origin: ' . $origin);
+                    header('Vary: Origin');
                     break;
                 }
             }
         }
     } else {
         header('Access-Control-Allow-Origin: *');
-    }
-
-    if (!$site) {
-        json_error('Invalid form key.', 403);
-        return;
-    }
-    if (!(int) $site['active']) {
-        json_error('This form is currently disabled.', 403);
-        return;
     }
 
     $ip = client_ip();
@@ -280,7 +297,8 @@ Flight::route('POST /api/leads', function () {
     $successMessage = !empty($site['success_message']) ? $site['success_message'] : 'your enquiry sent successfully';
 
     if (!empty($data['_redirect'])) {
-        Flight::redirect((string) $data['_redirect']);
+        // Never trust a client-supplied redirect verbatim (open redirect).
+        Flight::redirect(safe_local_url((string) $data['_redirect'], '/thanks'));
         return;
     }
 

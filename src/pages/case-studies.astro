@@ -359,7 +359,7 @@ import ContactForm from "../components/sections/ContactForm.astro";
                 }
 
                 // Load data from external JSON file
-                fetch("/case-studies.json", { cache: "no-cache" })
+                fetch("/case-studies.json")
                     .then((r) => r.json())
                     .then((data) => {
                         renderCards(data);

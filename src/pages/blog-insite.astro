@@ -1,7 +1,12 @@
 ---
 import ContactForm from "../components/sections/ContactForm.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../config/site";
 ---
+
+const blogSiteUrl = site.url;
+const blogSiteName = site.name;
+const blogLogoUrl = site.url + site.logo.ogImage;
 
 <BaseLayout
     title="Blog & Insights | ChimpzLab"
@@ -833,7 +838,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8">
                 <!-- Related Blog 1 -->
                 <a
-                    href="/blog-insite.html?slug=does-faq-schema-still-matter-2026"
+                    href="/blog-insite?slug=does-faq-schema-still-matter-2026"
                     class="group interactive block gsap-reveal"
                 >
                     <div
@@ -858,7 +863,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                 </a>
                 <!-- Related Blog 2 -->
                 <a
-                    href="/blog-insite.html?slug=how-do-ai-answer-engines-choose-sources"
+                    href="/blog-insite?slug=how-do-ai-answer-engines-choose-sources"
                     class="group interactive block gsap-reveal"
                 >
                     <div
@@ -1208,11 +1213,18 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         })();
     </script>
 
-    <script is:inline>
+    <script
+        is:inline
+        define:vars={{
+            blogSiteName: site.name,
+            blogSiteUrl: site.url,
+            blogLogoUrl: site.url + site.logo.ogImage,
+        }}
+    >
         // Article loader - reads slug from URL, loads metadata index + single article
         (async function () {
             try {
-                const res = await fetch("insights/articles/index.json");
+                const res = await fetch("/insights/articles/index.json");
                 const data = await res.json();
                 const meta = data.articles || [];
                 if (meta.length === 0) return;
@@ -1231,13 +1243,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                 if (!metaArticle) return;
 
                 const articleRes = await fetch(
-                    "insights/articles/" + metaArticle.slug + ".json",
+                    "/insights/articles/" + metaArticle.slug + ".json",
                 );
                 const article = await articleRes.json();
                 if (!article) return;
 
                 // Update page title
-                document.title = article.titleFull + " | ChimpzLab";
+                document.title = article.titleFull + " | " + blogSiteName;
 
                 // Update meta description
                 var metaDesc = document.querySelector(
@@ -1253,24 +1265,24 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                     headline: article.titleFull,
                     description: article.intro || "",
                     image: article.image
-                        ? "https://chimpzlab.com/" + article.image
+                        ? blogSiteUrl + "/" + article.image
                         : "",
                     datePublished: article.date || "",
                     author: {
                         "@type": "Organization",
-                        name: "ChimpzLab",
+                        name: blogSiteName,
                     },
                     publisher: {
                         "@type": "Organization",
-                        name: "ChimpzLab",
+                        name: blogSiteName,
                         logo: {
                             "@type": "ImageObject",
-                            url: "https://chimpzlab.com/asset/chimpzlab-icon.gif",
+                            url: blogLogoUrl,
                         },
                     },
                     mainEntityOfPage: {
                         "@type": "WebPage",
-                        "@id": "https://chimpzlab.com/blog/" + article.slug,
+                        "@id": blogSiteUrl + "/blog/" + article.slug,
                     },
                 };
                 var schemaScript = document.createElement("script");
@@ -1309,7 +1321,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                     ".rounded-2xl.relative img",
                 );
                 if (coverImg) {
-                    coverImg.src = article.image;
+                    coverImg.src = "/" + article.image;
                     coverImg.alt = article.alt;
                 }
 
@@ -1458,7 +1470,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                             .map(function (a) {
                                 var readTime = a.readTime || "5 Min Read";
                                 return (
-                                    '<a href="/blog-insite.html?slug=' +
+                                    '<a href="/blog-insite?slug=' +
                                     a.slug +
                                     '" class="group interactive block gsap-reveal">' +
                                     '<div class="w-full aspect-[16/9] bg-gray-100 overflow-hidden rounded-xl mb-6 relative">' +

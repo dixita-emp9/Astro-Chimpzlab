@@ -119,7 +119,7 @@
             (grid && grid.getAttribute('data-projects-json')) ||
             '/services/digital-experiences/website-design-development-case-studies.json';
 
-        fetch(jsonPath, { cache: 'no-cache' })
+        fetch(jsonPath)
             .then(function (r) { return r.json(); })
             .then(function (data) {
                 initCarousel(data);

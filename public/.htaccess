@@ -124,3 +124,45 @@
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
 </IfModule>
+
+# ----------------------------------------------------------------------
+# Security — block direct access to secrets & runtime data.
+#
+# The CRM stores .env (SMTP credentials, APP_KEY), the SQLite database and
+# its PHP source inside the web root (dist/crm). These rules make all of them
+# unreachable over HTTP as defence-in-depth, even if a .env or database.sqlite
+# is accidentally uploaded with the build. For production, still follow the
+# AGENTS.md guidance: set DB_PATH outside the web root and do not upload .env.
+# ----------------------------------------------------------------------
+<FilesMatch "^(\.env|\.env\.example|\.env\.|.*\.sqlite.*|.*\.log$|^\.DS_Store|composer\.(json|lock)$|README\.md$)">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # CRM internals must never be web-accessible.
+  RewriteRule ^crm/(\.env|\.env\.example|storage|src|bin|vendor|database|views)(/|$) - [F,L]
+  RewriteRule ^crm/composer\.(json|lock)$ - [F,L]
+  RewriteRule ^crm/README\.md$ - [F,L]
+  RewriteRule ^crm/\.DS_Store$ - [F,L]
+  # The shared helper is meant to be include()'d, never requested directly.
+  RewriteRule ^capture-common\.php$ - [F,L]
+</IfModule>
+
+# ----------------------------------------------------------------------
+# Security headers — CSP, clickjacking, MIME sniffing, referrer policy.
+# ----------------------------------------------------------------------
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), autoplay=(self)"
+  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://www.google-analytics.com https://google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://unpkg.com; font-src 'self' data: https://fonts.gstatic.com https://unpkg.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https://www.google.com https://www.gstatic.com https://img.youtube.com https://i.ytimg.com https://*.ytimg.com https://www.googletagmanager.com; frame-src https://www.google.com https://www.youtube.com https://www.youtube-nocookie.com; connect-src 'self' https://www.google.com https://www.gstatic.com https://www.googletagmanager.com https://www.google-analytics.com https://google-analytics.com; media-src 'self' https://img.youtube.com;"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+</IfModule>

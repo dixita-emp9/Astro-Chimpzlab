@@ -10,12 +10,15 @@
         var prefix = wrapper.dataset.linkPrefix || '../case-studies/';
         var coverPrefix = wrapper.dataset.coverPrefix || '';
 
-        // Resolve the shared services case-study index. Using an absolute path
-        // avoids the broken page-relative resolution that occurred on nested
-        // service routes (the previous depth-based prefix resolved to 404s).
-        var jsonPath = '/services/case-studies.json';
+        // Resolve the single source-of-truth case-study index at the site
+        // root (absolute path avoids broken page-relative resolution on
+        // nested service routes). public/services/case-studies.json is a
+        // duplicate copy that is no longer deployed.
+        var jsonPath = '/case-studies.json';
 
-        fetch(jsonPath, { cache: 'no-cache' })
+        // Same-origin static JSON: drop the no-cache flag so the browser can
+        // use the Cache-Control/Last-Modified revalidation from .htaccess.
+        fetch(jsonPath)
             .then(function (r) { return r.json(); })
             .then(function (data) {
                 var items = [];

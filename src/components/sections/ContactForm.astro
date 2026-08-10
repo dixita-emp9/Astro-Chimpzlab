@@ -2,6 +2,8 @@
 // Reusable right-side contact form. `theme` controls the light/dark styling:
 //  - light  -> matches the home page form (white container, dark accents)
 //  - dark   -> matches the about page form (dark container, white text)
+import { site } from "../../config/site";
+
 interface Props {
     theme?: "light" | "dark";
     action?: string;
@@ -10,11 +12,12 @@ interface Props {
 
 const {
     theme = "light",
-    action = "/lead-capture.php",
-    redirect = "/thanks",
+    action = site.crm.contactEndpoint,
+    redirect = site.crm.redirect,
 } = Astro.props;
 
 const dark = theme === "dark";
+const { testSiteKey } = site.recaptcha;
 
 const wrapCls = dark
     ? "bg-[#1a1a1a] border border-white/5 rounded-3xl p-8 md:p-12 shadow-2xl gsap-reveal"
@@ -107,10 +110,7 @@ const btnCls = dark
 
         <!-- Google reCAPTCHA -->
         <div class="pt-2">
-            <div
-                class="g-recaptcha"
-                data-sitekey="6Ld5s24tAAAAABcGfuai8DbOmn6JAS9kARQonH1h"
-            >
+            <div class="g-recaptcha" data-sitekey={site.recaptcha.siteKey}>
             </div>
             <p
                 id="recaptchaError"
@@ -120,11 +120,7 @@ const btnCls = dark
             </p>
         </div>
 
-        <input
-            type="hidden"
-            name="api_key"
-            value="3afc0840e1193e58397159d4af15cf4a15b5b35c"
-        />
+        <input type="hidden" name="api_key" value={site.crm.apiKey} />
         <input type="hidden" name="_redirect" value={redirect} />
         <div class="pt-6">
             <button type="submit" id="submitBtn" class={btnCls}>
@@ -154,10 +150,7 @@ const btnCls = dark
         var h = location.hostname;
         if (h !== "localhost" && h !== "127.0.0.1") return;
         document.querySelectorAll(".g-recaptcha").forEach(function (el) {
-            el.setAttribute(
-                "data-sitekey",
-                "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
-            );
+            el.setAttribute("data-sitekey", { testSiteKey });
         });
     })();
 </script>

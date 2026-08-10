@@ -4,6 +4,7 @@ import InsightsLoader from '../../../components/InsightsLoader.astro';
 
 import ContactForm from '../../../components/sections/ContactForm.astro';
 import Testimonials from '../../../components/Testimonials.tsx';
+import { site } from '../../../config/site';
 
 ---
 <BaseLayout
@@ -419,7 +420,7 @@ import Testimonials from '../../../components/Testimonials.tsx';
                 <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tighter uppercase m-0">
                     Video Work
                 </h2>
-                <a href="https://youtube.com/@chimpzlab" target="_blank" rel="noopener noreferrer"
+                <a href={site.socials.youtube} target="_blank" rel="noopener noreferrer"
                     class="inline-flex items-center gap-2 text-white/70 hover:text-white font-bold text-[11px] sm:text-xs hover:gap-3 transition-all duration-300 pb-1 border-b border-white/20 hover:border-white shrink-0 uppercase tracking-[0.15em]">
                     View Full Channel
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -682,7 +683,7 @@ import Testimonials from '../../../components/Testimonials.tsx';
         </div>
     </section>
 
-        <Testimonials client:load />
+        <Testimonials client:visible />
 
     <section class="py-16 md:py-20 px-6 md:px-12 bg-brand-dark text-white border-t border-white/10" id="booking-form"
         style="min-height: 100dvh; align-items: center; display: flex; flex-wrap: wrap;">
