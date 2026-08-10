@@ -236,6 +236,26 @@ const blogLogoUrl = site.url + site.logo.ogImage;
         </div>
     </header>
 
+    <!-- Blog Not Found -->
+    <div
+        id="blog-not-found"
+        class="hidden py-32 px-6 md:px-12 bg-brand-dark text-white text-center"
+    >
+        <div class="max-w-[1400px] mx-auto">
+            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tighter uppercase mb-4">
+                Blog Not Found
+            </h1>
+            <p class="text-gray-400 text-lg md:text-xl font-medium max-w-xl mx-auto">
+                The blog you're looking for doesn't exist yet. Check back soon.
+            </p>
+            <a
+                href="/insights"
+                class="interactive inline-block mt-10 border-2 border-white text-white hover:bg-white hover:text-black px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300"
+                >Browse all blogs</a
+            >
+        </div>
+    </div>
+
     <!-- Sticky Audio Player (bottom center, shown after 600px scroll) -->
     <div
         id="sticky-audio-player-container"
@@ -1213,6 +1233,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
         })();
     </script>
 
+    <script is:inline src="/js/wp-insights.js"></script>
     <script
         is:inline
         define:vars={{
@@ -1223,11 +1244,20 @@ const blogLogoUrl = site.url + site.logo.ogImage;
     >
         // Article loader - reads slug from URL, loads metadata index + single article
         (async function () {
+            function showNotFound() {
+                const notFound = document.getElementById("blog-not-found");
+                if (notFound) {
+                    notFound.classList.remove("hidden");
+                    notFound.classList.add("block");
+                }
+            }
+
             try {
-                const res = await fetch("/insights/articles/index.json");
-                const data = await res.json();
-                const meta = data.articles || [];
-                if (meta.length === 0) return;
+                const meta = await window.WPInsights.fetchIndex();
+                if (meta.length === 0) {
+                    showNotFound();
+                    return;
+                }
 
                 const params = new URLSearchParams(window.location.search);
                 let slug = params.get("slug");
@@ -1240,13 +1270,18 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     ? meta.find((a) => a.slug === slug)
                     : null;
                 if (!metaArticle) metaArticle = meta[0];
-                if (!metaArticle) return;
+                if (!metaArticle) {
+                    showNotFound();
+                    return;
+                }
 
-                const articleRes = await fetch(
-                    "/insights/articles/" + metaArticle.slug + ".json",
+                const article = await window.WPInsights.fetchArticle(
+                    metaArticle.slug,
                 );
-                const article = await articleRes.json();
-                if (!article) return;
+                if (!article) {
+                    showNotFound();
+                    return;
+                }
 
                 // Update page title
                 document.title = article.titleFull + " | " + blogSiteName;
@@ -1265,7 +1300,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     headline: article.titleFull,
                     description: article.intro || "",
                     image: article.image
-                        ? blogSiteUrl + "/" + article.image
+                        ? article.image
                         : "",
                     datePublished: article.date || "",
                     author: {
@@ -1321,14 +1356,14 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     ".rounded-2xl.relative img",
                 );
                 if (coverImg) {
-                    coverImg.src = "/" + article.image;
+                    coverImg.src = article.image;
                     coverImg.alt = article.alt;
                 }
 
                 const audioDurationEl = document.querySelector(
                     "#play-pause-btn + div .text-sm.font-bold.text-white",
                 );
-                if (audioDurationEl)
+                if (audioDurationEl && article.audioDuration)
                     audioDurationEl.textContent = article.audioDuration;
 
                 // --- Hero Tags ---
@@ -1366,28 +1401,64 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                             .replace(/(^-|-$)/g, "");
                     }
 
-                    article.body.forEach(function (section) {
-                        if (section.type === "p") {
-                            html +=
-                                '<p class="gsap-reveal mb-6">' +
-                                section.text +
-                                "</p>";
-                        } else if (section.type === "h2") {
-                            var id = slugify(section.text);
-                            html +=
-                                '<h2 id="' +
-                                id +
-                                '" class="gsap-reveal uppercase tracking-tight text-2xl md:text-3xl font-bold mt-14 mb-6 scroll-mt-24">' +
-                                section.text +
-                                "</h2>";
-                        } else if (section.type === "blockquote") {
-                            html +=
-                                '<blockquote class="gsap-reveal border-l-4 border-black pl-6 my-12 text-xl md:text-2xl font-medium italic">' +
-                                section.text +
-                                "</blockquote>";
-                        }
-                    });
-                    articleContent.innerHTML = html;
+                    if (Array.isArray(article.body)) {
+                        // Legacy structured blocks (static JSON fallback)
+                        article.body.forEach(function (section) {
+                            if (section.type === "p") {
+                                html +=
+                                    '<p class="gsap-reveal mb-6">' +
+                                    section.text +
+                                    "</p>";
+                            } else if (section.type === "h2") {
+                                var id = slugify(section.text);
+                                html +=
+                                    '<h2 id="' +
+                                    id +
+                                    '" class="gsap-reveal uppercase tracking-tight text-2xl md:text-3xl font-bold mt-14 mb-6 scroll-mt-24">' +
+                                    section.text +
+                                    "</h2>";
+                            } else if (section.type === "blockquote") {
+                                html +=
+                                    '<blockquote class="gsap-reveal border-l-4 border-black pl-6 my-12 text-xl md:text-2xl font-medium italic">' +
+                                    section.text +
+                                    "</blockquote>";
+                            }
+                        });
+                    } else {
+                        // WordPress HTML content: inject raw, then apply the same
+                        // classes so the existing article typography is preserved.
+                        html += article.body || "";
+                    }
+                    if (html) articleContent.innerHTML = html;
+                    if (!Array.isArray(article.body)) {
+                        articleContent
+                            .querySelectorAll("h2")
+                            .forEach(function (h) {
+                                if (!h.id)
+                                    h.id =
+                                        slugify(h.textContent || "") ||
+                                        "section";
+                                h.className =
+                                    "gsap-reveal uppercase tracking-tight text-2xl md:text-3xl font-bold mt-14 mb-6 scroll-mt-24";
+                            });
+                        articleContent
+                            .querySelectorAll("blockquote")
+                            .forEach(function (b) {
+                                b.className =
+                                    "gsap-reveal border-l-4 border-black pl-6 my-12 text-xl md:text-2xl font-medium italic";
+                            });
+                        articleContent
+                            .querySelectorAll("p")
+                            .forEach(function (p) {
+                                // Skip the intro paragraph already rendered above.
+                                if (
+                                    p.classList.contains("text-2xl") ||
+                                    p.className.indexOf("text-2xl") !== -1
+                                )
+                                    return;
+                                p.className = "gsap-reveal mb-6";
+                            });
+                    }
                 }
                 // Update share links after dynamic content loads
                 setShareLinks(window.location.href, document.title);
@@ -1395,6 +1466,9 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                 // --- Sidebar: Key Takeaways ---
                 const takeawaysList = document.querySelector(
                     ".sidebar-takeaways ul",
+                );
+                const takeawaysWrap = document.querySelector(
+                    ".sidebar-takeaways",
                 );
                 if (takeawaysList && article.takeaways) {
                     takeawaysList.innerHTML = article.takeaways
@@ -1408,14 +1482,19 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                             );
                         })
                         .join("");
+                } else if (takeawaysWrap) {
+                    takeawaysWrap.style.display = "none";
                 }
 
                 // --- Sidebar: Table of Contents ---
                 const tocList = document.querySelector(".sidebar-toc ul");
                 if (tocList) {
                     var tocItems = [];
-                    article.body.forEach(function (section) {
-                        if (section.type === "h2") tocItems.push(section.text);
+                    const contentH2s = articleContent
+                        ? articleContent.querySelectorAll("h2")
+                        : [];
+                    contentH2s.forEach(function (h) {
+                        tocItems.push(h.textContent);
                     });
                     if (tocItems.length > 0) {
                         tocList.innerHTML = tocItems
@@ -1460,12 +1539,18 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                 );
                 if (moreSection) {
                     var heading = moreSection.querySelector("h3");
-                    if (heading) heading.textContent = "More in " + article.tag;
+                    var catLabel =
+                        article.tag ||
+                        (article.category
+                            ? article.category.charAt(0).toUpperCase() +
+                              article.category.slice(1)
+                            : "Insights");
+                    if (heading)
+                        heading.textContent = "More in " + catLabel;
                     var relatedGrid = moreSection.querySelector(
                         ".grid.grid-cols-1.md\\:grid-cols-2",
                     );
                     if (relatedGrid) {
-                        var catLabel = article.tag;
                         relatedGrid.innerHTML = relatedArticles
                             .map(function (a) {
                                 var readTime = a.readTime || "5 Min Read";
@@ -1474,7 +1559,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                                     a.slug +
                                     '" class="group interactive block gsap-reveal">' +
                                     '<div class="w-full aspect-[16/9] bg-gray-100 overflow-hidden rounded-xl mb-6 relative">' +
-                                    '<img src="/' +
+                                    '<img src="' +
                                     a.image +
                                     '" alt="' +
                                     a.alt +

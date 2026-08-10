@@ -423,8 +423,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <!-- Footer -->
 
     <Fragment slot="scripts">
+        <script is:inline src="/js/wp-insights.js"></script>
         <script is:inline>
-            // Fetch insights/articles/index.json and render insight cards dynamically
+            // Fetch insights from WordPress REST API and render insight cards dynamically
             (async function () {
                 const grid = document.getElementById("insight-grid");
                 const emptyMsg = document.getElementById("insight-empty");
@@ -432,11 +433,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
                 let articles = [];
                 try {
-                    const res = await fetch("/insights/articles/index.json");
-                    const data = await res.json();
-                    articles = data.articles || [];
+                    articles = await window.WPInsights.fetchIndex();
                 } catch (e) {
                     console.error("Failed to load insights data:", e);
+                    return;
+                }
+
+                if (!articles.length) {
+                    if (emptyMsg) emptyMsg.classList.remove("hidden");
                     return;
                 }
 
@@ -466,7 +470,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                         card.style.transitionDelay = (i % 3) * 0.07 + "s";
                         card.innerHTML = `
                         <div class="w-full aspect-[16/10] overflow-hidden relative">
-                            <img src="/${article.image}" alt="${article.alt}"
+                            <img src="${article.image}" alt="${article.alt}"
                                 class="w-full h-full object-cover grayscale contrast-110 group-hover:grayscale-0 group-hover:contrast-100 group-hover:scale-110 transition-all duration-700 ease-out">
                         </div>
                         <div class="p-6 pt-5">

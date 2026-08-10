@@ -113,6 +113,7 @@ const { loadAnimations = true } = Astro.props;
         if (
             typeof Swiper !== "undefined" &&
             insightsSwiperEl &&
+            !insightsSwiperEl.dataset.dynamicSlides &&
             !insightsSwiperEl.swiper
         ) {
             const insightsSwiper = new Swiper(".insights-swiper", {
