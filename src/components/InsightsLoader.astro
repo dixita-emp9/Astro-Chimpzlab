@@ -1,64 +1,78 @@
 ---
-// Shared, SSR-rendered insights carousel that replaces the duplicated inline
+// Shared, client-rendered insights carousel that replaces the duplicated inline
 // "Dynamic insights loader" blocks previously copied into every service page.
-// Data is imported at build time (no runtime fetch -> no 404s on nested pages).
-import data from '../../public/insights/articles/index.json';
-
+// Articles are fetched at runtime from the WordPress REST API (window.WPInsights)
+// so WP edits appear without a rebuild.
 interface Props {
     slugs?: string[];
 }
 
-interface Article {
-    slug: string;
-    tag?: string;
-    category: string;
-    titleParts?: string[];
-    titleFull: string;
-}
-
 const { slugs = [] } = Astro.props;
-
-const articles = ((data as { articles?: Article[] }).articles || []) as Article[];
-
-const list: Article[] =
-    slugs.length > 0
-        ? articles
-              .filter((a) => slugs.includes(a.slug))
-              .sort((a, b) => slugs.indexOf(a.slug) - slugs.indexOf(b.slug))
-        : articles.slice(0, 3);
-
-const label = (a: Article) =>
-    a.tag ||
-    (a.category
-        ? a.category.charAt(0).toUpperCase() + a.category.slice(1)
-        : '');
+const slugsJson = JSON.stringify(slugs);
 ---
 
 <div
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-5"
     id="insight-grid"
->
-    {list.map((a) => (
-        <div class="insight-card-item p-6 md:p-8 border-l border-t md:border-t-0 border-gray-300">
-            <span class="text-gray-500 text-xs font-bold uppercase tracking-widest mb-4 block">
-                {label(a)}
-            </span>
-            <h3 class="text-lg md:text-xl font-bold mb-8 leading-snug">
-                {a.titleParts ? a.titleParts.join(' ') : a.titleFull}
-            </h3>
-            <a
-                href={`/blog-insite?slug=${a.slug}`}
-                class="text-brand-dark hover:opacity-70 transition-opacity duration-300"
-            >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    ></path>
-                </svg>
-            </a>
-        </div>
-    ))}
-</div>
+    data-slugs={slugsJson}
+></div>
+
+<script is:inline src="/js/wp-insights.js"></script>
+<script is:inline>
+    (async function () {
+        const grid = document.getElementById("insight-grid");
+        if (!grid) return;
+
+        let slugs = [];
+        try {
+            slugs = JSON.parse(grid.getAttribute("data-slugs") || "[]");
+        } catch (e) {
+            slugs = [];
+        }
+
+        let articles = [];
+        try {
+            articles = await window.WPInsights.fetchIndex();
+        } catch (e) {
+            console.error("Failed to load insights data:", e);
+            return;
+        }
+        if (!articles.length) {
+            grid.style.display = "none";
+            return;
+        }
+
+        const list =
+            slugs.length > 0
+                ? articles
+                      .filter((a) => slugs.includes(a.slug))
+                      .sort(
+                          (a, b) => slugs.indexOf(a.slug) - slugs.indexOf(b.slug),
+                      )
+                : articles.slice(0, 3);
+
+        const label = (a) =>
+            a.tag ||
+            (a.category
+                ? a.category.charAt(0).toUpperCase() + a.category.slice(1)
+                : "");
+
+        grid.innerHTML = list
+            .map(
+                (a) =>
+                    '<div class="insight-card-item p-6 md:p-8 border-l border-t md:border-t-0 border-gray-300">' +
+                    '<span class="text-gray-500 text-xs font-bold uppercase tracking-widest mb-4 block">' +
+                    label(a) +
+                    "</span>" +
+                    '<h3 class="text-lg md:text-xl font-bold mb-8 leading-snug">' +
+                    (a.titleParts ? a.titleParts.join(" ") : a.titleFull) +
+                    "</h3>" +
+                    '<a href="/blog-insite?slug=' +
+                    a.slug +
+                    '" class="text-brand-dark hover:opacity-70 transition-opacity duration-300">' +
+                    '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>' +
+                    "</a></div>",
+            )
+            .join("");
+    })();
+</script>
