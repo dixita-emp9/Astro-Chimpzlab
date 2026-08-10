@@ -119,11 +119,24 @@ window.WPInsights = (function () {
         if (!list) list = lists[0];
         var takeaways = [];
         if (list) {
+            var listWrap = list.parentNode;
+            // Capture takeaways text from <li> elements.
             list.querySelectorAll("li").forEach(function (li) {
                 var t = (li.textContent || "").replace(/\s+/g, " ").trim();
                 if (t) takeaways.push(t);
             });
-            if (list.parentNode) list.parentNode.removeChild(list);
+            // Remove the heading that introduces the list (e.g. "Key Takeaways")
+            // so it doesn't show up again as a section heading in the body.
+            var prev = list.previousElementSibling;
+            if (prev && prev.tagName === "H2" && /takeaway/i.test(prev.textContent || "")) {
+                listWrap.removeChild(prev);
+            }
+            listWrap.removeChild(list);
+            // If the wrapper is now empty, remove the blank comment nodes / empty
+            // paragraphs Gutenberg leaves behind.
+            if (listWrap && !listWrap.hasChildNodes()) {
+                listWrap.parentNode && listWrap.parentNode.removeChild(listWrap);
+            }
         }
         return { body: d.innerHTML, takeaways: takeaways };
     }
