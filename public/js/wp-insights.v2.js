@@ -4,7 +4,38 @@
 // WordPress is the single source of truth for blog content.
 window.WPInsights = (function () {
     var API = "https://chimpzlab.com/chimpzlab-old/wp-json/wp/v2/insights";
+    var PROXY = "/wp-proxy.php?endpoint=insights";
+    var PROXY_IMG = "/wp-proxy.php?img=";
     var FALLBACK_IMG = "/asset/home-page.webp";
+    var usingProxy = false;
+
+    // Fetches through the same-origin PHP proxy first (works even when a strict
+    // Content-Security-Policy blocks cross-origin calls to chimpzlab.com), and
+    // falls back to the direct WordPress REST API when the proxy is not running
+    // (e.g. `astro dev`, where public PHP files are served as plain text).
+    async function fetchWp(query) {
+        try {
+            var res = await fetch(PROXY + query.replace(/^\?/, "&"));
+            var text = await res.text();
+            if (res.ok && /^[\s]*[{[]/.test(text)) {
+                usingProxy = true;
+                return JSON.parse(text);
+            }
+        } catch (e) {}
+        usingProxy = false;
+        var res2 = await fetch(API + query);
+        if (!res2.ok) throw new Error("WP " + res2.status);
+        return await res2.json();
+    }
+
+    // Rewrites chimpzlab.com media URLs so they load through the same-origin
+    // proxy (only needed when the proxy is in use, i.e. under a strict CSP).
+    function proxifyImage(url) {
+        if (usingProxy && /^https:\/\/chimpzlab\.com\//i.test(url || "")) {
+            return PROXY_IMG + encodeURIComponent(url);
+        }
+        return url;
+    }
 
     function stripTags(html) {
         var d = document.createElement("div");
@@ -185,6 +216,14 @@ window.WPInsights = (function () {
             /<!--\s*(readtime|titleparts):[\s\S]*?-->/g,
             "",
         );
+        // Relay in-body chimpzlab.com media through the same-origin proxy so
+        // images inside article bodies also work under a strict CSP.
+        contentHtml = contentHtml.replace(
+            /src="(https:\/\/chimpzlab\.com\/[^"]+)"/gi,
+            function (m, u) {
+                return 'src="' + proxifyImage(u) + '"';
+            },
+        );
         var excerpt = (post.excerpt && post.excerpt.rendered) || "";
         var terms = (post._embedded && post._embedded["wp:term"]) || [];
         var media =
@@ -208,6 +247,7 @@ window.WPInsights = (function () {
         });
         var takeaways = [];
         var image = media && media.source_url ? media.source_url : "";
+        image = proxifyImage(image);
         
         // Extract takeaways from content if not in meta
         var extracted = extractTakeaways(contentHtml);
@@ -233,10 +273,7 @@ window.WPInsights = (function () {
     async function fetchIndex() {
         var data = [];
         try {
-            var url = API + "?per_page=100&_embed&orderby=date&order=desc";
-            var res = await fetch(url);
-            if (!res.ok) throw new Error("WP " + res.status);
-            data = await res.json();
+            data = await fetchWp("?per_page=100&_embed&orderby=date&order=desc");
             if (!Array.isArray(data)) throw new Error("bad payload");
         } catch (err) {
             console.warn("WPInsights fetchIndex failed:", err);
@@ -257,11 +294,9 @@ window.WPInsights = (function () {
 
     async function fetchArticle(slug) {
         try {
-            var res = await fetch(
-                API + "?slug=" + encodeURIComponent(slug) + "&_embed",
+            var data = await fetchWp(
+                "?slug=" + encodeURIComponent(slug) + "&_embed",
             );
-            if (!res.ok) throw new Error("WP " + res.status);
-            var data = await res.json();
             if (!Array.isArray(data) || data.length === 0)
                 throw new Error("not found");
             return normalize(data[0]);
