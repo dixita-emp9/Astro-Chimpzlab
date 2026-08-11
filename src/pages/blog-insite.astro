@@ -2,11 +2,11 @@
 import ContactForm from "../components/sections/ContactForm.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { site } from "../config/site";
----
 
 const blogSiteUrl = site.url;
 const blogSiteName = site.name;
 const blogLogoUrl = site.url + site.logo.ogImage;
+---
 
 <BaseLayout
     title="Blog & Insights | ChimpzLab"
@@ -33,15 +33,15 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     >
                         <span
                             class="text-xs font-bold uppercase text-white px-4 py-2 border border-white/20 rounded-full break-words whitespace-normal max-w-full"
-                            >Strategy</span
+                            id="blog-category">Loading...</span
                         >
                         <span
                             class="text-xs font-bold uppercase tracking-widest text-gray-400"
-                            >5 Min Read</span
+                            id="blog-readtime">Loading...</span
                         >
                         <span
                             class="text-xs font-bold uppercase tracking-widest text-gray-400 hidden sm:inline"
-                            >• July 1, 2026</span
+                            id="blog-date">Loading...</span
                         >
                     </div>
 
@@ -49,18 +49,15 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     <h1
                         class="text-3xl md:text-5xl lg:text-5xl xl:text-6xl font-extrabold tracking-tighter leading-[0.95] text-white mb-10 uppercase"
                     >
-                        <span class="gsap-reveal-text">The Future of</span>
-                        <span class="gsap-reveal-text"
-                            >Corporate Reputation</span
-                        >
-                        <span class="gsap-reveal-text text-gray-400"
-                            >in an AI-First World</span
+                        <span class="gsap-reveal-text" id="blog-title-part-1"
+                            >Loading...</span
                         >
                     </h1>
 
                     <!-- Tags -->
                     <div
                         class="hero-tags gsap-reveal flex flex-wrap gap-2 mt-6"
+                        id="blog-tags"
                     >
                     </div>
 
@@ -226,8 +223,8 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                         class="w-full bg-gray-100 overflow-hidden rounded-2xl relative shadow-2xl aspect-[4/3]"
                     >
                         <img
-                            src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop"
-                            alt="Corporate Strategy"
+                            src=""
+                            alt="Blog cover image"
                             class="w-full h-full object-cover grayscale hover:grayscale-0 hover:scale-105 transition-transform duration-700"
                         />
                     </div>
@@ -235,26 +232,6 @@ const blogLogoUrl = site.url + site.logo.ogImage;
             </div>
         </div>
     </header>
-
-    <!-- Blog Not Found -->
-    <div
-        id="blog-not-found"
-        class="hidden py-32 px-6 md:px-12 bg-brand-dark text-white text-center"
-    >
-        <div class="max-w-[1400px] mx-auto">
-            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tighter uppercase mb-4">
-                Blog Not Found
-            </h1>
-            <p class="text-gray-400 text-lg md:text-xl font-medium max-w-xl mx-auto">
-                The blog you're looking for doesn't exist yet. Check back soon.
-            </p>
-            <a
-                href="/insights"
-                class="interactive inline-block mt-10 border-2 border-white text-white hover:bg-white hover:text-black px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300"
-                >Browse all blogs</a
-            >
-        </div>
-    </div>
 
     <!-- Sticky Audio Player (bottom center, shown after 600px scroll) -->
     <div
@@ -394,8 +371,44 @@ const blogLogoUrl = site.url + site.logo.ogImage;
         </div>
     </div>
 
+    <!-- Loading State -->
+    <div
+        id="blog-loading"
+        class="flex items-center justify-center min-h-[500px] bg-white text-brand-dark"
+    >
+        <div class="text-center">
+            <div
+                class="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"
+            >
+            </div>
+            <p class="text-lg font-medium">Loading blog post...</p>
+        </div>
+    </div>
+
+    <!-- Not Found State -->
+    <div
+        id="blog-not-found"
+        class="hidden flex items-center justify-center min-h-[500px] bg-white text-brand-dark"
+    >
+        <div class="text-center p-6">
+            <h2 class="text-3xl font-bold mb-4">Blog Not Found</h2>
+            <p class="text-lg text-gray-600 mb-6">
+                The requested blog post could not be found.
+            </p>
+            <a
+                href="/insights"
+                class="inline-block px-6 py-3 bg-black text-white rounded-full font-medium hover:bg-gray-800 transition-colors"
+            >
+                View All Insights
+            </a>
+        </div>
+    </div>
+
     <!-- Main Content & Sidebar Layout -->
-    <section class="px-6 md:px-12 pt-20 pb-32 bg-white text-brand-dark">
+    <section
+        id="blog-content"
+        class="px-6 md:px-12 pt-20 pb-32 bg-white text-brand-dark hidden"
+    >
         <div
             class="w-full max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16"
         >
@@ -405,6 +418,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
             >
                 <!-- Share Options (Moved to Top) -->
                 <div
+                    id="share-article"
                     class="mb-12 pb-8 border-b border-gray-200 flex items-center gap-6 flex-wrap gsap-reveal"
                 >
                     <span
@@ -499,65 +513,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                         >
                             Key Takeaways
                         </h4>
-                        <ul class="space-y-3">
-                            <li class="flex items-start gap-3 text-sm">
-                                <svg
-                                    class="w-4 h-4 shrink-0 mt-0.5 text-black"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2.5"
-                                        d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                <span
-                                    >Building authentic brand authority requires
-                                    consistent, expert-level content across
-                                    owned channels.</span
-                                >
-                            </li>
-                            <li class="flex items-start gap-3 text-sm">
-                                <svg
-                                    class="w-4 h-4 shrink-0 mt-0.5 text-black"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2.5"
-                                        d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                <span
-                                    >AI-driven search engines synthesize
-                                    multiple sources; inconsistent narratives
-                                    undermine trust.</span
-                                >
-                            </li>
-                            <li class="flex items-start gap-3 text-sm">
-                                <svg
-                                    class="w-4 h-4 shrink-0 mt-0.5 text-black"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2.5"
-                                        d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                <span
-                                    >Unified PR and digital strategy is no
-                                    longer optional-it is a boardroom
-                                    imperative.</span
-                                >
-                            </li>
-                        </ul>
+                        <ul class="space-y-3" id="mobile-takeaways"></ul>
                     </div>
 
                     <!-- Mobile TOC -->
@@ -567,24 +523,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                         >
                             In This Article
                         </h4>
-                        <ul class="space-y-2">
-                            <li
-                                class="flex items-center gap-3 text-sm text-gray-500"
-                            >
-                                <span class="font-bold text-black/30 text-xs"
-                                    >01</span
-                                >
-                                <span>The Shift from SEO to AEO</span>
-                            </li>
-                            <li
-                                class="flex items-center gap-3 text-sm text-gray-500"
-                            >
-                                <span class="font-bold text-black/30 text-xs"
-                                    >02</span
-                                >
-                                <span>How to Audit Your AI Footprint</span>
-                            </li>
-                        </ul>
+                        <ul class="space-y-2" id="mobile-toc"></ul>
                     </div>
 
                     <!-- Mobile Services -->
@@ -624,83 +563,8 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     </div>
                 </div>
 
-                <p
-                    class="gsap-reveal text-2xl md:text-3xl text-black font-medium mb-12 leading-tight"
-                >
-                    Search is no longer just a list of blue links. With the
-                    rapid integration of Generative AI into search engines, how
-                    stakeholders research your company is fundamentally
-                    changing. If your corporate narrative isn't structured for
-                    AI, you are handing your reputation over to an algorithm.
-                </p>
-
-                <p class="gsap-reveal">
-                    For decades, corporate communications and SEO existed in
-                    entirely separate silos. PR teams focused on securing
-                    tier-one media placements, while digital teams obsessed over
-                    keywords and technical site structure. In an era where AI
-                    models synthesize answers from across the web in real-time,
-                    this separation is no longer just inefficient-it’s dangerous
-                    to your brand equity.
-                </p>
-
-                <p class="gsap-reveal">
-                    When an investor, a prospective employee, or a critical
-                    partner asks an AI engine, <em
-                        >"What is the market reputation of [Your Company]?"</em
-                    >, the engine doesn't just read your latest press release.
-                    It synthesizes your website, employee reviews, news
-                    sentiment, and leadership visibility into one definitive
-                    summary.
-                </p>
-
-                <blockquote class="gsap-reveal">
-                    "You can no longer control the narrative by simply issuing a
-                    statement. You must architect a digital infrastructure that
-                    consistently feeds the truth to the machines that shape
-                    human perception."
-                </blockquote>
-
-                <h2 class="gsap-reveal uppercase tracking-tight">
-                    The Shift from SEO to AEO (Answer Engine Optimization)
-                </h2>
-
-                <p class="gsap-reveal">
-                    Optimizing for AI means understanding that these systems
-                    look for consensus and context. A single highly-placed op-ed
-                    might drive immediate traffic, but consistently published,
-                    expert-level content across your owned channels establishes
-                    the semantic authority that AI relies upon.
-                </p>
-
-                <p class="gsap-reveal">
-                    This is where integrated communications becomes
-                    non-negotiable. Your corporate narrative must be unified. If
-                    your PR team is telling a story about innovation, but your
-                    careers page is entirely generic and your leadership has
-                    zero footprint on LinkedIn, the AI detects an inconsistency.
-                    To an answer engine, inconsistency equates to a lack of
-                    authority.
-                </p>
-
-                <h2 class="gsap-reveal uppercase tracking-tight">
-                    How to Audit Your AI Footprint
-                </h2>
-
-                <p class="gsap-reveal">
-                    Start by querying the major AI tools as if you were your own
-                    harshest critic. Ask about your company's controversies,
-                    market position, and culture. The gaps in the generated
-                    responses represent your immediate communications mandate.
-                </p>
-
-                <p class="gsap-reveal">
-                    At ChimpzLab, we approach this by merging narrative strategy
-                    with technical digital execution. We ensure that the story
-                    you want to tell is exactly the story the algorithms piece
-                    together. Because in an AI-first world, visibility and
-                    reputation are the exact same thing.
-                </p>
+                <!-- Article Content Will Be Injected Here -->
+                <div id="article-body" class="gsap-reveal"></div>
             </article>
 
             <!-- Right: Sticky Sidebar (Spans 4 columns) -->
@@ -748,64 +612,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     >
                         Key Takeaways
                     </h4>
-                    <ul class="space-y-3">
-                        <li class="flex items-start gap-3 text-sm md:text-base">
-                            <svg
-                                class="w-5 h-5 shrink-0 mt-0.5 text-black"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2.5"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <span
-                                >Building authentic brand authority requires
-                                consistent, expert-level content across owned
-                                channels.</span
-                            >
-                        </li>
-                        <li class="flex items-start gap-3 text-sm md:text-base">
-                            <svg
-                                class="w-5 h-5 shrink-0 mt-0.5 text-black"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2.5"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <span
-                                >AI-driven search engines synthesize multiple
-                                sources; inconsistent narratives undermine
-                                trust.</span
-                            >
-                        </li>
-                        <li class="flex items-start gap-3 text-sm md:text-base">
-                            <svg
-                                class="w-5 h-5 shrink-0 mt-0.5 text-black"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2.5"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <span
-                                >Unified PR and digital strategy is no longer
-                                optional-it is a boardroom imperative.</span
-                            >
-                        </li>
-                    </ul>
+                    <ul class="space-y-3" id="desktop-takeaways"></ul>
                 </div>
 
                 <!-- Table of Contents -->
@@ -815,24 +622,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     >
                         In This Article
                     </h4>
-                    <ul class="space-y-3">
-                        <li
-                            class="flex items-center gap-3 text-sm md:text-base text-gray-500 hover:text-black transition-colors cursor-pointer"
-                        >
-                            <span class="font-bold text-black/30 text-xs"
-                                >01</span
-                            >
-                            <span>The Shift from SEO to AEO</span>
-                        </li>
-                        <li
-                            class="flex items-center gap-3 text-sm md:text-base text-gray-500 hover:text-black transition-colors cursor-pointer"
-                        >
-                            <span class="font-bold text-black/30 text-xs"
-                                >02</span
-                            >
-                            <span>How to Audit Your AI Footprint</span>
-                        </li>
-                    </ul>
+                    <ul class="space-y-3" id="desktop-toc"></ul>
                 </div>
             </aside>
         </div>
@@ -846,8 +636,9 @@ const blogLogoUrl = site.url + site.logo.ogImage;
             >
                 <h3
                     class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter uppercase text-black"
+                    id="more-articles-title"
                 >
-                    More in Strategy
+                    Related Articles
                 </h3>
                 <a
                     href="/insights"
@@ -855,56 +646,10 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     >View All Insights</a
                 >
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8">
-                <!-- Related Blog 1 -->
-                <a
-                    href="/blog-insite?slug=does-faq-schema-still-matter-2026"
-                    class="group interactive block gsap-reveal"
-                >
-                    <div
-                        class="w-full aspect-[16/9] bg-gray-100 overflow-hidden rounded-xl mb-6 relative"
-                    >
-                        <img
-                            src="/asset/blogs/first-blog-cover.jpg"
-                            alt="FAQ Schema and AI Search"
-                            class="w-full h-full object-cover grayscale group-hover:grayscale-0 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
-                        />
-                    </div>
-                    <span
-                        class="text-[10px] font-bold uppercase tracking-widest text-gray-500 block mb-3"
-                        >SEO/AEO • 8 Min Read</span
-                    >
-                    <h4
-                        class="text-2xl md:text-2xl font-bold tracking-tight text-black group-hover:text-gray-500 transition-colors leading-tight mb-4"
-                    >
-                        Does FAQ Schema Still Matter After Google Removed FAQ
-                        Rich Results?
-                    </h4>
-                </a>
-                <!-- Related Blog 2 -->
-                <a
-                    href="/blog-insite?slug=how-do-ai-answer-engines-choose-sources"
-                    class="group interactive block gsap-reveal"
-                >
-                    <div
-                        class="w-full aspect-[16/9] bg-gray-100 overflow-hidden rounded-xl mb-6 relative"
-                    >
-                        <img
-                            src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=800&auto=format&fit=crop"
-                            alt="AI Answer Engines"
-                            class="w-full h-full object-cover grayscale group-hover:grayscale-0 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
-                        />
-                    </div>
-                    <span
-                        class="text-[10px] font-bold uppercase tracking-widest text-gray-500 block mb-3"
-                        >SEO/AEO • 16 Min Read</span
-                    >
-                    <h4
-                        class="text-2xl md:text-2xl font-bold tracking-tight text-black group-hover:text-gray-500 transition-colors leading-tight mb-4"
-                    >
-                        How Do AI Answer Engines Choose Which Sources to Cite?
-                    </h4>
-                </a>
+            <div
+                class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8"
+                id="related-articles"
+            >
             </div>
         </div>
     </section>
@@ -926,49 +671,42 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                 cursor.classList.remove("hovered"),
             );
         });
-        window.lenis = new Lenis({
-            wrapper: window,
-            content: document.documentElement,
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            direction: "vertical",
-            gestureDirection: "vertical",
-            smooth: true,
-            mouseMultiplier: 1,
-            smoothTouch: false,
-            touchMultiplier: 2,
-            infinite: false,
-        });
-        function raf(time) {
-            lenis.raf(time);
+        if (typeof Lenis !== "undefined" && !window.lenis) {
+            window.lenis = new Lenis({
+                wrapper: window,
+                content: document.documentElement,
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                direction: "vertical",
+                gestureDirection: "vertical",
+                smooth: true,
+                mouseMultiplier: 1,
+                smoothTouch: false,
+                touchMultiplier: 2,
+                infinite: false,
+            });
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
             requestAnimationFrame(raf);
         }
-        requestAnimationFrame(raf);
-        gsap.registerPlugin(ScrollTrigger);
-        lenis.on("scroll", ScrollTrigger.update);
-        gsap.from(".gsap-reveal-text", {
-            y: 120,
-            opacity: 0,
-            duration: 1.2,
-            stagger: 0.1,
-            ease: "power4.out",
-            delay: 0.2,
-        });
-        const revealElements = document.querySelectorAll(".gsap-reveal");
-        revealElements.forEach((el) => {
-            gsap.to(el, {
-                scrollTrigger: {
-                    trigger: el,
-                    start: "top 85%",
-                    toggleActions: "play none none reverse",
-                },
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "power3.out",
+        if (typeof gsap !== "undefined") {
+            gsap.registerPlugin(ScrollTrigger);
+            if (window.lenis) lenis.on("scroll", ScrollTrigger.update);
+            gsap.from(".gsap-reveal-text", {
+                y: 120,
+                opacity: 0,
+                duration: 1.2,
+                stagger: 0.1,
+                ease: "power4.out",
+                delay: 0.2,
             });
-        });
-        ScrollTrigger.refresh();
+            // Reveals are created globally (GlobalScripts) and re-created after
+            // the article loads; only refresh positions here to avoid double
+            // triggers on the same elements.
+            ScrollTrigger.refresh();
+        }
 
         // Blog Audio Player (visual toggle; replaced by Speech Synthesis logic at bottom of file)
         window.toggleAudio = function () {
@@ -1233,7 +971,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
         })();
     </script>
 
-    <script is:inline src="/js/wp-insights.js"></script>
+    <script is:inline src="/js/wp-insights.v2.js"></script>
     <script
         is:inline
         define:vars={{
@@ -1245,44 +983,13 @@ const blogLogoUrl = site.url + site.logo.ogImage;
         // Article loader - reads slug from URL, loads metadata index + single article
         (async function () {
             function showNotFound() {
-                const notFound = document.getElementById("blog-not-found");
-                if (notFound) {
-                    notFound.classList.remove("hidden");
-                    notFound.classList.add("block");
-                }
+                document.getElementById("blog-loading").classList.add("hidden");
+                document
+                    .getElementById("blog-not-found")
+                    .classList.remove("hidden");
             }
 
-            try {
-                const meta = await window.WPInsights.fetchIndex();
-                if (meta.length === 0) {
-                    showNotFound();
-                    return;
-                }
-
-                const params = new URLSearchParams(window.location.search);
-                let slug = params.get("slug");
-                if (!slug) {
-                    const pathMatch =
-                        window.location.pathname.match(/\/blog\/([^/]+)/);
-                    if (pathMatch) slug = pathMatch[1];
-                }
-                let metaArticle = slug
-                    ? meta.find((a) => a.slug === slug)
-                    : null;
-                if (!metaArticle) metaArticle = meta[0];
-                if (!metaArticle) {
-                    showNotFound();
-                    return;
-                }
-
-                const article = await window.WPInsights.fetchArticle(
-                    metaArticle.slug,
-                );
-                if (!article) {
-                    showNotFound();
-                    return;
-                }
-
+            function showContent(article) {
                 // Update page title
                 document.title = article.titleFull + " | " + blogSiteName;
 
@@ -1299,9 +1006,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     "@type": "BlogPosting",
                     headline: article.titleFull,
                     description: article.intro || "",
-                    image: article.image
-                        ? article.image
-                        : "",
+                    image: article.image ? article.image : "",
                     datePublished: article.date || "",
                     author: {
                         "@type": "Organization",
@@ -1338,18 +1043,12 @@ const blogLogoUrl = site.url + site.logo.ogImage;
 
                 const titleH1 = document.querySelector("h1");
                 if (titleH1) {
-                    const blocks =
-                        titleH1.querySelectorAll(".gsap-reveal-text");
-                    article.titleParts.forEach((part, idx) => {
-                        if (blocks[idx]) blocks[idx].textContent = part;
-                    });
-                    for (
-                        let i = article.titleParts.length;
-                        i < blocks.length;
-                        i++
-                    ) {
-                        blocks[i].style.display = "none";
-                    }
+                    const block = titleH1.querySelector(".gsap-reveal-text");
+                    if (block)
+                        block.textContent =
+                            (article.titleParts &&
+                                article.titleParts.join(" ")) ||
+                            article.titleFull;
                 }
 
                 const coverImg = document.querySelector(
@@ -1359,12 +1058,6 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     coverImg.src = article.image;
                     coverImg.alt = article.alt;
                 }
-
-                const audioDurationEl = document.querySelector(
-                    "#play-pause-btn + div .text-sm.font-bold.text-white",
-                );
-                if (audioDurationEl && article.audioDuration)
-                    audioDurationEl.textContent = article.audioDuration;
 
                 // --- Hero Tags ---
                 const heroTags = document.querySelector(".hero-tags");
@@ -1385,9 +1078,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                 const articleContent =
                     document.querySelector(".article-content");
                 if (articleContent) {
-                    const shareBar =
-                        articleContent.querySelector(".pb-8.border-b");
-                    let html = shareBar ? shareBar.outerHTML : "";
+                    let html = "";
 
                     html +=
                         '<p class="gsap-reveal text-2xl md:text-3xl text-black font-medium mb-12 leading-tight">' +
@@ -1429,7 +1120,13 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                         // classes so the existing article typography is preserved.
                         html += article.body || "";
                     }
-                    if (html) articleContent.innerHTML = html;
+                    // Keep the "Share Article" block (first child) intact —
+                    // assigning the whole innerHTML would wipe it out.
+                    var shareBlock =
+                        articleContent.querySelector("#share-article");
+                    var shareHtml = shareBlock ? shareBlock.outerHTML : "";
+                    if (html) articleContent.innerHTML = shareHtml + html;
+                    else if (shareBlock) shareBlock.classList.add("hidden");
                     if (!Array.isArray(article.body)) {
                         articleContent
                             .querySelectorAll("h2")
@@ -1467,9 +1164,8 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                 const takeawaysList = document.querySelector(
                     ".sidebar-takeaways ul",
                 );
-                const takeawaysWrap = document.querySelector(
-                    ".sidebar-takeaways",
-                );
+                const takeawaysWrap =
+                    document.querySelector(".sidebar-takeaways");
                 if (takeawaysList && article.takeaways) {
                     takeawaysList.innerHTML = article.takeaways
                         .map(function (t) {
@@ -1515,6 +1211,57 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                 }
 
                 // --- Related Articles ---
+                var sameCat = [];
+                var otherCat = [];
+                // We'll get these from the index later
+
+                var moreSection = document.querySelector(
+                    ".border-t.border-gray-200.pt-16",
+                );
+                if (moreSection) {
+                    var heading = moreSection.querySelector("h3");
+                    if (heading)
+                        heading.textContent = "Related Articles";
+                    var relatedGrid = moreSection.querySelector(
+                        ".grid.grid-cols-1.md\\:grid-cols-2",
+                    );
+                    if (relatedGrid) {
+                        // Will be populated after fetching index
+                    }
+                }
+
+                // Hide loading state and show content
+                document.getElementById("blog-loading").classList.add("hidden");
+                document
+                    .getElementById("blog-content")
+                    .classList.remove("hidden");
+            }
+
+            try {
+                const params = new URLSearchParams(window.location.search);
+                let slug = params.get("slug");
+                if (!slug) {
+                    const pathMatch =
+                        window.location.pathname.match(/\/blog\/([^/]+)/);
+                    if (pathMatch) slug = pathMatch[1];
+                }
+
+                // Fetch the specific article
+                const article = await window.WPInsights.fetchArticle(
+                    slug || "",
+                );
+                if (!article) {
+                    showNotFound();
+                    return;
+                }
+
+                // Fetch index for related articles
+                const meta = await window.WPInsights.fetchIndex();
+
+                // Show the article content
+                showContent(article);
+
+                // --- Related Articles ---
                 var sameCat = meta.filter(function (a) {
                     return (
                         a.category === article.category &&
@@ -1538,15 +1285,6 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     ".border-t.border-gray-200.pt-16",
                 );
                 if (moreSection) {
-                    var heading = moreSection.querySelector("h3");
-                    var catLabel =
-                        article.tag ||
-                        (article.category
-                            ? article.category.charAt(0).toUpperCase() +
-                              article.category.slice(1)
-                            : "Insights");
-                    if (heading)
-                        heading.textContent = "More in " + catLabel;
                     var relatedGrid = moreSection.querySelector(
                         ".grid.grid-cols-1.md\\:grid-cols-2",
                     );
@@ -1566,7 +1304,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                                     '" class="w-full h-full object-cover grayscale group-hover:grayscale-0 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">' +
                                     "</div>" +
                                     '<span class="text-[10px] font-bold uppercase tracking-widest text-gray-500 block mb-3">' +
-                                    catLabel +
+                                    (a.category || "Insights") +
                                     " \u2022 " +
                                     readTime +
                                     "</span>" +
@@ -1607,6 +1345,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                 }
             } catch (e) {
                 console.warn("Article loader error:", e);
+                showNotFound();
             }
         })();
     </script>
@@ -1772,7 +1511,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
 
                     blocks = Array.from(
                         document.querySelectorAll(
-                            "h1, .article-content > p, .article-content > h2, .article-content > blockquote",
+                            "h1, .article-content > p, .article-content > h2, .article-content > h3, .article-content > blockquote",
                         ),
                     );
                     if (blocks.length === 0) return false;

@@ -321,6 +321,18 @@ const { loadAnimations = true } = Astro.props;
                     ease: "power3.out",
                 });
             });
+
+            // 5. Recalculate trigger positions once images/fonts settle the
+            // layout. ScrollTrigger measures at DOMContentLoaded when the page is
+            // still shorter (images not loaded), so triggers fire late and
+            // sections stay hidden until they reach the top of the viewport.
+            function refreshReveals() {
+                if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+            }
+            window.addEventListener("load", refreshReveals);
+            if (document.fonts && document.fonts.ready)
+                document.fonts.ready.then(refreshReveals);
+            setTimeout(refreshReveals, 1200);
         }
 
         // Location Map Modal Functionality

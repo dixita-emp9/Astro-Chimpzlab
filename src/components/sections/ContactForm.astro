@@ -143,14 +143,14 @@ const btnCls = dark
 </div>
 
 <!-- Google reCAPTCHA API -->
-<script is:inline>
+<script is:inline define:vars={{ testSiteKey }}>
     // On localhost, swap to Google's always-pass test site key so the form
     // can be tested without registering the domain in the reCAPTCHA console.
     (function () {
         var h = location.hostname;
         if (h !== "localhost" && h !== "127.0.0.1") return;
         document.querySelectorAll(".g-recaptcha").forEach(function (el) {
-            el.setAttribute("data-sitekey", { testSiteKey });
+            el.setAttribute("data-sitekey", testSiteKey);
         });
     })();
 </script>

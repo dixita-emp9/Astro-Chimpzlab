@@ -31,6 +31,21 @@ php crm/bin/register-site.php     # creates DB + registers the site API key (ide
 Set `DB_PATH` in `crm/.env` to an absolute path outside the web root on live hosts,
 so the SQLite DB is never downloadable. `public/crm/.env` and the DB are gitignored.
 
+## Blog data source (WordPress via same-origin proxy)
+
+Blog/insight content is read live from the WordPress REST API
+(`https://chimpzlab.com/chimpzlab-old/wp-json/wp/v2/insights`) — WordPress is the
+single source of truth (no JSON snapshots). `public/wp-insights.js` fetches through
+the same-origin PHP proxy `public/wp-proxy.php` first, then falls back to the direct
+WP API when the proxy is unavailable (e.g. `astro dev`, where public PHP files are
+served as raw text and the JSON probe fails).
+
+The proxy exists because some hosts (e.g. Hostinger CDN-based demo hosts) inject a
+strict Content-Security-Policy that blocks cross-origin calls to `chimpzlab.com`;
+`wp-proxy.php` relays both the WP API and WP media images through the site's own
+origin so blogs/images keep working without hosting-config changes. It never stores
+or edits content. Requires PHP on the host (Hostinger, shared/demo plans).
+
 ## Documentation
 
 Full documentation: https://docs.astro.build

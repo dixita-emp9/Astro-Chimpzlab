@@ -1,10 +1,41 @@
 // WordPress REST API data source for ChimpzLab insights/blogs.
 // Loaded before the inline loaders on blog-insite, insights, the homepage
 // slider and service-page loaders so they all share one fetch+normalize path.
-// Falls back to the static /insights/articles/*.json files if WP is unreachable.
+// WordPress is the single source of truth for blog content.
 window.WPInsights = (function () {
     var API = "https://chimpzlab.com/chimpzlab-old/wp-json/wp/v2/insights";
+    var PROXY = "/wp-proxy.php?endpoint=insights";
+    var PROXY_IMG = "/wp-proxy.php?img=";
     var FALLBACK_IMG = "/asset/home-page.webp";
+    var usingProxy = false;
+
+    // Fetches through the same-origin PHP proxy first (works even when a strict
+    // Content-Security-Policy blocks cross-origin calls to chimpzlab.com), and
+    // falls back to the direct WordPress REST API when the proxy is not running
+    // (e.g. `astro dev`, where public PHP files are served as plain text).
+    async function fetchWp(query) {
+        try {
+            var res = await fetch(PROXY + query.replace(/^\?/, "&"));
+            var text = await res.text();
+            if (res.ok && /^[\s]*[{[]/.test(text)) {
+                usingProxy = true;
+                return JSON.parse(text);
+            }
+        } catch (e) {}
+        usingProxy = false;
+        var res2 = await fetch(API + query);
+        if (!res2.ok) throw new Error("WP " + res2.status);
+        return await res2.json();
+    }
+
+    // Rewrites chimpzlab.com media URLs so they load through the same-origin
+    // proxy (only needed when the proxy is in use, i.e. under a strict CSP).
+    function proxifyImage(url) {
+        if (usingProxy && /^https:\/\/chimpzlab\.com\//i.test(url || "")) {
+            return PROXY_IMG + encodeURIComponent(url);
+        }
+        return url;
+    }
 
     function stripTags(html) {
         var d = document.createElement("div");
@@ -38,6 +69,16 @@ window.WPInsights = (function () {
     function splitTitle(title) {
         var t = String(title || "").trim();
         if (!t) return [""];
+        // Handle titles with question marks properly
+        if (t.includes('?')) {
+            var parts = t.split('?');
+            if (parts.length > 1) {
+                // Add question mark back to first part
+                parts[0] = parts[0] + '?';
+                // Remove any extra whitespace
+                return parts.map(p => p.trim()).filter(Boolean);
+            }
+        }
         var parts = t
             .split(/\s*[?.:]\s+|\s+[-–—]\s+/)
             .map(function (s) {
@@ -119,19 +160,69 @@ window.WPInsights = (function () {
         if (!list) list = lists[0];
         var takeaways = [];
         if (list) {
+            var listWrap = list.parentNode;
+            // Capture takeaways text from <li> elements.
             list.querySelectorAll("li").forEach(function (li) {
                 var t = (li.textContent || "").replace(/\s+/g, " ").trim();
                 if (t) takeaways.push(t);
             });
-            if (list.parentNode) list.parentNode.removeChild(list);
+            // Remove the heading that introduces the list (e.g. "Key Takeaways")
+            // so it doesn't show up again as a section heading in the body.
+            var prev = list.previousElementSibling;
+            if (prev && prev.tagName === "H2" && /takeaway/i.test(prev.textContent || "")) {
+                listWrap.removeChild(prev);
+            }
+            listWrap.removeChild(list);
+            // If the wrapper is now empty, remove the blank comment nodes / empty
+            // paragraphs Gutenberg leaves behind.
+            if (listWrap && !listWrap.hasChildNodes()) {
+                listWrap.parentNode && listWrap.parentNode.removeChild(listWrap);
+            }
         }
         return { body: d.innerHTML, takeaways: takeaways };
+    }
+
+    // Pulls a "<!-- name:value -->" comment marker embedded in the post content
+    // by the migration script (e.g. readtime, author title line-splits).
+    function getMarker(html, name) {
+        var re = new RegExp(
+            "<!--\\s*" + name + ":\\s*([\\s\\S]*?)\\s*-->",
+        );
+        var m = html.match(re);
+        return m ? m[1].trim() : "";
     }
 
     function normalize(post) {
         var title = stripTags(post.title && post.title.rendered);
         var contentHtml = cleanHtml(
             (post.content && post.content.rendered) || "",
+        );
+        // Use the authored read time embedded as an HTML comment by the
+        // migration script ("<!-- readtime:5 Min Read -->"); fall back to the
+        // word-count estimate if the marker is missing.
+        var readTime = getMarker(contentHtml, "readtime");
+        // Restore the author's exact title line-breaks (titleParts) instead of
+        // re-splitting the flattened title, so the H1 animation wraps the same.
+        var titleParts = [];
+        try {
+            var parsed = JSON.parse(getMarker(contentHtml, "titleparts"));
+            if (Array.isArray(parsed) && parsed.length) {
+                titleParts = parsed.map(function (p) {
+                    return String(p);
+                });
+            }
+        } catch (e) {}
+        contentHtml = contentHtml.replace(
+            /<!--\s*(readtime|titleparts):[\s\S]*?-->/g,
+            "",
+        );
+        // Relay in-body chimpzlab.com media through the same-origin proxy so
+        // images inside article bodies also work under a strict CSP.
+        contentHtml = contentHtml.replace(
+            /src="(https:\/\/chimpzlab\.com\/[^"]+)"/gi,
+            function (m, u) {
+                return 'src="' + proxifyImage(u) + '"';
+            },
         );
         var excerpt = (post.excerpt && post.excerpt.rendered) || "";
         var terms = (post._embedded && post._embedded["wp:term"]) || [];
@@ -140,7 +231,6 @@ window.WPInsights = (function () {
                 post._embedded["wp:featuredmedia"] &&
                 post._embedded["wp:featuredmedia"][0]) ||
             null;
-        var meta = post.meta || {};
         var catGroup =
             terms.find(function (g) {
                 return g && g[0] && g[0].taxonomy === "category";
@@ -155,27 +245,22 @@ window.WPInsights = (function () {
         var tags = tagGroup.map(function (x) {
             return x.name;
         });
-        var takeaways = meta.takeaways
-            ? String(meta.takeaways)
-                  .split(/\r?\n/)
-                  .map(function (s) {
-                      return s.trim();
-                  })
-                  .filter(Boolean)
-            : [];
+        var takeaways = [];
         var image = media && media.source_url ? media.source_url : "";
-        if (!takeaways.length) {
-            var extracted = extractTakeaways(contentHtml);
-            contentHtml = extracted.body;
-            takeaways = extracted.takeaways;
-        }
+        image = proxifyImage(image);
+        
+        // Extract takeaways from content if not in meta
+        var extracted = extractTakeaways(contentHtml);
+        contentHtml = extracted.body;
+        takeaways = extracted.takeaways;
+        
         return {
             slug: post.slug,
             category: cats[0] || "strategy",
-            tag: meta.tag || tags.join(", ") || "",
-            readTime: meta.readtime || computedReadTime(contentHtml),
-            date: meta.date || fmtDate(post.date) || "",
-            titleParts: splitTitle(title),
+            tag: tags.join(", ") || "",
+            readTime: readTime || computedReadTime(contentHtml),
+            date: fmtDate(post.date) || "",
+            titleParts: titleParts.length ? titleParts : splitTitle(title),
             titleFull: title,
             image: absImage(image),
             alt: (media && media.alt_text) || title,
@@ -188,10 +273,7 @@ window.WPInsights = (function () {
     async function fetchIndex() {
         var data = [];
         try {
-            var url = API + "?per_page=100&_embed&orderby=date&order=desc";
-            var res = await fetch(url);
-            if (!res.ok) throw new Error("WP " + res.status);
-            data = await res.json();
+            data = await fetchWp("?per_page=100&_embed&orderby=date&order=desc");
             if (!Array.isArray(data)) throw new Error("bad payload");
         } catch (err) {
             console.warn("WPInsights fetchIndex failed:", err);
@@ -212,11 +294,9 @@ window.WPInsights = (function () {
 
     async function fetchArticle(slug) {
         try {
-            var res = await fetch(
-                API + "?slug=" + encodeURIComponent(slug) + "&_embed",
+            var data = await fetchWp(
+                "?slug=" + encodeURIComponent(slug) + "&_embed",
             );
-            if (!res.ok) throw new Error("WP " + res.status);
-            var data = await res.json();
             if (!Array.isArray(data) || data.length === 0)
                 throw new Error("not found");
             return normalize(data[0]);
