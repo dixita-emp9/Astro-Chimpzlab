@@ -163,7 +163,6 @@ window.WPInsights = (function () {
                 post._embedded["wp:featuredmedia"] &&
                 post._embedded["wp:featuredmedia"][0]) ||
             null;
-        var meta = post.meta || {};
         var catGroup =
             terms.find(function (g) {
                 return g && g[0] && g[0].taxonomy === "category";
@@ -178,26 +177,20 @@ window.WPInsights = (function () {
         var tags = tagGroup.map(function (x) {
             return x.name;
         });
-        var takeaways = meta.takeaways
-            ? String(meta.takeaways)
-                  .split(/\r?\n/)
-                  .map(function (s) {
-                      return s.trim();
-                  })
-                  .filter(Boolean)
-            : [];
+        var takeaways = [];
         var image = media && media.source_url ? media.source_url : "";
-        if (!takeaways.length) {
-            var extracted = extractTakeaways(contentHtml);
-            contentHtml = extracted.body;
-            takeaways = extracted.takeaways;
-        }
+        
+        // Extract takeaways from content if not in meta
+        var extracted = extractTakeaways(contentHtml);
+        contentHtml = extracted.body;
+        takeaways = extracted.takeaways;
+        
         return {
             slug: post.slug,
             category: cats[0] || "strategy",
-            tag: meta.tag || tags.join(", ") || "",
-            readTime: meta.readtime || computedReadTime(contentHtml),
-            date: meta.date || fmtDate(post.date) || "",
+            tag: tags.join(", ") || "",
+            readTime: computedReadTime(contentHtml),
+            date: fmtDate(post.date) || "",
             titleParts: splitTitle(title),
             titleFull: title,
             image: absImage(image),
@@ -205,8 +198,6 @@ window.WPInsights = (function () {
             intro: stripTags(excerpt) || "",
             takeaways: takeaways,
             body: contentHtml,
-            // Preserve FAQ section formatting
-            faq: post.faq || ""
         };
     }
 
