@@ -52,11 +52,6 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                         <span class="gsap-reveal-text" id="blog-title-part-1"
                             >Loading...</span
                         >
-                        <span
-                            class="gsap-reveal-text"
-                            id="blog-title-part-2"
-                            style="display:none;">Loading...</span
-                        >
                     </h1>
 
                     <!-- Tags -->
@@ -643,7 +638,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter uppercase text-black"
                     id="more-articles-title"
                 >
-                    More in Strategy
+                    Related Articles
                 </h3>
                 <a
                     href="/insights"
@@ -676,49 +671,42 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                 cursor.classList.remove("hovered"),
             );
         });
-        window.lenis = new Lenis({
-            wrapper: window,
-            content: document.documentElement,
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            direction: "vertical",
-            gestureDirection: "vertical",
-            smooth: true,
-            mouseMultiplier: 1,
-            smoothTouch: false,
-            touchMultiplier: 2,
-            infinite: false,
-        });
-        function raf(time) {
-            lenis.raf(time);
+        if (typeof Lenis !== "undefined" && !window.lenis) {
+            window.lenis = new Lenis({
+                wrapper: window,
+                content: document.documentElement,
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                direction: "vertical",
+                gestureDirection: "vertical",
+                smooth: true,
+                mouseMultiplier: 1,
+                smoothTouch: false,
+                touchMultiplier: 2,
+                infinite: false,
+            });
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
             requestAnimationFrame(raf);
         }
-        requestAnimationFrame(raf);
-        gsap.registerPlugin(ScrollTrigger);
-        lenis.on("scroll", ScrollTrigger.update);
-        gsap.from(".gsap-reveal-text", {
-            y: 120,
-            opacity: 0,
-            duration: 1.2,
-            stagger: 0.1,
-            ease: "power4.out",
-            delay: 0.2,
-        });
-        const revealElements = document.querySelectorAll(".gsap-reveal");
-        revealElements.forEach((el) => {
-            gsap.to(el, {
-                scrollTrigger: {
-                    trigger: el,
-                    start: "top 85%",
-                    toggleActions: "play none none reverse",
-                },
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "power3.out",
+        if (typeof gsap !== "undefined") {
+            gsap.registerPlugin(ScrollTrigger);
+            if (window.lenis) lenis.on("scroll", ScrollTrigger.update);
+            gsap.from(".gsap-reveal-text", {
+                y: 120,
+                opacity: 0,
+                duration: 1.2,
+                stagger: 0.1,
+                ease: "power4.out",
+                delay: 0.2,
             });
-        });
-        ScrollTrigger.refresh();
+            // Reveals are created globally (GlobalScripts) and re-created after
+            // the article loads; only refresh positions here to avoid double
+            // triggers on the same elements.
+            ScrollTrigger.refresh();
+        }
 
         // Blog Audio Player (visual toggle; replaced by Speech Synthesis logic at bottom of file)
         window.toggleAudio = function () {
@@ -1055,18 +1043,12 @@ const blogLogoUrl = site.url + site.logo.ogImage;
 
                 const titleH1 = document.querySelector("h1");
                 if (titleH1) {
-                    const blocks =
-                        titleH1.querySelectorAll(".gsap-reveal-text");
-                    article.titleParts.forEach((part, idx) => {
-                        if (blocks[idx]) blocks[idx].textContent = part;
-                    });
-                    for (
-                        let i = article.titleParts.length;
-                        i < blocks.length;
-                        i++
-                    ) {
-                        blocks[i].style.display = "none";
-                    }
+                    const block = titleH1.querySelector(".gsap-reveal-text");
+                    if (block)
+                        block.textContent =
+                            (article.titleParts &&
+                                article.titleParts.join(" ")) ||
+                            article.titleFull;
                 }
 
                 const coverImg = document.querySelector(
@@ -1238,11 +1220,8 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                 );
                 if (moreSection) {
                     var heading = moreSection.querySelector("h3");
-                    var catLabel = article.category
-                        ? article.category.charAt(0).toUpperCase() +
-                          article.category.slice(1)
-                        : "Insights";
-                    if (heading) heading.textContent = "More in " + catLabel;
+                    if (heading)
+                        heading.textContent = "Related Articles";
                     var relatedGrid = moreSection.querySelector(
                         ".grid.grid-cols-1.md\\:grid-cols-2",
                     );

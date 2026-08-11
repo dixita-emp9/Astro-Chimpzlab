@@ -2306,7 +2306,7 @@ const recaptchaTestSiteKey = recaptcha.testSiteKey;
             });
         </script>
 
-        <script is:inline>
+        <script is:inline define:vars={{ recaptchaTestSiteKey }}>
             // On localhost, swap to Google's always-pass test site key so the
             // form can be tested without registering the domain.
             (function () {
@@ -2315,9 +2315,7 @@ const recaptchaTestSiteKey = recaptcha.testSiteKey;
                 document
                     .querySelectorAll(".g-recaptcha")
                     .forEach(function (el) {
-                        el.setAttribute("data-sitekey", {
-                            recaptchaTestSiteKey,
-                        });
+                        el.setAttribute("data-sitekey", recaptchaTestSiteKey);
                     });
             })();
         </script>
