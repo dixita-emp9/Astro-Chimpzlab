@@ -38,6 +38,16 @@ window.WPInsights = (function () {
     function splitTitle(title) {
         var t = String(title || "").trim();
         if (!t) return [""];
+        // Handle titles with question marks properly
+        if (t.includes('?')) {
+            var parts = t.split('?');
+            if (parts.length > 1) {
+                // Add question mark back to first part
+                parts[0] = parts[0] + '?';
+                // Remove any extra whitespace
+                return parts.map(p => p.trim()).filter(Boolean);
+            }
+        }
         var parts = t
             .split(/\s*[?.:]\s+|\s+[-–—]\s+/)
             .map(function (s) {
@@ -195,6 +205,8 @@ window.WPInsights = (function () {
             intro: stripTags(excerpt) || "",
             takeaways: takeaways,
             body: contentHtml,
+            // Preserve FAQ section formatting
+            faq: post.faq || ""
         };
     }
 
