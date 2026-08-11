@@ -2,11 +2,11 @@
 import ContactForm from "../components/sections/ContactForm.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { site } from "../config/site";
----
 
 const blogSiteUrl = site.url;
 const blogSiteName = site.name;
 const blogLogoUrl = site.url + site.logo.ogImage;
+---
 
 <BaseLayout
     title="Blog & Insights | ChimpzLab"
@@ -49,14 +49,21 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     <h1
                         class="text-3xl md:text-5xl lg:text-5xl xl:text-6xl font-extrabold tracking-tighter leading-[0.95] text-white mb-10 uppercase"
                     >
-                        <span class="gsap-reveal-text" id="blog-title-part-1">Loading...</span>
-                        <span class="gsap-reveal-text" id="blog-title-part-2" style="display:none;">Loading...</span>
+                        <span class="gsap-reveal-text" id="blog-title-part-1"
+                            >Loading...</span
+                        >
+                        <span
+                            class="gsap-reveal-text"
+                            id="blog-title-part-2"
+                            style="display:none;">Loading...</span
+                        >
                     </h1>
 
                     <!-- Tags -->
                     <div
                         class="hero-tags gsap-reveal flex flex-wrap gap-2 mt-6"
-                        id="blog-tags">
+                        id="blog-tags"
+                    >
                     </div>
 
                     <!-- Custom Audio Player -->
@@ -231,7 +238,6 @@ const blogLogoUrl = site.url + site.logo.ogImage;
         </div>
     </header>
 
-
     <!-- Sticky Audio Player (bottom center, shown after 600px scroll) -->
     <div
         id="sticky-audio-player-container"
@@ -371,26 +377,43 @@ const blogLogoUrl = site.url + site.logo.ogImage;
     </div>
 
     <!-- Loading State -->
-    <div id="blog-loading" class="flex items-center justify-center min-h-[500px] bg-white text-brand-dark">
+    <div
+        id="blog-loading"
+        class="flex items-center justify-center min-h-[500px] bg-white text-brand-dark"
+    >
         <div class="text-center">
-            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
+            <div
+                class="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"
+            >
+            </div>
             <p class="text-lg font-medium">Loading blog post...</p>
         </div>
     </div>
 
     <!-- Not Found State -->
-    <div id="blog-not-found" class="hidden flex items-center justify-center min-h-[500px] bg-white text-brand-dark">
+    <div
+        id="blog-not-found"
+        class="hidden flex items-center justify-center min-h-[500px] bg-white text-brand-dark"
+    >
         <div class="text-center p-6">
             <h2 class="text-3xl font-bold mb-4">Blog Not Found</h2>
-            <p class="text-lg text-gray-600 mb-6">The requested blog post could not be found.</p>
-            <a href="/insights" class="inline-block px-6 py-3 bg-black text-white rounded-full font-medium hover:bg-gray-800 transition-colors">
+            <p class="text-lg text-gray-600 mb-6">
+                The requested blog post could not be found.
+            </p>
+            <a
+                href="/insights"
+                class="inline-block px-6 py-3 bg-black text-white rounded-full font-medium hover:bg-gray-800 transition-colors"
+            >
                 View All Insights
             </a>
         </div>
     </div>
 
     <!-- Main Content & Sidebar Layout -->
-    <section id="blog-content" class="px-6 md:px-12 pt-20 pb-32 bg-white text-brand-dark hidden">
+    <section
+        id="blog-content"
+        class="px-6 md:px-12 pt-20 pb-32 bg-white text-brand-dark hidden"
+    >
         <div
             class="w-full max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16"
         >
@@ -400,6 +423,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
             >
                 <!-- Share Options (Moved to Top) -->
                 <div
+                    id="share-article"
                     class="mb-12 pb-8 border-b border-gray-200 flex items-center gap-6 flex-wrap gsap-reveal"
                 >
                     <span
@@ -494,8 +518,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                         >
                             Key Takeaways
                         </h4>
-                        <ul class="space-y-3" id="mobile-takeaways">
-                        </ul>
+                        <ul class="space-y-3" id="mobile-takeaways"></ul>
                     </div>
 
                     <!-- Mobile TOC -->
@@ -505,8 +528,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                         >
                             In This Article
                         </h4>
-                        <ul class="space-y-2" id="mobile-toc">
-                        </ul>
+                        <ul class="space-y-2" id="mobile-toc"></ul>
                     </div>
 
                     <!-- Mobile Services -->
@@ -595,8 +617,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     >
                         Key Takeaways
                     </h4>
-                    <ul class="space-y-3" id="desktop-takeaways">
-                    </ul>
+                    <ul class="space-y-3" id="desktop-takeaways"></ul>
                 </div>
 
                 <!-- Table of Contents -->
@@ -606,8 +627,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     >
                         In This Article
                     </h4>
-                    <ul class="space-y-3" id="desktop-toc">
-                    </ul>
+                    <ul class="space-y-3" id="desktop-toc"></ul>
                 </div>
             </aside>
         </div>
@@ -621,7 +641,8 @@ const blogLogoUrl = site.url + site.logo.ogImage;
             >
                 <h3
                     class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter uppercase text-black"
-                    id="more-articles-title">
+                    id="more-articles-title"
+                >
                     More in Strategy
                 </h3>
                 <a
@@ -630,7 +651,10 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     >View All Insights</a
                 >
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8" id="related-articles">
+            <div
+                class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8"
+                id="related-articles"
+            >
             </div>
         </div>
     </section>
@@ -972,7 +996,9 @@ const blogLogoUrl = site.url + site.logo.ogImage;
         (async function () {
             function showNotFound() {
                 document.getElementById("blog-loading").classList.add("hidden");
-                document.getElementById("blog-not-found").classList.remove("hidden");
+                document
+                    .getElementById("blog-not-found")
+                    .classList.remove("hidden");
             }
 
             function showContent(article) {
@@ -992,9 +1018,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     "@type": "BlogPosting",
                     headline: article.titleFull,
                     description: article.intro || "",
-                    image: article.image
-                        ? article.image
-                        : "",
+                    image: article.image ? article.image : "",
                     datePublished: article.date || "",
                     author: {
                         "@type": "Organization",
@@ -1072,7 +1096,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                 const articleContent =
                     document.querySelector(".article-content");
                 if (articleContent) {
-                    let html = '';
+                    let html = "";
 
                     html +=
                         '<p class="gsap-reveal text-2xl md:text-3xl text-black font-medium mb-12 leading-tight">' +
@@ -1114,7 +1138,13 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                         // classes so the existing article typography is preserved.
                         html += article.body || "";
                     }
-                    if (html) articleContent.innerHTML = html;
+                    // Keep the "Share Article" block (first child) intact —
+                    // assigning the whole innerHTML would wipe it out.
+                    var shareBlock =
+                        articleContent.querySelector("#share-article");
+                    var shareHtml = shareBlock ? shareBlock.outerHTML : "";
+                    if (html) articleContent.innerHTML = shareHtml + html;
+                    else if (shareBlock) shareBlock.classList.add("hidden");
                     if (!Array.isArray(article.body)) {
                         articleContent
                             .querySelectorAll("h2")
@@ -1152,9 +1182,8 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                 const takeawaysList = document.querySelector(
                     ".sidebar-takeaways ul",
                 );
-                const takeawaysWrap = document.querySelector(
-                    ".sidebar-takeaways",
-                );
+                const takeawaysWrap =
+                    document.querySelector(".sidebar-takeaways");
                 if (takeawaysList && article.takeaways) {
                     takeawaysList.innerHTML = article.takeaways
                         .map(function (t) {
@@ -1203,20 +1232,17 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                 var sameCat = [];
                 var otherCat = [];
                 // We'll get these from the index later
-                
+
                 var moreSection = document.querySelector(
                     ".border-t.border-gray-200.pt-16",
                 );
                 if (moreSection) {
                     var heading = moreSection.querySelector("h3");
-                    var catLabel =
-                        article.tag ||
-                        (article.category
-                            ? article.category.charAt(0).toUpperCase() +
-                              article.category.slice(1)
-                            : "Insights");
-                    if (heading)
-                        heading.textContent = "More in " + catLabel;
+                    var catLabel = article.category
+                        ? article.category.charAt(0).toUpperCase() +
+                          article.category.slice(1)
+                        : "Insights";
+                    if (heading) heading.textContent = "More in " + catLabel;
                     var relatedGrid = moreSection.querySelector(
                         ".grid.grid-cols-1.md\\:grid-cols-2",
                     );
@@ -1227,7 +1253,9 @@ const blogLogoUrl = site.url + site.logo.ogImage;
 
                 // Hide loading state and show content
                 document.getElementById("blog-loading").classList.add("hidden");
-                document.getElementById("blog-content").classList.remove("hidden");
+                document
+                    .getElementById("blog-content")
+                    .classList.remove("hidden");
             }
 
             try {
@@ -1240,7 +1268,9 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                 }
 
                 // Fetch the specific article
-                const article = await window.WPInsights.fetchArticle(slug || "");
+                const article = await window.WPInsights.fetchArticle(
+                    slug || "",
+                );
                 if (!article) {
                     showNotFound();
                     return;
@@ -1248,7 +1278,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
 
                 // Fetch index for related articles
                 const meta = await window.WPInsights.fetchIndex();
-                
+
                 // Show the article content
                 showContent(article);
 
@@ -1295,7 +1325,8 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                                     '" class="w-full h-full object-cover grayscale group-hover:grayscale-0 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">' +
                                     "</div>" +
                                     '<span class="text-[10px] font-bold uppercase tracking-widest text-gray-500 block mb-3">' +
-                                    (a.category || "Insights") + " \u2022 " +
+                                    (a.category || "Insights") +
+                                    " \u2022 " +
                                     readTime +
                                     "</span>" +
                                     '<h4 class="text-2xl md:text-2xl font-bold tracking-tight text-black group-hover:text-gray-500 transition-colors leading-tight mb-4">' +
@@ -1501,7 +1532,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
 
                     blocks = Array.from(
                         document.querySelectorAll(
-                            "h1, .article-content > p, .article-content > h2, .article-content > blockquote",
+                            "h1, .article-content > p, .article-content > h2, .article-content > h3, .article-content > blockquote",
                         ),
                     );
                     if (blocks.length === 0) return false;

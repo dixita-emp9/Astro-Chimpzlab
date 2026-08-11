@@ -1,7 +1,7 @@
 // WordPress REST API data source for ChimpzLab insights/blogs.
 // Loaded before the inline loaders on blog-insite, insights, the homepage
 // slider and service-page loaders so they all share one fetch+normalize path.
-// Falls back to the static /insights/articles/*.json files if WP is unreachable.
+// WordPress is the single source of truth for blog content.
 window.WPInsights = (function () {
     var API = "https://chimpzlab.com/chimpzlab-old/wp-json/wp/v2/insights";
     var FALLBACK_IMG = "/asset/home-page.webp";
@@ -151,10 +151,39 @@ window.WPInsights = (function () {
         return { body: d.innerHTML, takeaways: takeaways };
     }
 
+    // Pulls a "<!-- name:value -->" comment marker embedded in the post content
+    // by the migration script (e.g. readtime, author title line-splits).
+    function getMarker(html, name) {
+        var re = new RegExp(
+            "<!--\\s*" + name + ":\\s*([\\s\\S]*?)\\s*-->",
+        );
+        var m = html.match(re);
+        return m ? m[1].trim() : "";
+    }
+
     function normalize(post) {
         var title = stripTags(post.title && post.title.rendered);
         var contentHtml = cleanHtml(
             (post.content && post.content.rendered) || "",
+        );
+        // Use the authored read time embedded as an HTML comment by the
+        // migration script ("<!-- readtime:5 Min Read -->"); fall back to the
+        // word-count estimate if the marker is missing.
+        var readTime = getMarker(contentHtml, "readtime");
+        // Restore the author's exact title line-breaks (titleParts) instead of
+        // re-splitting the flattened title, so the H1 animation wraps the same.
+        var titleParts = [];
+        try {
+            var parsed = JSON.parse(getMarker(contentHtml, "titleparts"));
+            if (Array.isArray(parsed) && parsed.length) {
+                titleParts = parsed.map(function (p) {
+                    return String(p);
+                });
+            }
+        } catch (e) {}
+        contentHtml = contentHtml.replace(
+            /<!--\s*(readtime|titleparts):[\s\S]*?-->/g,
+            "",
         );
         var excerpt = (post.excerpt && post.excerpt.rendered) || "";
         var terms = (post._embedded && post._embedded["wp:term"]) || [];
@@ -189,9 +218,9 @@ window.WPInsights = (function () {
             slug: post.slug,
             category: cats[0] || "strategy",
             tag: tags.join(", ") || "",
-            readTime: computedReadTime(contentHtml),
+            readTime: readTime || computedReadTime(contentHtml),
             date: fmtDate(post.date) || "",
-            titleParts: splitTitle(title),
+            titleParts: titleParts.length ? titleParts : splitTitle(title),
             titleFull: title,
             image: absImage(image),
             alt: (media && media.alt_text) || title,

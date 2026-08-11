@@ -26,3 +26,4 @@ public/crm/storage/*.sqlite-*
 
 # jetbrains setting folder
 .idea/
+.aider*

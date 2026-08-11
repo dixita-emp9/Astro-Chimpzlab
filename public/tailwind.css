@@ -1016,6 +1016,10 @@ video {
     min-height: 400px
 }
 
+.min-h-\[500px\] {
+    min-height: 500px
+}
+
 .min-h-\[50vh\] {
     min-height: 50vh
 }
@@ -1315,6 +1319,16 @@ video {
 
 .animate-pulse {
     animation: pulse 2s cubic-bezier(.4, 0, .6, 1) infinite
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(1turn)
+    }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite
 }
 
 .cursor-pointer {
