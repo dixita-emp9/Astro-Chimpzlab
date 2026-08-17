@@ -35,6 +35,16 @@ const gtmId = site.gtmId;
 <!doctype html>
 <html lang="en">
     <head>
+        <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-DD2FDYFCEP"></script>
+        <script is:inline>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+
+            gtag("config", "G-DD2FDYFCEP");
+        </script>
         <script is:inline define:vars={{ gtmId }}>
             (function (w, d, s, l, i) {
                 w[l] = w[l] || [];

@@ -3,10 +3,15 @@
     // service page carousel and the dedicated project page grid. Cards link
     // out to the live site in a new tab.
 
+    function absImagePath(p) {
+        if (/^(https?:)?\/\//i.test(p) || p.charAt(0) === '/') return p;
+        return '/' + String(p).replace(/^(?:\.\.?\/)+/, '');
+    }
+
     function cardInner(item) {
         return '<div class="bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl overflow-hidden h-full flex flex-col hover:bg-white/[0.08] transition-colors duration-300">'
             + '<div class="shrink-0">'
-            + '<img src="' + item.image + '" alt="' + item.title + '" class="w-full block" loading="lazy">'
+            + '<img src="' + absImagePath(item.image) + '" alt="' + item.title + '" class="w-full block" loading="lazy">'
             + '</div>'
             + '<div class="p-5 sm:p-6 md:p-8 flex flex-col flex-1">'
             + '<h3 class="text-lg sm:text-xl md:text-2xl font-extrabold text-white mb-2 sm:mb-3 leading-tight tracking-tight">' + item.title + '</h3>'
