@@ -37,7 +37,7 @@
         card.innerHTML =
             '<div class="bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl overflow-hidden h-full flex flex-col hover:bg-white/[0.08] transition-colors duration-300">' +
             '<div class="shrink-0 max-h-[400px] overflow-hidden relative">' +
-            '<img src="' + item.image + '" alt="' + item.title + '" class="w-full block" loading="lazy">' +
+            '<img src="' + item.image + '" alt="' + item.title + '" class="w-full block group-hover:animate-scroll-up" loading="lazy">' +
             '</div>' +
             '<div class="p-5 sm:p-6 flex flex-col flex-1">' +
             '<h3 class="text-lg sm:text-xl font-extrabold text-white leading-tight tracking-tight">' + item.title + '</h3>' +

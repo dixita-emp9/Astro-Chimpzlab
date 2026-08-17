@@ -2238,6 +2238,15 @@ select {
   width: 100%;
 }
 
+/* "Video-style" project cards: the tall screenshot scrolls up on hover */
+.group .group-hover\:animate-scroll-up {
+  transition: transform 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.group:hover .group-hover\:animate-scroll-up {
+  transform: translateY(calc(-100% + 400px));
+}
+
 .cs-filter {
   border: 1px solid rgba(255, 255, 255, 0.18);
   color: rgba(255, 255, 255, 0.85);

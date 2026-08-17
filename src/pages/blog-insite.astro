@@ -64,7 +64,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     <!-- Custom Audio Player -->
                     <div
                         id="audio-player-container"
-                        class="mt-10 p-2 pr-4 sm:pr-6 border border-white/10 bg-white/5 rounded-full flex items-center gap-2 sm:gap-4 w-fit interactive group hover:border-white/30 transition-all duration-300"
+                        class="mt-10 p-2 pr-4 sm:pr-6 border border-white/10 bg-white/5 rounded-full flex items-center gap-2 sm:gap-4 w-fit interactive group hover:border-white/30 transition-all duration-300 hidden"
                     >
                         <!-- Hidden Audio Element (ADD YOUR SRC HERE) -->
                         <audio id="blog-audio" src="" preload="metadata"
@@ -236,7 +236,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
     <!-- Sticky Audio Player (bottom center, shown after 600px scroll) -->
     <div
         id="sticky-audio-player-container"
-        class="fixed bottom-8 inset-x-0 mx-auto w-fit z-[100] transition-all duration-500 ease-out opacity-0 invisible translate-y-4 pointer-events-none"
+        class="fixed bottom-8 inset-x-0 mx-auto w-fit z-[100] transition-all duration-500 ease-out opacity-0 invisible translate-y-4 pointer-events-none hidden"
     >
         <div
             class="p-2 pr-4 sm:pr-6 border border-white/10 bg-brand-dark/90 backdrop-blur-md rounded-full flex items-center gap-2 sm:gap-4 shadow-2xl"
@@ -1220,8 +1220,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                 );
                 if (moreSection) {
                     var heading = moreSection.querySelector("h3");
-                    if (heading)
-                        heading.textContent = "Related Articles";
+                    if (heading) heading.textContent = "Related Articles";
                     var relatedGrid = moreSection.querySelector(
                         ".grid.grid-cols-1.md\\:grid-cols-2",
                     );
