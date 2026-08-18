@@ -463,7 +463,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                     );
                     filtered.forEach((article, i) => {
                         const card = document.createElement("a");
-                        card.href = "/blog-insite?slug=" + article.slug;
+                        card.href = "/blog-insite/" + article.slug;
                         card.setAttribute("data-category", article.category);
                         card.className =
                             "insight-card group interactive block rounded-2xl border border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.07] hover:-translate-y-1.5 hover:border-white/25 transition-all duration-500 overflow-hidden relative";
