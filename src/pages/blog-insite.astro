@@ -993,6 +993,10 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                 // Update page title
                 document.title = article.titleFull + " | " + blogSiteName;
 
+                // Update canonical URL to the pretty per-article URL
+                var canon = document.querySelector('link[rel="canonical"]');
+                if (canon) canon.setAttribute("href", "/blog-insite/" + article.slug);
+
                 // Update meta description
                 var metaDesc = document.querySelector(
                     'meta[name="description"]',
@@ -1022,7 +1026,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     },
                     mainEntityOfPage: {
                         "@type": "WebPage",
-                        "@id": blogSiteUrl + "/blog/" + article.slug,
+                        "@id": blogSiteUrl + "/blog-insite/" + article.slug,
                     },
                 };
                 var schemaScript = document.createElement("script");
@@ -1241,7 +1245,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                 let slug = params.get("slug");
                 if (!slug) {
                     const pathMatch =
-                        window.location.pathname.match(/\/blog\/([^/]+)/);
+                        window.location.pathname.match(/\/blog-insite\/([^/]+)/);
                     if (pathMatch) slug = pathMatch[1];
                 }
 
@@ -1292,7 +1296,7 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                             .map(function (a) {
                                 var readTime = a.readTime || "5 Min Read";
                                 return (
-                                    '<a href="/blog-insite?slug=' +
+                                    '<a href="/blog-insite/' +
                                     a.slug +
                                     '" class="group interactive block gsap-reveal">' +
                                     '<div class="w-full aspect-[16/9] bg-gray-100 overflow-hidden rounded-xl mb-6 relative">' +

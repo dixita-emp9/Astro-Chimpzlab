@@ -5,7 +5,7 @@ import { site } from "../config/site";
 
 export const GET: APIRoute = () => {
   const cleanUrl = site.url.replace(/\/$/, "");
-  const sitemapUrl = `${cleanUrl}/sitemap-index.xml`;
+  const sitemapUrl = `${cleanUrl}/sitemap.xml`;
 
   const body = `User-agent: *
 Allow: /
