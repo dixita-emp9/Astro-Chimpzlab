@@ -110,7 +110,11 @@ const btnCls = dark
 
         <!-- Google reCAPTCHA -->
         <div class="pt-2">
-            <div class="g-recaptcha" data-sitekey={site.recaptcha.siteKey}>
+            <div
+                class="g-recaptcha"
+                data-sitekey={site.recaptcha.siteKey}
+                data-theme={dark ? "dark" : "light"}
+            >
             </div>
             <p
                 id="recaptchaError"
