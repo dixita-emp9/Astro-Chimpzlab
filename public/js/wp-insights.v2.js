@@ -46,10 +46,11 @@ window.WPInsights = (function () {
     function fmtDate(iso) {
         if (!iso) return "";
         try {
-            return new Date(iso).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-            });
+            var d = new Date(iso);
+            var day = String(d.getDate()).padStart(2, '0');
+            var month = d.toLocaleDateString("en-US", { month: "long" });
+            var year = d.getFullYear();
+            return day + " " + month + ", " + year;
         } catch (e) {
             return iso;
         }

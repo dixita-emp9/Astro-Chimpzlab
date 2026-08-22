@@ -1,0 +1,1254 @@
+---
+import ContactForm from "../../components/sections/ContactForm.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { site } from "../../config/site";
+
+export const prerender = false;
+
+const blogSiteUrl = site.url;
+const blogSiteName = site.name;
+const blogLogoUrl = site.url + site.logo.ogImage;
+---
+
+<BaseLayout
+    title="Blog & Insights | ChimpzLab"
+    description="Read ChimpzLab's latest blog posts on digital marketing, SEO, AI, social media, and industry trends."
+    canonical="/blog-insite"
+    hideHeader={false}
+    hideFooter={false}
+>
+    <Fragment slot="head">
+        <!-- Per-article meta tags: updates synchronously before rendering -->
+    </Fragment>
+
+    <!-- Blog Hero Split Layout -->
+    <header class="pt-32 md:pt-48 pb-20 px-6 md:px-12 relative bg-brand-dark">
+        <div class="w-full max-w-[1400px] mx-auto">
+            <div
+                class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center"
+            >
+                <!-- Left: Text & Audio (7 Cols) -->
+                <div class="lg:col-span-7">
+                    <!-- Meta -->
+                    <div
+                        class="flex flex-wrap items-center gap-4 mb-8 gsap-reveal"
+                    >
+                        <span
+                            class="text-xs font-bold uppercase text-white px-4 py-2 border border-white/20 rounded-full break-words whitespace-normal max-w-full"
+                            id="blog-category">Loading...</span
+                        >
+                        <span
+                            class="text-xs font-bold uppercase tracking-widest text-gray-400"
+                            id="blog-readtime">Loading...</span
+                        >
+                        <span
+                            class="text-xs font-bold uppercase tracking-widest text-gray-400 hidden sm:inline"
+                            id="blog-date">Loading...</span
+                        >
+                    </div>
+
+                    <!-- Title -->
+                    <h1
+                        class="text-3xl md:text-5xl lg:text-5xl xl:text-6xl font-extrabold tracking-tighter leading-[0.95] text-white mb-10 uppercase"
+                    >
+                        <span class="gsap-reveal-text" id="blog-title-part-1"
+                            >Loading...</span
+                        >
+                    </h1>
+
+                    <!-- Tags -->
+                    <div
+                        class="hero-tags gsap-reveal flex flex-wrap gap-2 mt-6"
+                        id="blog-tags"
+                    >
+                    </div>
+
+                    <!-- Custom Audio Player -->
+                    <div
+                        id="audio-player-container"
+                        class="mt-10 p-2 pr-4 sm:pr-6 border border-white/10 bg-white/5 rounded-full flex items-center gap-2 sm:gap-4 w-fit interactive group hover:border-white/30 transition-all duration-300 hidden"
+                    >
+                        <!-- Hidden Audio Element (ADD YOUR SRC HERE) -->
+                        <audio id="blog-audio" src="" preload="metadata"
+                        ></audio>
+
+                        <button
+                            id="skip-prev-btn"
+                            class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors shadow-sm"
+                            onclick="window.skipAudio(-1, event)"
+                            title="Previous Paragraph"
+                        >
+                            <svg
+                                class="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                        </button>
+
+                        <button
+                            id="play-pause-btn"
+                            onclick="window.toggleAudio(event)"
+                            class="play-pause-btn w-14 h-14 rounded-full bg-black text-white flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform shadow-md mx-1"
+                        >
+                            <!-- Play Icon (Default) -->
+                            <svg
+                                class="icon-play w-6 h-6 ml-1"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path d="M8 5v14l11-7z"></path>
+                            </svg>
+                            <!-- Pause Icon (Hidden initially) -->
+                            <svg
+                                class="icon-pause w-6 h-6 hidden"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"
+                                ></path>
+                            </svg>
+                        </button>
+
+                        <button
+                            id="skip-next-btn"
+                            class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors shadow-sm"
+                            onclick="window.skipAudio(1, event)"
+                            title="Next Paragraph"
+                        >
+                            <svg
+                                class="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+
+                        <div class="flex flex-col justify-center">
+                            <span
+                                class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-0.5"
+                                >Listen to this blog</span
+                            >
+                            <div class="flex items-center gap-3">
+                                <!-- Visual Waveform Placeholder -->
+                                <div
+                                    class="hidden sm:flex items-center gap-1 h-3"
+                                >
+                                    <div
+                                        class="w-1 h-2 bg-white/60 rounded-full animate-pulse"
+                                    >
+                                    </div>
+                                    <div
+                                        class="w-1 h-3 bg-white/60 rounded-full animate-pulse delay-75"
+                                    >
+                                    </div>
+                                    <div
+                                        class="w-1 h-1.5 bg-white/60 rounded-full animate-pulse delay-150"
+                                    >
+                                    </div>
+                                    <div
+                                        class="w-1 h-2.5 bg-white/60 rounded-full animate-pulse delay-75"
+                                    >
+                                    </div>
+                                    <div
+                                        class="w-1 h-2 bg-white/20 rounded-full"
+                                    >
+                                    </div>
+                                    <div
+                                        class="w-1 h-1 bg-white/20 rounded-full"
+                                    >
+                                    </div>
+                                    <div
+                                        class="w-1 h-2 bg-white/20 rounded-full"
+                                    >
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex items-center gap-1.5"
+                                    title="Playback Speed"
+                                >
+                                    <input
+                                        type="range"
+                                        class="speed-range w-12 h-1 accent-white cursor-pointer"
+                                        min="0.5"
+                                        max="2"
+                                        step="0.25"
+                                        value="1"
+                                        oninput="window.setSpeed(this.value, event)"
+                                        onchange="window.applySpeed(event)"
+                                    />
+                                    <span
+                                        class="speed-label text-[10px] font-bold text-white bg-white/20 rounded-full px-1.5 py-0.5 min-w-[30px] text-center"
+                                        title="Normal">1x</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <button
+                            id="close-audio-btn"
+                            onclick="window.closeAudio(event)"
+                            class="close-audio-btn w-8 h-8 rounded-full bg-white/10 hover:bg-white/30 text-white/70 hover:text-white flex items-center justify-center transition-colors ml-auto hidden"
+                            title="Close Audio"
+                        >
+                            <svg
+                                class="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right: Cover Image (5 Cols) -->
+                <div class="lg:col-span-5 gsap-reveal mt-12 lg:mt-0">
+                    <div
+                        class="w-full bg-gray-100 overflow-hidden rounded-2xl relative shadow-2xl aspect-[4/3]"
+                    >
+                        <img
+                            src=""
+                            alt="Blog cover image"
+                            class="w-full h-full object-cover grayscale hover:grayscale-0 hover:scale-105 transition-transform duration-700"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Audio Player (bottom center, shown after 600px scroll) -->
+    <div
+        id="sticky-audio-player-container"
+        class="fixed bottom-8 inset-x-0 mx-auto w-fit z-[100] transition-all duration-500 ease-out opacity-0 invisible translate-y-4 pointer-events-none hidden"
+    >
+        <div
+            class="p-2 pr-4 sm:pr-6 border border-white/10 bg-brand-dark/90 backdrop-blur-md rounded-full flex items-center gap-2 sm:gap-4 shadow-2xl"
+        >
+            <audio id="sticky-blog-audio" src="" preload="metadata"></audio>
+
+            <button
+                class="skip-prev-btn w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors shadow-sm"
+                onclick="window.skipAudio(-1, event)"
+                title="Previous Paragraph"
+            >
+                <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+
+            <button
+                class="play-pause-btn w-14 h-14 rounded-full bg-black text-white flex items-center justify-center shrink-0 transition-transform shadow-md mx-1"
+                onclick="window.toggleAudio(event)"
+            >
+                <svg
+                    class="icon-play w-6 h-6 ml-1"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path d="M8 5v14l11-7z"></path>
+                </svg>
+                <svg
+                    class="icon-pause w-6 h-6 hidden"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path>
+                </svg>
+            </button>
+
+            <button
+                class="skip-next-btn w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors shadow-sm"
+                onclick="window.skipAudio(1, event)"
+                title="Next Paragraph"
+            >
+                <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
+
+            <div class="flex flex-col justify-center">
+                <span
+                    class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-0.5"
+                    >Listen to this blog</span
+                >
+                <div class="flex items-center gap-3">
+                    <div class="hidden sm:flex items-center gap-1 h-3">
+                        <div
+                            class="w-1 h-2 bg-white/60 rounded-full animate-pulse"
+                        >
+                        </div>
+                        <div
+                            class="w-1 h-3 bg-white/60 rounded-full animate-pulse delay-75"
+                        >
+                        </div>
+                        <div
+                            class="w-1 h-1.5 bg-white/60 rounded-full animate-pulse delay-150"
+                        >
+                        </div>
+                        <div
+                            class="w-1 h-2.5 bg-white/60 rounded-full animate-pulse delay-75"
+                        >
+                        </div>
+                        <div class="w-1 h-2 bg-white/20 rounded-full"></div>
+                        <div class="w-1 h-1 bg-white/20 rounded-full"></div>
+                        <div class="w-1 h-2 bg-white/20 rounded-full"></div>
+                    </div>
+                    <div
+                        class="flex items-center gap-1.5"
+                        title="Playback Speed"
+                    >
+                        <input
+                            type="range"
+                            class="speed-range w-12 h-1 accent-white cursor-pointer"
+                            min="0.5"
+                            max="2"
+                            step="0.25"
+                            value="1"
+                            oninput="window.setSpeed(this.value, event)"
+                            onchange="window.applySpeed(event)"
+                        />
+                        <span
+                            class="speed-label text-[10px] font-bold text-white bg-white/20 rounded-full px-1.5 py-0.5 min-w-[30px] text-center"
+                            title="Normal">1x</span
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <button
+                class="close-audio-btn w-8 h-8 rounded-full bg-white/10 hover:bg-white/30 text-white/70 hover:text-white flex items-center justify-center transition-colors ml-auto hidden"
+                onclick="window.closeAudio(event)"
+                title="Close Audio"
+            >
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    <div
+        id="blog-loading"
+        class="flex items-center justify-center min-h-[500px] bg-white text-brand-dark"
+    >
+        <div class="text-center">
+            <div
+                class="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"
+            >
+            </div>
+            <p class="text-lg font-medium">Loading blog post...</p>
+        </div>
+    </div>
+
+    <!-- Not Found State -->
+    <div
+        id="blog-not-found"
+        class="hidden flex items-center justify-center min-h-[500px] bg-white text-brand-dark"
+    >
+        <div class="text-center p-6">
+            <h2 class="text-3xl font-bold mb-4">Blog Not Found</h2>
+            <p class="text-lg text-gray-600 mb-6">
+                The requested blog post could not be found.
+            </p>
+            <a
+                href="/insights"
+                class="inline-block px-6 py-3 bg-black text-white rounded-full font-medium hover:bg-gray-800 transition-colors"
+            >
+                View All Insights
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content & Sidebar Layout -->
+    <section
+        id="blog-content"
+        class="px-6 md:px-12 pt-20 pb-32 bg-white text-brand-dark hidden"
+    >
+        <div
+            class="w-full max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16"
+        >
+            <!-- Left: Article Body (Spans 8 columns) -->
+            <article
+                class="lg:col-span-8 article-content text-lg md:text-xl font-light"
+            >
+                <!-- Share Options (Moved to Top) -->
+                <div
+                    id="share-article"
+                    class="mb-12 pb-8 border-b border-gray-200 flex items-center gap-6 flex-wrap gsap-reveal"
+                >
+                    <span
+                        class="text-xs font-bold uppercase tracking-widest text-gray-500"
+                        >Share Article</span
+                    >
+                    <a
+                        id="linkedin-share"
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-black hover:text-gray-400 transition-colors interactive"
+                    >
+                        <svg
+                            class="w-5 h-5"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+                            ></path>
+                        </svg>
+                    </a>
+                    <a
+                        id="twitter-share"
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-black hover:text-gray-400 transition-colors interactive"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            class="bi bi-twitter-x"
+                            viewBox="0 0 16 16"
+                        >
+                            <path
+                                d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"
+                            ></path>
+                        </svg>
+                    </a>
+                    <button
+                        onclick="shareArticle()"
+                        class="text-black hover:text-gray-400 transition-colors interactive"
+                        title="Share article"
+                    >
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+                            ></path>
+                        </svg>
+                    </button>
+                    <button
+                        onclick="copyPageLink()"
+                        class="text-black hover:text-gray-400 transition-colors interactive"
+                        title="Copy page link"
+                    >
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Mobile: Key Takeaways + TOC + Services (visible only on mobile/tablet) -->
+                <div
+                    class="lg:hidden mb-12 p-6 bg-gray-50 rounded-2xl border border-gray-200"
+                >
+                    <!-- Mobile Key Takeaways -->
+                    <div class="mb-8 sidebar-takeaways-mobile">
+                        <h4
+                            class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4 border-b border-gray-200 pb-3"
+                        >
+                            Key Takeaways
+                        </h4>
+                        <ul class="space-y-3" id="mobile-takeaways"></ul>
+                    </div>
+
+                    <!-- Mobile TOC -->
+                    <div class="mb-8 sidebar-toc-mobile">
+                        <h4
+                            class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4 border-b border-gray-200 pb-3"
+                        >
+                            In This Article
+                        </h4>
+                        <ul class="space-y-2" id="mobile-toc"></ul>
+                    </div>
+
+                    <!-- Mobile Services -->
+                    <div>
+                        <h4
+                            class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4 border-b border-gray-200 pb-3"
+                        >
+                            Explore by Service
+                        </h4>
+                        <div class="flex flex-wrap gap-2">
+                            <a
+                                href="/services/reputation-communications"
+                                class="interactive border border-black/20 rounded-full px-3 py-1.5 text-xs font-semibold tracking-wide text-black hover:bg-black hover:text-white transition-colors"
+                                >Reputation & Comms</a
+                            >
+                            <a
+                                href="/services/visibility-search"
+                                class="interactive border border-black/20 rounded-full px-3 py-1.5 text-xs font-semibold tracking-wide text-black hover:bg-black hover:text-white transition-colors"
+                                >Visibility & Search</a
+                            >
+                            <a
+                                href="/services/creative"
+                                class="interactive border border-black/20 rounded-full px-3 py-1.5 text-xs font-semibold tracking-wide text-black hover:bg-black hover:text-white transition-colors"
+                                >Content & Creative</a
+                            >
+                            <a
+                                href="/services/demand-generation"
+                                class="interactive border border-black/20 rounded-full px-3 py-1.5 text-xs font-semibold tracking-wide text-black hover:bg-black hover:text-white transition-colors"
+                                >Demand & Automation</a
+                            >
+                            <a
+                                href="/services/digital-experiences"
+                                class="interactive border border-black/20 rounded-full px-3 py-1.5 text-xs font-semibold tracking-wide text-black hover:bg-black hover:text-white transition-colors"
+                                >Digital Experiences</a
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Article Content Will Be Injected Here -->
+                <div id="article-body" class="gsap-reveal"></div>
+            </article>
+
+            <!-- Right: Sticky Sidebar (Spans 4 columns) -->
+            <aside class="lg:col-span-4 hidden lg:block">
+                <!-- Blog Categorization by Services -->
+                <div class="mb-12 gsap-reveal">
+                    <h4
+                        class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4 border-b border-gray-200 pb-3"
+                    >
+                        Explore by Service
+                    </h4>
+                    <div class="flex flex-wrap gap-2">
+                        <a
+                            href="/services/reputation-communications"
+                            class="interactive border border-black/20 rounded-full px-3 py-1.5 text-xs font-semibold tracking-wide text-black hover:bg-black hover:text-white transition-colors"
+                            >Reputation & Comms</a
+                        >
+                        <a
+                            href="/services/visibility-search"
+                            class="interactive border border-black/20 rounded-full px-3 py-1.5 text-xs font-semibold tracking-wide text-black hover:bg-black hover:text-white transition-colors"
+                            >Visibility & Search</a
+                        >
+                        <a
+                            href="/services/creative"
+                            class="interactive border border-black/20 rounded-full px-3 py-1.5 text-xs font-semibold tracking-wide text-black hover:bg-black hover:text-white transition-colors"
+                            >Content & Creative</a
+                        >
+                        <a
+                            href="/services/demand-generation"
+                            class="interactive border border-black/20 rounded-full px-3 py-1.5 text-xs font-semibold tracking-wide text-black hover:bg-black hover:text-white transition-colors"
+                            >Demand & Automation</a
+                        >
+                        <a
+                            href="/services/digital-experiences"
+                            class="interactive border border-black/20 rounded-full px-3 py-1.5 text-xs font-semibold tracking-wide text-black hover:bg-black hover:text-white transition-colors"
+                            >Digital Experiences</a
+                        >
+                    </div>
+                </div>
+
+                <!-- Key Takeaways -->
+                <div class="mb-12 gsap-reveal sidebar-takeaways">
+                    <h4
+                        class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4 border-b border-gray-200 pb-3"
+                    >
+                        Key Takeaways
+                    </h4>
+                    <ul class="space-y-3" id="desktop-takeaways"></ul>
+                </div>
+
+                <!-- Table of Contents -->
+                <div class="sticky top-24 md:top-28 gsap-reveal sidebar-toc">
+                    <h4
+                        class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4 border-b border-gray-200 pb-3"
+                    >
+                        In This Article
+                    </h4>
+                    <ul class="space-y-3" id="desktop-toc"></ul>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <!-- More Blogs Connector -->
+    <section class="px-6 md:px-12 py-24 bg-white text-brand-dark">
+        <div class="max-w-[1400px] mx-auto border-t border-gray-200 pt-16">
+            <div
+                class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8 gsap-reveal"
+            >
+                <h3
+                    class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter uppercase text-black"
+                    id="more-articles-title"
+                >
+                    Related Articles
+                </h3>
+                <a
+                    href="/insights"
+                    class="interactive border border-black/20 text-black hover:bg-black hover:text-white px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 whitespace-nowrap"
+                    >View All Insights</a
+                >
+            </div>
+            <div
+                class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8"
+                id="related-articles"
+            >
+            </div>
+        </div>
+    </section>
+
+    <script is:inline>
+        const cursor = document.getElementById("cursor");
+        const interactiveElements = document.querySelectorAll(
+            ".interactive, a, button, input, textarea, select, label",
+        );
+        document.addEventListener("mousemove", (e) => {
+            cursor.style.left = e.clientX + "px";
+            cursor.style.top = e.clientY + "px";
+        });
+        interactiveElements.forEach((el) => {
+            el.addEventListener("mouseenter", () =>
+                cursor.classList.add("hovered"),
+            );
+            el.addEventListener("mouseleave", () =>
+                cursor.classList.remove("hovered"),
+            );
+        });
+        if (typeof Lenis !== "undefined" && !window.lenis) {
+            window.lenis = new Lenis({
+                wrapper: window,
+                content: document.documentElement,
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                direction: "vertical",
+                gestureDirection: "vertical",
+                smooth: true,
+                mouseMultiplier: 1,
+                smoothTouch: false,
+                touchMultiplier: 2,
+                infinite: false,
+            });
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+        }
+        if (typeof gsap !== "undefined") {
+            gsap.registerPlugin(ScrollTrigger);
+            if (window.lenis) lenis.on("scroll", ScrollTrigger.update);
+            gsap.from(".gsap-reveal-text", {
+                y: 120,
+                opacity: 0,
+                duration: 1.2,
+                stagger: 0.1,
+                ease: "power4.out",
+                delay: 0.2,
+            });
+            // Reveals are created globally (GlobalScripts) and re-created after
+            // the article loads; only refresh positions here to avoid double
+            // triggers on the same elements.
+            ScrollTrigger.refresh();
+        }
+
+        // Blog Audio Player (visual toggle; replaced by Speech Synthesis logic at bottom of file)
+        window.toggleAudio = function () {
+            // Function overridden below
+        };
+
+        function setShareLinks(url, title) {
+            const linkedin = document.getElementById("linkedin-share");
+            const twitter = document.getElementById("twitter-share");
+            if (linkedin)
+                linkedin.href =
+                    "https://www.linkedin.com/sharing/share-offsite/?url=" +
+                    encodeURIComponent(url);
+            if (twitter)
+                twitter.href =
+                    "https://twitter.com/intent/tweet?url=" +
+                    encodeURIComponent(url) +
+                    "&text=" +
+                    encodeURIComponent(title);
+        }
+
+        // Set share links on page load
+        setShareLinks(window.location.href, document.title);
+
+        function shareArticle() {
+            const title = document.title;
+            const url = window.location.href;
+            setShareLinks(url, title);
+            if (navigator.share) {
+                navigator.share({ title, url }).catch(function (err) {
+                    if (err.name !== "AbortError") copyPageLink();
+                });
+            } else {
+                copyPageLink();
+            }
+        }
+
+        function copyPageLink() {
+            const url = window.location.href;
+            navigator.clipboard
+                .writeText(url)
+                .then(function () {
+                    showToast("Link copied!", "check");
+                })
+                .catch(function () {
+                    const input = document.createElement("input");
+                    input.value = url;
+                    document.body.appendChild(input);
+                    input.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(input);
+                    showToast("Link copied!", "check");
+                });
+        }
+
+        function showToast(msg, type) {
+            const el = document.getElementById("toast-notification");
+            if (!el) return;
+            let icon = "";
+            if (type === "check") {
+                icon =
+                    '<svg class="w-5 h-5 mr-2 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
+            } else if (type === "warning") {
+                icon =
+                    '<svg class="w-5 h-5 mr-2 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>';
+            }
+            el.innerHTML = icon + msg;
+            el.classList.remove("opacity-0", "translate-y-4");
+            el.classList.add("opacity-100", "translate-y-0");
+            clearTimeout(el._hide);
+            el._hide = setTimeout(function () {
+                el.classList.remove("opacity-100", "translate-y-0");
+                el.classList.add("opacity-0", "translate-y-4");
+            }, 2500);
+        }
+    </script>
+
+    <script is:inline>
+        // 5. Footer: highlight relationship between Services and Service Pages
+        (function () {
+            const serviceLinks = document.querySelectorAll(
+                "footer a[data-service]",
+            );
+            const pageLinks = document.querySelectorAll(
+                "footer a[data-parent]",
+            );
+            if (!serviceLinks.length || !pageLinks.length) return;
+
+            function clearAll() {
+                serviceLinks.forEach((s) => s.classList.remove("is-active"));
+                pageLinks.forEach((p) =>
+                    p.classList.remove("is-match", "is-dim", "is-hovered"),
+                );
+            }
+
+            serviceLinks.forEach((link) => {
+                const key = link.getAttribute("data-service");
+                link.addEventListener("mouseenter", () => {
+                    serviceLinks.forEach((s) =>
+                        s.classList.remove("is-active"),
+                    );
+                    link.classList.add("is-active");
+                    pageLinks.forEach((p) => {
+                        if (p.getAttribute("data-parent") === key) {
+                            p.classList.add("is-match");
+                            p.classList.remove("is-dim");
+                        } else {
+                            p.classList.add("is-dim");
+                            p.classList.remove("is-match");
+                        }
+                    });
+                });
+                link.addEventListener("mouseleave", clearAll);
+            });
+
+            pageLinks.forEach((link) => {
+                const key = link.getAttribute("data-parent");
+                link.addEventListener("mouseenter", () => {
+                    serviceLinks.forEach((s) => {
+                        if (s.getAttribute("data-service") === key)
+                            s.classList.add("is-active");
+                        else s.classList.remove("is-active");
+                    });
+                    pageLinks.forEach((p) => {
+                        if (p.getAttribute("data-parent") === key) {
+                            p.classList.add("is-match");
+                            p.classList.remove("is-dim");
+                        } else {
+                            p.classList.add("is-dim");
+                            p.classList.remove("is-match");
+                        }
+                    });
+                    p.classList.remove("is-hovered");
+                    link.classList.add("is-hovered");
+                });
+                link.addEventListener("mouseleave", clearAll);
+            });
+        })();
+    </script>
+
+    <!-- MOBILE_OFFCANVAS_MENU -->
+
+    <script is:inline>
+        /* Mobile Offcanvas Menu - built dynamically from each page's nav */
+        (function () {
+            var navEl = document.querySelector("nav");
+            var hamburgerBtn = navEl ? navEl.querySelector("button") : null;
+            if (!navEl || !hamburgerBtn) return;
+
+            var megaLinks = Array.prototype.slice
+                .call(document.querySelectorAll("nav .mega-menu-grid a"))
+                .map(function (a) {
+                    var t = a.querySelector(".card-title");
+                    var label = t
+                        ? t.innerHTML
+                              .replace(/<br\s*\/?>/gi, " ")
+                              .replace(/\s+/g, " ")
+                              .trim()
+                        : a.textContent.trim();
+                    return { href: a.href, label: label };
+                });
+            var directLinks = Array.prototype.slice
+                .call(document.querySelectorAll("nav .nav-pill > a"))
+                .map(function (a) {
+                    return { href: a.href, label: a.textContent.trim() };
+                });
+            var ctaLink = Array.prototype.slice
+                .call(document.querySelectorAll("nav a"))
+                .find(function (a) {
+                    return /connect/i.test(a.textContent);
+                });
+            var homeLink = document.querySelector('nav a[aria-label="Home"]');
+
+            var overlay = document.createElement("div");
+            overlay.className = "mobile-menu-overlay";
+            var panel = document.createElement("div");
+            panel.className = "mobile-menu-panel";
+            panel.setAttribute("data-lenis-prevent", ""); // let the panel scroll natively even when Lenis is stopped
+
+            var html =
+                '<div class="mobile-menu-head"><a href="/' +
+                (homeLink ? homeLink.href : "index.html") +
+                '" class="mobile-menu-logo">CHIMPZLAB</a>';
+            html +=
+                '<button type="button" class="mobile-menu-close" aria-label="Close menu">&times;</button></div>';
+            html += '<nav class="mobile-menu-nav">';
+            html +=
+                '<div class="mobile-menu-group"><button type="button" class="mobile-menu-toggle">Services <span class="chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button><div class="mobile-submenu">';
+            megaLinks.forEach(function (l) {
+                html +=
+                    '<a href="/' +
+                    l.href +
+                    '" class="mobile-submenu-link">' +
+                    l.label +
+                    "</a>";
+            });
+            html += "</div></div>";
+            directLinks.forEach(function (l) {
+                html +=
+                    '<a href="/' +
+                    l.href +
+                    '" class="mobile-menu-link">' +
+                    l.label +
+                    "</a>";
+            });
+            html += "</nav>";
+            html +=
+                '<a href="/' +
+                (ctaLink ? ctaLink.href : "#booking-form") +
+                '" class="mobile-menu-cta">Let\'s Connect</a>';
+
+            panel.innerHTML = html;
+            overlay.appendChild(panel);
+            document.body.appendChild(overlay);
+
+            function lockScroll() {
+                document.body.classList.add("menu-open");
+                if (window.lenis && typeof window.lenis.stop === "function")
+                    window.lenis.stop();
+            }
+            function unlockScroll() {
+                document.body.classList.remove("menu-open");
+                if (window.lenis && typeof window.lenis.start === "function")
+                    window.lenis.start();
+            }
+            function openMenu() {
+                overlay.classList.add("open");
+                hamburgerBtn.classList.add("is-active");
+                hamburgerBtn.setAttribute("aria-expanded", "true");
+                lockScroll();
+            }
+            function closeMenu() {
+                overlay.classList.remove("open");
+                hamburgerBtn.classList.remove("is-active");
+                hamburgerBtn.setAttribute("aria-expanded", "false");
+                unlockScroll();
+            }
+
+            hamburgerBtn.addEventListener("click", function () {
+                if (overlay.classList.contains("open")) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+            });
+            overlay.addEventListener("click", function (e) {
+                if (e.target === overlay) closeMenu();
+                if (e.target.closest("a")) closeMenu();
+            });
+            var closeBtn = panel.querySelector(".mobile-menu-close");
+            if (closeBtn) closeBtn.addEventListener("click", closeMenu);
+            document.addEventListener("keydown", function (e) {
+                if (e.key === "Escape") closeMenu();
+            });
+
+            var svcToggle = panel.querySelector(".mobile-menu-toggle");
+            if (svcToggle) {
+                svcToggle.addEventListener("click", function () {
+                    svcToggle.parentElement.classList.toggle("open");
+                });
+            }
+        })();
+    </script>
+
+    <script is:inline src="/js/wp-insights.v2.js"></script>
+    <script
+        is:inline
+        define:vars={{
+            blogSiteName: site.name,
+            blogSiteUrl: site.url,
+            blogLogoUrl: site.url + site.logo.ogImage,
+        }}
+    >
+        // Article loader - reads slug from URL, loads metadata index + single article
+        (async function () {
+            function showNotFound() {
+                document.getElementById("blog-loading").classList.add("hidden");
+                document
+                    .getElementById("blog-not-found")
+                    .classList.remove("hidden");
+            }
+
+            function showContent(article) {
+                // Update page title
+                document.title = article.titleFull + " | " + blogSiteName;
+
+                // Update canonical URL to the pretty per-article URL
+                var canon = document.querySelector('link[rel="canonical"]');
+                if (canon) canon.setAttribute("href", "/blog-insite/" + article.slug);
+
+                // Update meta description
+                var metaDesc = document.querySelector(
+                    'meta[name="description"]',
+                );
+                if (metaDesc && article.intro)
+                    metaDesc.setAttribute("content", article.intro);
+
+                // Inject BlogPosting JSON-LD schema
+                var blogSchema = {
+                    "@context": "https://schema.org",
+                    "@type": "BlogPosting",
+                    headline: article.titleFull,
+                    description: article.intro || "",
+                    image: article.image ? article.image : "",
+                    datePublished: article.date || "",
+                    author: {
+                        "@type": "Organization",
+                        name: blogSiteName,
+                    },
+                    publisher: {
+                        "@type": "Organization",
+                        name: blogSiteName,
+                        logo: {
+                            "@type": "ImageObject",
+                            url: blogLogoUrl,
+                        },
+                    },
+                    mainEntityOfPage: {
+                        "@type": "WebPage",
+                        "@id": blogSiteUrl + "/blog-insite/" + article.slug,
+                    },
+                };
+                var schemaScript = document.createElement("script");
+                schemaScript.type = "application/ld+json";
+                schemaScript.textContent = JSON.stringify(blogSchema);
+                document.head.appendChild(schemaScript);
+
+                // --- Hero Section ---
+                const heroMeta = document.querySelector(
+                    ".gap-4.mb-8.gsap-reveal",
+                );
+                if (heroMeta) {
+                    const spans = heroMeta.querySelectorAll("span");
+                    if (spans[0]) spans[0].textContent = article.category;
+                    if (spans[1]) spans[1].textContent = article.readTime;
+                    if (spans[2]) spans[2].innerHTML = "\u2022 " + article.date;
+                }
+
+                const titleH1 = document.querySelector("h1");
+                if (titleH1) {
+                    const block = titleH1.querySelector(".gsap-reveal-text");
+                    if (block)
+                        block.textContent =
+                            (article.titleParts &&
+                                article.titleParts.join(" ")) ||
+                            article.titleFull;
+                }
+
+                const coverImg = document.querySelector(
+                    ".rounded-2xl.relative img",
+                );
+                if (coverImg) {
+                    coverImg.src = article.image;
+                    coverImg.alt = article.alt;
+                }
+
+                // --- Hero Tags ---
+                const heroTags = document.querySelector(".hero-tags");
+                if (heroTags && article.tag) {
+                    var tagItems = article.tag.split(",").map(function (t) {
+                        return t.trim();
+                    });
+                    tagItems.forEach(function (t) {
+                        var span = document.createElement("span");
+                        span.className =
+                            "text-[11px] font-medium text-white/70 px-3 py-1 border border-white/20 rounded-full";
+                        span.textContent = t;
+                        heroTags.appendChild(span);
+                    });
+                }
+
+                // --- Article Body ---
+                const articleContent =
+                    document.querySelector(".article-content");
+                if (articleContent) {
+                    let html = "";
+
+                    html +=
+                        '<p class="gsap-reveal text-2xl md:text-3xl text-black font-medium mb-12 leading-tight">' +
+                        article.intro +
+                        "</p>";
+
+                    function slugify(text) {
+                        return text
+                            .toLowerCase()
+                            .replace(/[^a-z0-9]+/g, "-")
+                            .replace(/(^-|-$)/g, "");
+                    }
+
+                    if (Array.isArray(article.body)) {
+                        // Legacy structured blocks (static JSON fallback)
+                        article.body.forEach(function (section) {
+                            if (section.type === "p") {
+                                html +=
+                                    '<p class="gsap-reveal mb-6">' +
+                                    section.text +
+                                    "</p>";
+                            } else if (section.type === "h2") {
+                                var id = slugify(section.text);
+                                html +=
+                                    '<h2 id="' +
+                                    id +
+                                    '" class="gsap-reveal uppercase tracking-tight text-2xl md:text-3xl font-bold mt-14 mb-6 scroll-mt-24">' +
+                                    section.text +
+                                    "</h2>";
+                            } else if (section.type === "blockquote") {
+                                html +=
+                                    '<blockquote class="gsap-reveal border-l-4 border-black pl-6 italic text-gray-700 my-8">' +
+                                    section.text +
+                                    "</blockquote>";
+                            } else if (section.type === "h3") {
+                                var id = slugify(section.text);
+                                html +=
+                                    '<h3 id="' +
+                                    id +
+                                    '" class="gsap-reveal uppercase tracking-tight text-xl md:text-2xl font-bold mt-10 mb-4 scroll-mt-24">' +
+                                    section.text +
+                                    "</h3>";
+                            }
+                        });
+                    } else if (typeof article.body === "string" && article.body.trim()) {
+                        // WordPress rendered HTML
+                        html += article.body;
+                    }
+
+                    document.getElementById("article-body").innerHTML = html;
+
+                    // Build Table of Contents from h2/h3
+                    const tocContainer = document.querySelector("#desktop-toc");
+                    const mobileToc = document.querySelector("#mobile-toc");
+                    const headings = articleContent.querySelectorAll("h2, h3");
+                    headings.forEach((h, i) => {
+                        const id = h.id || "heading-" + i;
+                        h.id = id;
+                        const link = document.createElement("a");
+                        link.href = "#" + id;
+                        link.textContent = h.textContent;
+                        link.className = "block text-sm text-gray-600 hover:text-black transition-colors " + (h.tagName === "H3" ? "ml-4" : "");
+                        if (tocContainer) tocContainer.appendChild(link);
+                        if (mobileToc) mobileToc.appendChild(link.cloneNode(true));
+                    });
+
+                    // ScrollSpy for TOC
+                    if (typeof gsap !== "undefined" && headings.length) {
+                        gsap.registerPlugin(ScrollTrigger);
+                        const tocLinks = tocContainer ? tocContainer.querySelectorAll("a") : [];
+                        headings.forEach((h, i) => {
+                            ScrollTrigger.create({
+                                trigger: h,
+                                start: "top 100",
+                                end: "bottom 100",
+                                onToggle: (self) => {
+                                    if (tocLinks[i]) {
+                                        if (self.isActive) {
+                                            tocLinks[i].classList.add("text-black", "font-semibold");
+                                            tocLinks[i].classList.remove("text-gray-600");
+                                        } else {
+                                            tocLinks[i].classList.remove("text-black", "font-semibold");
+                                            tocLinks[i].classList.add("text-gray-600");
+                                        }
+                                    }
+                                },
+                            });
+                        });
+                    }
+
+                    // Re-init GSAP reveals for newly injected content
+                    if (typeof gsap !== "undefined") {
+                        gsap.from("#article-body .gsap-reveal", {
+                            y: 40,
+                            opacity: 0,
+                            duration: 0.8,
+                            stagger: 0.05,
+                            ease: "power3.out",
+                            scrollTrigger: {
+                                trigger: "#article-body",
+                                start: "top 80%",
+                            },
+                        });
+                        ScrollTrigger.refresh();
+                    }
+                }
+
+                // --- Key Takeaways ---
+                const dt = document.getElementById("desktop-takeaways");
+                const mt = document.getElementById("mobile-takeaways");
+                if (article.takeaways && article.takeaways.length) {
+                    article.takeaways.forEach(function (t) {
+                        var li = document.createElement("li");
+                        li.className = "flex items-start gap-3 text-gray-700";
+                        li.innerHTML =
+                            '<svg class="w-5 h-5 flex-shrink-0 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>' + t + "</span>";
+                        if (dt) dt.appendChild(li);
+                        if (mt) mt.appendChild(li.cloneNode(true));
+                    });
+                } else {
+                    if (dt) dt.parentElement.style.display = "none";
+                    if (mt) mt.parentElement.style.display = "none";
+                }
+
+                // --- Audio Player Setup ---
+                if (article.audioUrl) {
+                    const audioEl = document.getElementById("blog-audio");
+                    const stickyAudioEl = document.getElementById("sticky-blog-audio");
+                    if (audioEl) audioEl.src = article.audioUrl;
+                    if (stickyAudioEl) stickyAudioEl.src = article.audioUrl;
+                    document.getElementById("audio-player-container").classList.remove("hidden");
+                    document.getElementById("sticky-audio-player-container").classList.remove("hidden");
+                }
+
+                // --- Show Content ---
+                document.getElementById("blog-loading").classList.add("hidden");
+                document.getElementById("blog-content").classList.remove("hidden");
+
+                // Update share links
+                setShareLinks(window.location.href, article.titleFull);
+            }
+
+            // Extract slug from URL path: /blog-insite/<slug>
+            var path = window.location.pathname;
+            var match = path.match(/^\/blog-insite\/([^/]+)/);
+            var slug = match ? match[1] : null;
+
+            if (!slug) {
+                showNotFound();
+                return;
+            }
+
+            // Load article
+            try {
+                var article = await window.WPInsights.fetchArticle(slug);
+                if (!article) {
+                    showNotFound();
+                    return;
+                }
+                showContent(article);
+            } catch (err) {
+                console.error("Failed to load article:", err);
+                showNotFound();
+            }
+        })();
+    </script>
+</BaseLayout>
