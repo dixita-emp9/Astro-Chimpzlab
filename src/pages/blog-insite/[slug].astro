@@ -3,11 +3,27 @@ import ContactForm from "../../components/sections/ContactForm.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { site } from "../../config/site";
 
-export const prerender = false;
-
 const blogSiteUrl = site.url;
 const blogSiteName = site.name;
 const blogLogoUrl = site.url + site.logo.ogImage;
+
+export async function getStaticPaths() {
+    const API = "https://chimpzlab.com/chimpzlab-old/wp-json/wp/v2/insights";
+    try {
+        const res = await fetch(API + "?per_page=100&_embed&orderby=date&order=desc");
+        if (!res.ok) throw new Error("WP API failed");
+        const posts = await res.json();
+        return posts.map((post: any) => ({
+            params: { slug: post.slug },
+            props: { post },
+        }));
+    } catch (err) {
+        console.warn("getStaticPaths: failed to fetch WP posts", err);
+        return [];
+    }
+}
+
+const { post } = Astro.props;
 ---
 
 <BaseLayout
