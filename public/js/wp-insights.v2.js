@@ -3,7 +3,8 @@
 // slider and service-page loaders so they all share one fetch+normalize path.
 // WordPress is the single source of truth for blog content.
 window.WPInsights = (function () {
-    var API = "https://chimpzlab.com/chimpzlab-old/wp-json/wp/v2/insights";
+    var API_REST = "https://chimpzlab.com/chimpzlab-old/?rest_route=/wp/v2/insights";
+    var API_PRETTY = "https://chimpzlab.com/chimpzlab-old/wp-json/wp/v2/insights";
     var PROXY = "/wp-proxy.php?endpoint=insights";
     var PROXY_IMG = "/wp-proxy.php?img=";
     var FALLBACK_IMG = "/asset/home-page.webp";
@@ -13,6 +14,8 @@ window.WPInsights = (function () {
     // Content-Security-Policy blocks cross-origin calls to chimpzlab.com), and
     // falls back to the direct WordPress REST API when the proxy is not running
     // (e.g. `astro dev`, where public PHP files are served as plain text).
+    // Uses ?rest_route fallback because pretty permalinks (/wp-json/...) may
+    // return 404 when WP rewrites/.htaccess are broken — see GitHub issue.
     async function fetchWp(query) {
         try {
             var res = await fetch(PROXY + query.replace(/^\?/, "&"));
@@ -23,9 +26,19 @@ window.WPInsights = (function () {
             }
         } catch (e) {}
         usingProxy = false;
-        var res2 = await fetch(API + query);
-        if (!res2.ok) throw new Error("WP " + res2.status);
-        return await res2.json();
+        // 1) Try non-pretty rest_route URL (always works even with broken permalinks)
+        try {
+            var restUrl = API_REST + query.replace(/^\?/, "&");
+            var res2 = await fetch(restUrl);
+            if (res2.ok) {
+                var data = await res2.json();
+                if (Array.isArray(data) || (data && typeof data === 'object')) return data;
+            }
+        } catch (e2) {}
+        // 2) Fallback to pretty permalink URL
+        var res3 = await fetch(API_PRETTY + query);
+        if (!res3.ok) throw new Error("WP " + res3.status);
+        return await res3.json();
     }
 
     // Rewrites chimpzlab.com media URLs so they load through the same-origin
@@ -308,7 +321,8 @@ window.WPInsights = (function () {
     }
 
     return {
-        API: API,
+        API: API_REST,
+        API_PRETTY: API_PRETTY,
         FALLBACK_IMG: FALLBACK_IMG,
         fetchIndex: fetchIndex,
         fetchArticle: fetchArticle,

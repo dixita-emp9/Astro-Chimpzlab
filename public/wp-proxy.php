@@ -14,7 +14,9 @@
 // WordPress stays the single source of truth: this file only forwards requests
 // and never stores or edits content.
 
-$WP_BASE = 'https://chimpzlab.com/chimpzlab-old/wp-json/wp/v2';
+$WP_BASE = 'https://chimpzlab.com/chimpzlab-old';
+$WP_BASE_REST = $WP_BASE . '/?rest_route=/wp/v2';
+$WP_BASE_PRETTY = $WP_BASE . '/wp-json/wp/v2';
 
 // ---- Image proxy ---------------------------------------------------------
 if (isset($_GET['img'])) {
@@ -58,25 +60,41 @@ if (!preg_match('/^[a-z0-9_\-\/]+$/i', $endpoint)) {
 }
 unset($_GET['img'], $_GET['endpoint']);
 $qs = http_build_query($_GET);
-$url = $WP_BASE . '/' . $endpoint . ($qs !== '' ? '?' . $qs : '');
+// Build both rest_route (non-pretty, always works) and pretty permalink URLs.
+// Pretty permalinks (/wp-json/...) may 404 when WP .htaccess is broken, so we
+// try rest_route first and fall back to pretty.
+$url_rest   = $WP_BASE_REST . '/' . $endpoint . ($qs !== '' ? '&' . $qs : '');
+$url_pretty = $WP_BASE_PRETTY . '/' . $endpoint . ($qs !== '' ? '?' . $qs : '');
 
-$ctx = stream_context_create(array('http' => array(
-    'timeout'      => 25,
-    'header'       => "Accept: application/json\r\nUser-Agent: ChimpzlabSite/1.0\r\n",
-    'ignore_errors' => true,
-)));
-$json = @file_get_contents($url, false, $ctx);
-$status = 200;
-$total = null;
-if (isset($http_response_header) && is_array($http_response_header)) {
-    foreach ($http_response_header as $h) {
-        if (preg_match('/^HTTP\/\S+\s+(\d+)/', $h, $m)) {
-            $status = (int) $m[1];
-        } elseif (stripos($h, 'X-WP-Total:') === 0) {
-            $total = trim(substr($h, 12));
+function wp_proxy_fetch($url) {
+    $ctx = stream_context_create(array('http' => array(
+        'timeout'       => 25,
+        'header'        => "Accept: application/json\r\nUser-Agent: ChimpzlabSite/1.0\r\n",
+        'ignore_errors' => true,
+    )));
+    $json = @file_get_contents($url, false, $ctx);
+    $status = 200;
+    $total = null;
+    if (isset($http_response_header) && is_array($http_response_header)) {
+        foreach ($http_response_header as $h) {
+            if (preg_match('/^HTTP\/\S+\s+(\d+)/', $h, $m)) {
+                $status = (int) $m[1];
+            } elseif (stripos($h, 'X-WP-Total:') === 0) {
+                $total = trim(substr($h, 12));
+            }
         }
     }
+    return array('json' => $json, 'status' => $status, 'total' => $total);
 }
+
+$result = wp_proxy_fetch($url_rest);
+if ($result['json'] === false || $result['status'] >= 400) {
+    // Fallback to pretty permalink URL
+    $result = wp_proxy_fetch($url_pretty);
+}
+$json = $result['json'];
+$status = $result['status'];
+$total = $result['total'];
 if ($json === false || $status >= 400) {
     http_response_code(502);
     header('Content-Type: application/json');
