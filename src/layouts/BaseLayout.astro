@@ -35,6 +35,23 @@ const gtmId = site.gtmId;
 <!doctype html>
 <html lang="en">
     <head>
+        <!-- OpenAI ChatGPT Shopping Pixel -->
+        <script is:inline>
+            !(function (w, d, s, u) {
+                if (w.oaiq) return;
+                var q = function () {
+                    q.q.push(arguments);
+                };
+                q.q = [];
+                w.oaiq = q;
+                var j = d.createElement(s);
+                j.async = 1;
+                j.src = u;
+                var f = d.getElementsByTagName(s)[0];
+                f.parentNode.insertBefore(j, f);
+            })(window, document, "script", "https://bzrcdn.openai.com/sdk/oaiq.min.js");
+            oaiq("init", { pixelId: "9XEwf5xshNTdV1Wm6DeWKt", debug: true });
+        </script>
         <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-DD2FDYFCEP"></script>
         <script is:inline>
             window.dataLayer = window.dataLayer || [];
