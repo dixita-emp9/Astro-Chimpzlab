@@ -14,6 +14,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <Fragment slot="head">
         <meta name="robots" content="noindex, nofollow" />
     </Fragment>
+    <Fragment slot="scripts">
+        <script is:inline>
+            oaiq("measure", "page_viewed", { type: "contents" });
+        </script>
+    </Fragment>
 
     <div class="text-center max-w-lg">
         <div
