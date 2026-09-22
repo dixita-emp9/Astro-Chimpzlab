@@ -10,7 +10,7 @@ export const GET: APIRoute = () => {
   const body = `User-agent: *
 Allow: /
 Disallow: /thanks/
-Disallow: /blog-insite?*
+Disallow: /blog-insights?*
 
 Sitemap: ${sitemapUrl}
 `;

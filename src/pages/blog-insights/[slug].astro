@@ -42,7 +42,7 @@ const { post } = Astro.props;
 <BaseLayout
     title="Blog & Insights | ChimpzLab"
     description="Read ChimpzLab's latest blog posts on digital marketing, SEO, AI, social media, and industry trends."
-    canonical="/blog-insite"
+    canonical="/blog-insights"
     hideHeader={false}
     hideFooter={false}
 >
@@ -1026,7 +1026,7 @@ const { post } = Astro.props;
 
                 // Update canonical URL to the pretty per-article URL
                 var canon = document.querySelector('link[rel="canonical"]');
-                if (canon) canon.setAttribute("href", "/blog-insite/" + article.slug);
+                if (canon) canon.setAttribute("href", "/blog-insights/" + article.slug);
 
                 // Update meta description
                 var metaDesc = document.querySelector(
@@ -1057,7 +1057,7 @@ const { post } = Astro.props;
                     },
                     mainEntityOfPage: {
                         "@type": "WebPage",
-                        "@id": blogSiteUrl + "/blog-insite/" + article.slug,
+                        "@id": blogSiteUrl + "/blog-insights/" + article.slug,
                     },
                 };
                 var schemaScript = document.createElement("script");
@@ -1256,9 +1256,9 @@ const { post } = Astro.props;
                 setShareLinks(window.location.href, article.titleFull);
             }
 
-            // Extract slug from URL path: /blog-insite/<slug>
+            // Extract slug from URL path: /blog-insights/<slug>
             var path = window.location.pathname;
-            var match = path.match(/^\/blog-insite\/([^/]+)/);
+            var match = path.match(/^\/blog-insights\/([^/]+)/);
             var slug = match ? match[1] : null;
 
             if (!slug) {

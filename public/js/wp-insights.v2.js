@@ -1,5 +1,5 @@
 // WordPress REST API data source for ChimpzLab insights/blogs.
-// Loaded before the inline loaders on blog-insite, insights, the homepage
+// Loaded before the inline loaders on blog-insights, insights, the homepage
 // slider and service-page loaders so they all share one fetch+normalize path.
 // WordPress is the single source of truth for blog content.
 window.WPInsights = (function () {

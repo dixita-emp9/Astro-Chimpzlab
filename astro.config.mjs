@@ -11,6 +11,8 @@ export default defineConfig({
   integrations: [react()],
   redirects: {
     '/blog': '/insights',
+    '/blog-insite': '/blog-insights',
+    '/blog-insite.html': '/blog-insights',
     '/casestudy/ajmera-realty': '/case-studies/ajmera-realty',
     '/casestudy/blue-star': '/case-studies/blue-star',
     '/casestudy/carnelian-capital': '/case-studies/carnelian-capital',
