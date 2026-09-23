@@ -1020,6 +1020,44 @@ const { post } = Astro.props;
                     .classList.remove("hidden");
             }
 
+            // TOC ScrollSpy — created after layout settles (post-unhide) so
+            // trigger positions are measured on the visible page.
+            function initScrollSpy() {
+                if (typeof gsap === "undefined" || !window.ScrollTrigger) return;
+                var tocBox = document.getElementById("desktop-toc");
+                var heads = document.querySelectorAll(
+                    ".article-content h2, .article-content h3",
+                );
+                if (!heads.length) return;
+                if (typeof gsap.registerPlugin === "function")
+                    gsap.registerPlugin(window.ScrollTrigger);
+                var links = tocBox ? tocBox.querySelectorAll("a") : [];
+                heads.forEach(function (h, i) {
+                    window.ScrollTrigger.create({
+                        trigger: h,
+                        start: "top 100",
+                        end: "bottom 100",
+                        onToggle: function (self) {
+                            if (links[i]) {
+                                if (self.isActive) {
+                                    links[i].classList.add(
+                                        "text-black",
+                                        "font-semibold",
+                                    );
+                                    links[i].classList.remove("text-gray-600");
+                                } else {
+                                    links[i].classList.remove(
+                                        "text-black",
+                                        "font-semibold",
+                                    );
+                                    links[i].classList.add("text-gray-600");
+                                }
+                            }
+                        },
+                    });
+                });
+            }
+
             function showContent(article) {
                 // Update page title
                 document.title = article.titleFull + " | " + blogSiteName;
@@ -1180,45 +1218,10 @@ const { post } = Astro.props;
                         if (mobileToc) mobileToc.appendChild(link.cloneNode(true));
                     });
 
-                    // ScrollSpy for TOC
-                    if (typeof gsap !== "undefined" && headings.length) {
-                        gsap.registerPlugin(ScrollTrigger);
-                        const tocLinks = tocContainer ? tocContainer.querySelectorAll("a") : [];
-                        headings.forEach((h, i) => {
-                            ScrollTrigger.create({
-                                trigger: h,
-                                start: "top 100",
-                                end: "bottom 100",
-                                onToggle: (self) => {
-                                    if (tocLinks[i]) {
-                                        if (self.isActive) {
-                                            tocLinks[i].classList.add("text-black", "font-semibold");
-                                            tocLinks[i].classList.remove("text-gray-600");
-                                        } else {
-                                            tocLinks[i].classList.remove("text-black", "font-semibold");
-                                            tocLinks[i].classList.add("text-gray-600");
-                                        }
-                                    }
-                                },
-                            });
-                        });
-                    }
-
-                    // Re-init GSAP reveals for newly injected content
-                    if (typeof gsap !== "undefined") {
-                        gsap.from("#article-body .gsap-reveal", {
-                            y: 40,
-                            opacity: 0,
-                            duration: 0.8,
-                            stagger: 0.05,
-                            ease: "power3.out",
-                            scrollTrigger: {
-                                trigger: "#article-body",
-                                start: "top 80%",
-                            },
-                        });
-                        ScrollTrigger.refresh();
-                    }
+                    // NOTE: ScrollSpy + reveal triggers are (re)created AFTER the
+                    // content is unhidden by the loader at the bottom of this
+                    // file. Measuring while #blog-content is display:none yields
+                    // zero positions, which left elements stuck at opacity:0.
                 }
 
                 // --- Key Takeaways ---
@@ -1274,6 +1277,95 @@ const { post } = Astro.props;
                     return;
                 }
                 showContent(article);
+
+                // --- Related Articles (same-category first, pad with others) ---
+                try {
+                    var meta = await window.WPInsights.fetchIndex();
+                    var sameCat = meta.filter(function (a) {
+                        return (
+                            a.category === article.category &&
+                            a.slug !== article.slug
+                        );
+                    });
+                    var otherCat = meta.filter(function (a) {
+                        return (
+                            a.category !== article.category &&
+                            a.slug !== article.slug
+                        );
+                    });
+                    var relatedArticles = sameCat.slice(0, 2);
+                    if (relatedArticles.length < 2) {
+                        relatedArticles = relatedArticles.concat(
+                            otherCat.slice(0, 2 - relatedArticles.length),
+                        );
+                    }
+                    var relatedGrid =
+                        document.getElementById("related-articles");
+                    if (relatedGrid) {
+                        relatedGrid.innerHTML = relatedArticles
+                            .map(function (a) {
+                                var readTime = a.readTime || "5 Min Read";
+                                return (
+                                    '<a href="/blog-insights/' +
+                                    a.slug +
+                                    '" class="group interactive block gsap-reveal">' +
+                                    '<div class="w-full aspect-[16/9] bg-gray-100 overflow-hidden rounded-xl mb-6 relative">' +
+                                    '<img src="' +
+                                    a.image +
+                                    '" alt="' +
+                                    a.alt +
+                                    '" class="w-full h-full object-cover grayscale group-hover:grayscale-0 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">' +
+                                    "</div>" +
+                                    '<span class="text-[10px] font-bold uppercase tracking-widest text-gray-500 block mb-3">' +
+                                    (a.category || "Insights") +
+                                    " \u2022 " +
+                                    readTime +
+                                    "</span>" +
+                                    '<h4 class="text-2xl md:text-2xl font-bold tracking-tight text-black group-hover:text-gray-500 transition-colors leading-tight mb-4">' +
+                                    a.titleFull +
+                                    "</h4></a>"
+                                );
+                            })
+                            .join("");
+                    }
+                } catch (relErr) {
+                    console.warn("Related articles loader error:", relErr);
+                }
+
+                // --- Re-trigger GSAP reveals AFTER content is visible ---
+                requestAnimationFrame(function () {
+                    if (typeof gsap === "undefined") return;
+                    if (window.ScrollTrigger) {
+                        window.ScrollTrigger.getAll().forEach(function (st) {
+                            st.kill();
+                        });
+                    }
+                    document
+                        .querySelectorAll(".gsap-reveal")
+                        .forEach(function (el) {
+                            gsap.fromTo(
+                                el,
+                                { opacity: 0, y: 24 },
+                                {
+                                    scrollTrigger: {
+                                        trigger: el,
+                                        start: "top 85%",
+                                        toggleActions: "play none none reverse",
+                                    },
+                                    opacity: 1,
+                                    y: 0,
+                                    duration: 0.8,
+                                    ease: "power3.out",
+                                },
+                            );
+                        });
+                    initScrollSpy();
+                    if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+                    // Late refresh once images settle and shift layout.
+                    setTimeout(function () {
+                        if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+                    }, 1000);
+                });
             } catch (err) {
                 console.error("Failed to load article:", err);
                 showNotFound();
