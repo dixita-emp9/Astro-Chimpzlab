@@ -52,8 +52,8 @@ or edits content. Requires PHP on the host (Hostinger, shared/demo plans).
 (rewritten via `.htaccess`; `public/local-router.php` mirrors the rewrite for
 `npm run serve:php`). Blog URLs come from the WP REST API on each cache miss, so
 publishing adds the URL and drafting/trashing removes it automatically with no
-build or command. Cache TTL is 5 min (`SITEMAP_TTL` in `sitemap.php`), so worst-case
-delay after a WP action is 5 minutes. Static page URLs are a curated list inside
+build or command. Cache TTL is 1 min (`SITEMAP_TTL` in `sitemap.php`), so worst-case
+delay after a WP action is ~1 minute. Static page URLs are a curated list inside
 `sitemap.php`. `astro dev` cannot execute PHP, so test the sitemap via
 `npm run serve:php`, not `:4321`.
 
