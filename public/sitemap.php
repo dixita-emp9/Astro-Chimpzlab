@@ -128,6 +128,7 @@ function sitemap_xml_escape($s) {
 function sitemap_build($posts) {
     global $STATIC_URLS;
     $out = '<?xml version="1.0" encoding="UTF-8"?>' . "\n"
+        . '<?xml-stylesheet type="text/css" href="https://www.xml-sitemaps.com/css/sitemap.css"?>' . "\n"
         . '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">' . "\n\n";
     foreach ($STATIC_URLS as $u) {
         $out .= '  <url>' . "\n"
@@ -155,10 +156,12 @@ function sitemap_build($posts) {
     return $out;
 }
 
-function sitemap_serve($xml, $cached) {
+function sitemap_serve($xml, $cached, $stale = false) {
     header('Content-Type: application/xml; charset=utf-8');
     header('Cache-Control: public, max-age=300');
-    header('X-Sitemap-Cache: ' . ($cached ? 'HIT' : 'MISS'));
+    header('X-Sitemap-Cache: ' . ($stale ? 'STALE' : ($cached ? 'HIT' : 'MISS')));
+    $built = is_file(CACHE_FILE) ? gmdate('Y-m-d\TH:i:s\Z', filemtime(CACHE_FILE)) : 'none';
+    header('X-Sitemap-Built: ' . $built);
     echo $xml;
     exit;
 }
@@ -171,10 +174,12 @@ if (is_file(CACHE_FILE) && (time() - filemtime(CACHE_FILE)) < SITEMAP_TTL) {
 $posts = sitemap_wp_posts();
 if ($posts === false) {
     // WP unreachable: stale cache is better than nothing; else static URLs only.
-    if (is_file(CACHE_FILE)) sitemap_serve(file_get_contents(CACHE_FILE), true);
+    // Served as STALE (not HIT) so a stuck upstream is visible in headers.
+    if (is_file(CACHE_FILE)) sitemap_serve(file_get_contents(CACHE_FILE), true, true);
     sitemap_serve(sitemap_build(false), false);
 }
 
 $xml = sitemap_build($posts);
 @file_put_contents(CACHE_FILE, $xml);
+clearstatcache(true, CACHE_FILE);
 sitemap_serve($xml, false);
