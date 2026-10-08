@@ -21,6 +21,9 @@ pnpm-debug.log*
 public/crm/storage/*.sqlite
 public/crm/storage/*.sqlite-*
 
+# dynamic sitemap runtime cache (rebuilt automatically, never commit it)
+public/sitemap.cache.xml
+
 # macOS-specific files
 .DS_Store
 

@@ -46,6 +46,17 @@ strict Content-Security-Policy that blocks cross-origin calls to `chimpzlab.com`
 origin so blogs/images keep working without hosting-config changes. It never stores
 or edits content. Requires PHP on the host (Hostinger, shared/demo plans).
 
+## Sitemap (dynamic, WordPress-driven)
+
+`/sitemap.xml` is not a static file — it is generated live by `public/sitemap.php`
+(rewritten via `.htaccess`; `public/local-router.php` mirrors the rewrite for
+`npm run serve:php`). Blog URLs come from the WP REST API on each cache miss, so
+publishing adds the URL and drafting/trashing removes it automatically with no
+build or command. Cache TTL is 30 min (`SITEMAP_TTL` in `sitemap.php`), so worst-case
+delay after a WP action is 30 minutes. Static page URLs are a curated list inside
+`sitemap.php`. `astro dev` cannot execute PHP, so test the sitemap via
+`npm run serve:php`, not `:4321`.
+
 ## Documentation
 
 Full documentation: https://docs.astro.build

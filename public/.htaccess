@@ -172,6 +172,9 @@
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  # Dynamic sitemap: /sitemap.xml is generated live from WordPress-published
+  # blogs by sitemap.php (publish/draft auto-reflected, no rebuild needed).
+  RewriteRule ^sitemap\.xml$ /sitemap.php [L]
   # CRM internals must never be web-accessible.
   RewriteRule ^crm/(\.env|\.env\.example|storage|src|bin|vendor|database|views)(/|$) - [F,L]
   RewriteRule ^crm/composer\.(json|lock)$ - [F,L]
