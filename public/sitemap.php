@@ -13,7 +13,7 @@
 // last good cache is served; with no cache yet, static URLs alone are served.
 // This script never returns a 5xx for sitemap consumers.
 
-define('SITEMAP_TTL', 1800); // 30 minutes
+define('SITEMAP_TTL', 300); // 5 minutes
 define('SITE_URL', 'https://chimpzlab.com');
 define('WP_REST', 'https://chimpzlab.com/chimpzlab-old/?rest_route=/wp/v2/insights');
 define('WP_PRETTY', 'https://chimpzlab.com/chimpzlab-old/wp-json/wp/v2/insights');
