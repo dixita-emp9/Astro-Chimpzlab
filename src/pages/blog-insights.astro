@@ -1131,6 +1131,16 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                     var shareHtml = shareBlock ? shareBlock.outerHTML : "";
                     if (html) articleContent.innerHTML = shareHtml + html;
                     else if (shareBlock) shareBlock.classList.add("hidden");
+                    // External article links open in a new tab (all blogs, old and new).
+                    articleContent.querySelectorAll("a[href]").forEach(function (a) {
+                        try {
+                            var u = new URL(a.getAttribute("href"), window.location.href);
+                            if ((u.protocol === "http:" || u.protocol === "https:") && u.hostname !== window.location.hostname) {
+                                a.target = "_blank";
+                                a.rel = "noopener";
+                            }
+                        } catch (e) {}
+                    });
                     if (!Array.isArray(article.body)) {
                         articleContent
                             .querySelectorAll("h2")

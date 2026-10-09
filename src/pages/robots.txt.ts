@@ -11,6 +11,7 @@ export const GET: APIRoute = () => {
 Allow: /
 Disallow: /thanks/
 Disallow: /blog-insights?*
+Disallow: /blog-upload/
 
 Sitemap: ${sitemapUrl}
 `;

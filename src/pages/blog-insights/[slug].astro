@@ -1203,6 +1203,17 @@ const { post } = Astro.props;
 
                     document.getElementById("article-body").innerHTML = html;
 
+                    // External article links open in a new tab (all blogs, old and new).
+                    document.querySelectorAll("#article-body a[href]").forEach(function (a) {
+                        try {
+                            var u = new URL(a.getAttribute("href"), window.location.href);
+                            if ((u.protocol === "http:" || u.protocol === "https:") && u.hostname !== window.location.hostname) {
+                                a.target = "_blank";
+                                a.rel = "noopener";
+                            }
+                        } catch (e) {}
+                    });
+
                     // Build Table of Contents from h2/h3
                     const tocContainer = document.querySelector("#desktop-toc");
                     const mobileToc = document.querySelector("#mobile-toc");

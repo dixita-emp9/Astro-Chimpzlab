@@ -57,6 +57,16 @@ delay after a WP action is ~1 minute. Static page URLs are a curated list inside
 `sitemap.php`. `astro dev` cannot execute PHP, so test the sitemap via
 `npm run serve:php`, not `:4321`.
 
+## Blog uploader (`/blog-upload`, hidden + noindex)
+
+Password-gated internal page that creates WP `insight` drafts from a `.docx`
+(Week-6 format: `BLOG N` + title + keywords + Q&A body + FAQ). Parsing runs in
+the browser (`public/js/mammoth.browser.min.js`, vendored) with per-blog
+editable categories; `public/blog-upload.php` writes drafts via WP REST.
+Requires in server `crm/.env` (never client-side): `BLOG_UPLOAD_USER`,
+`BLOG_UPLOAD_PASSWORD`, `WP_APP_USER`, `WP_APP_PASSWORD` (WP Admin > Users > Profile > Application
+Passwords). Text only — featured images are set manually in WordPress.
+
 ## Documentation
 
 Full documentation: https://docs.astro.build
