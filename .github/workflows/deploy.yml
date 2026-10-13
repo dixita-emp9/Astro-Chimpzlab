@@ -32,6 +32,12 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
           server-dir: ./
+          # v2 state: the v1 sync-state still references the deleted WP post
+          # blog-insights/ai-creative-ctr-conversions-breakeven-2026, so every
+          # run retried deleting a remote path that no longer exists (550 loop).
+          # A fresh state file abandons that poisoned manifest; the orphan
+          # folder on the server is harmless (.htaccess rewrites slugs anyway).
+          state-name: .ftp-deploy-sync-state-v2.json
           exclude: |
             **/.git*
             **/.git*/**
