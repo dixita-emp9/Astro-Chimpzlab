@@ -25,6 +25,7 @@ jobs:
         run: npm run build
 
       - name: Deploy via FTP
+        id: ftp-deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -38,6 +39,30 @@ jobs:
           # A fresh state file abandons that poisoned manifest; the orphan
           # folder on the server is harmless (.htaccess rewrites slugs anyway).
           state-name: .ftp-deploy-sync-state-v2.json
+          # dist is ~200MB / ~700 files and the v2 state forces a large
+          # re-upload; Hostinger drops slow data connections, so allow more
+          # time per FTP operation before giving up.
+          timeout: 120000
+          exclude: |
+            **/.git*
+            **/.git*/**
+            crm/.env
+            crm/storage/**
+
+      # Transient "read ECONNRESET (data socket)" from Hostinger is common on
+      # big uploads. The first attempt already uploaded part of dist and
+      # updated the sync state, so this retry only moves the remainder.
+      - name: Retry deploy via FTP (on failure)
+        if: failure()
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: ./
+          state-name: .ftp-deploy-sync-state-v2.json
+          timeout: 120000
           exclude: |
             **/.git*
             **/.git*/**
