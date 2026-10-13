@@ -109,9 +109,75 @@ function bu_wp(string $auth, string $method, string $path, $body = null)
 $env = capture_env();
 $action = (string) ($_GET['action'] ?? '');
 
+// ---- AI takeaways (one blog at a time, session-gated) ---------------------
+// Uses an OpenAI-compatible chat API (OpenAI, OpenRouter, …) with the key kept
+// server-side in crm/.env: LLM_API_KEY, optional LLM_API_URL / LLM_MODEL.
+function bu_llm_items(string $title, string $text)
+{
+    global $env;
+    $key = trim((string) ($env['LLM_API_KEY'] ?? ''));
+    if ($key === '') return array('ok' => false, 'error' => 'AI is not configured (LLM_API_KEY).');
+    $url = trim((string) ($env['LLM_API_URL'] ?? 'https://api.openai.com/v1/chat/completions'));
+    $model = trim((string) ($env['LLM_MODEL'] ?? 'gpt-4o-mini'));
+    $text = mb_substr($text, 0, 6000);
+    $prompt = "You write sidebar \"Key Takeaways\" for a business blog post.\n"
+        . "Title: " . $title . "\n\n" . $text . "\n\n"
+        . "Return EXACTLY 4 takeaways, one per line, plain text, no numbering, no bullets, "
+        . "each a single punchy sentence under 140 characters stating the most useful fact, "
+        . "statistic or action — never generic filler, never repeat the title.";
+    $payload = json_encode(array(
+        'model' => $model,
+        'temperature' => 0.4,
+        'max_tokens' => 400,
+        'messages' => array(
+            array('role' => 'system', 'content' => 'You write concise, specific blog takeaways.'),
+            array('role' => 'user', 'content' => $prompt),
+        ),
+    ));
+    $ctx = stream_context_create(array('http' => array(
+        'method' => 'POST',
+        'timeout' => 60,
+        'ignore_errors' => true,
+        'header' => "Content-Type: application/json\r\nAuthorization: Bearer " . $key . "\r\n",
+        'content' => $payload,
+    )));
+    $raw = @file_get_contents($url, false, $ctx);
+    if ($raw === false) return array('ok' => false, 'error' => 'AI request failed.');
+    $data = json_decode($raw, true);
+    $out = '';
+    if (is_array($data) && isset($data['choices'][0]['message']['content'])) {
+        $out = (string) $data['choices'][0]['message']['content'];
+    } elseif (is_array($data) && isset($data['error']['message'])) {
+        return array('ok' => false, 'error' => 'AI error: ' . mb_substr((string) $data['error']['message'], 0, 160));
+    }
+    $items = array();
+    foreach (preg_split('/\r?\n/', $out) as $line) {
+        $line = trim($line);
+        $line = preg_replace('/^(\d+[.)\-:]|[-•*–—])\s*/u', '', $line);
+        $line = trim($line, "\"' ");
+        if (mb_strlen($line) < 20) continue;
+        $items[] = mb_substr($line, 0, 200);
+        if (count($items) >= 4) break;
+    }
+    if (count($items) < 2) return array('ok' => false, 'error' => 'AI returned too little.');
+    return array('ok' => true, 'items' => $items);
+}
+
+if ($action === 'takeaways') {
+    if (empty($_SESSION['bu_auth'])) bu_fail('Login required.', 401);
+    $data = json_decode((string) file_get_contents('php://input'), true);
+    $title = mb_substr(trim((string) ($data['title'] ?? '')), 0, 200);
+    $text = mb_substr(trim((string) ($data['text'] ?? '')), 0, 8000);
+    if ($title === '' || $text === '') bu_fail('Title and text are required.', 400);
+    $res = bu_llm_items($title, $text);
+    if (!$res['ok']) bu_fail($res['error'], 502);
+    echo json_encode(array('ok' => true, 'items' => $res['items']));
+    exit;
+}
+
 // ---- Session status (lets the page skip login after a reload) ------------
 if ($action === 'status') {
-    echo json_encode(array('ok' => true, 'authed' => !empty($_SESSION['bu_auth'])));
+    echo json_encode(array('ok' => true, 'authed' => !empty($_SESSION['bu_auth']), 'ai' => trim((string) ($env['LLM_API_KEY'] ?? '')) !== ''));
     exit;
 }
 

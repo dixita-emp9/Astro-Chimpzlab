@@ -65,7 +65,9 @@ the browser (`public/js/mammoth.browser.min.js`, vendored) with per-blog
 editable categories; `public/blog-upload.php` writes drafts via WP REST.
 Requires in server `crm/.env` (never client-side): `BLOG_UPLOAD_USER`,
 `BLOG_UPLOAD_PASSWORD`, `WP_APP_USER`, `WP_APP_PASSWORD` (WP Admin > Users > Profile > Application
-Passwords). Text only — featured images are set manually in WordPress.
+Passwords). Optional AI takeaways: `LLM_API_KEY` plus `LLM_API_URL` / `LLM_MODEL`
+(OpenAI-compatible endpoint, key stays server-side). Text only — featured images
+are set manually in WordPress.
 
 ## Documentation
 

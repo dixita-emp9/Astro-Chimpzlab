@@ -189,6 +189,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                         >
                     </div>
                 </div>
+                <p id="ai-status" class="text-xs text-white/45 mb-4"></p>
                 <div id="cards" class="grid grid-cols-1 lg:grid-cols-2 gap-3.5"></div>
                 <div class="sticky bottom-4 mt-5 z-10">
                     <div class="rounded-2xl border border-white/15 bg-[#111]/95 backdrop-blur px-5 py-3.5 flex flex-col sm:flex-row items-center gap-3 shadow-2xl">
@@ -276,6 +277,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             };
             var btnLogout = document.getElementById("btn-logout");
             var cards = document.getElementById("cards");
+            var aiAvailable = false;
             var parsed = [];
             var expanded = {};
 
@@ -398,6 +400,31 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                 });
             }
 
+            // Extractive fallback: when the docx has no takeaways section, build
+            // bullets from the intro + first sentences of body answers.
+            function firstSentence(t) {
+                var m = String(t || "").match(/^[^.!?]+[.!?]/);
+                var s = (m ? m[0] : String(t || "")).trim().replace(/\s+/g, " ");
+                if (s.length > 180) {
+                    s = s.slice(0, 180);
+                    var cut = s.lastIndexOf(" ");
+                    s = (cut > 60 ? s.slice(0, cut) : s) + "…";
+                }
+                return s;
+            }
+            function autoTakeaways(intro, blocks) {
+                var items = [];
+                if (intro && intro.length > 30) items.push(firstSentence(intro));
+                for (var i = 0; i < blocks.length && items.length < 4; i++) {
+                    if (blocks[i].tag !== "p") {
+                        if (blocks[i].tag === "h2" && /frequently asked/i.test(stripTags(blocks[i].html))) break;
+                        continue;
+                    }
+                    var s = firstSentence(stripTags(blocks[i].html));
+                    if (s.length >= 40) items.push(s);
+                }
+                return items.slice(0, 4);
+            }
             function parseDocx(html) {
                 var doc = new DOMParser().parseFromString("<div>" + html + "</div>", "text/html");
                 // Headings too: some files style titles with Heading styles
@@ -405,13 +432,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                 var nodes = Array.prototype.slice.call(doc.querySelectorAll("p, h1, h2, h3, h4, h5, h6, li"));
                 var paras = nodes.map(function (p) { return p.innerHTML; });
                 var texts = nodes.map(function (p) { return (p.textContent || "").replace(/\s+/g, " ").trim(); });
+                var tags = nodes.map(function (p) { return (p.tagName || "P").toUpperCase(); });
                 var starts = [];
                 texts.forEach(function (t, i) { if (/^blog\s+\d+/i.test(t)) starts.push(i); });
                 var blogs = [];
                 function isKw(t, pre) { return new RegExp("^" + pre + "\\s*:", "i").test(t); }
                 starts.forEach(function (s, bi) {
                     var end = bi + 1 < starts.length ? starts[bi + 1] : paras.length;
-                    var P = paras.slice(s + 1, end), T = texts.slice(s + 1, end);
+                    var P = paras.slice(s + 1, end), T = texts.slice(s + 1, end), G = tags.slice(s + 1, end);
                     var j = 0;
                     // Header zone: keywords, service line and title can appear in any
                     // order (Week-6: title first; Week-4: keywords, service line, title).
@@ -436,11 +464,27 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                     }
                     while (j < T.length && (T[j] === "" || /━/.test(T[j]))) j++;
                     var introHtml = P[j] || "", intro = T[j] || ""; j++;
+                    function isTakeawayHead(t, tag) {
+                        if (/^(key\s+)?takeaways?\s*:?$/i.test(t)) return true;
+                        return tag.charAt(0) === "H" && /takeaway/i.test(t) && t.length < 100;
+                    }
+                    function bulletItem(t) {
+                        var m = t.match(/^[•\-\*–—]\s+(.+)$/) || t.match(/^\d+[.)]\s+(.+)$/);
+                        return m ? m[1].trim() : "";
+                    }
                     var blocks = [];
                     var inFaq = false, faqN = 0, pendingQ = null;
+                    var inTk = false, docTk = [];
                     for (; j < T.length; j++) {
                         var tt = T[j], hh = P[j];
                         if (tt === "" || /━/.test(tt)) continue;
+                        if (!inTk && isTakeawayHead(tt, G[j])) { inTk = true; continue; }
+                        if (inTk) {
+                            // Bullets / numbered lines (or real <li>) become takeaways.
+                            var item = (G[j] === "LI" || /^[•\-\*–—]\s+|^\d+[.)]\s+/.test(tt)) ? (bulletItem(tt) || tt) : "";
+                            if (item) { if (docTk.length < 8) docTk.push(stripTags(item)); continue; }
+                            inTk = false; // normal content resumes — fall through
+                        }
                         if (/^frequently asked questions$/i.test(tt) || /^faq$/i.test(tt)) {
                             inFaq = true;
                             blocks.push({ tag: "h2", html: "Frequently Asked Questions" });
@@ -469,16 +513,30 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                     var allText = [title, intro].concat(blocks.map(function (b) { return stripTags(b.html); })).join(" ");
                     var words = (allText.match(/\S+/g) || []).length;
                     var readTime = Math.max(1, Math.ceil(words / 200)) + " Min Read";
-                    var content = "<!-- readtime:" + readTime + " -->\n<!-- titleparts:" + JSON.stringify(splitTitle(title)) + " -->\n";
-                    content += "<p>" + introHtml + "</p>\n";
-                    blocks.forEach(function (b) { content += "<" + b.tag + ">" + b.html + "</" + b.tag + ">\n"; });
-                    var tags = secondary.split(",").map(function (x) { return x.trim(); }).filter(Boolean).slice(0, 12);
+                    var tagNames = secondary.split(",").map(function (x) { return x.trim(); }).filter(Boolean).slice(0, 12);
                     var category = lineCat || guessCategory(title, primary + " " + secondary);
-                    blogs.push({ title: title, excerpt: intro, content: boldLinks(linkify(content)), slug: slugify(primary, 60), words: words, readTime: readTime, tags: tags, category: category });
+                    // Docx-authored takeaways win; otherwise auto-generate from content.
+                    var takeaways = docTk.length ? docTk : autoTakeaways(intro, blocks);
+                    var blog = { title: title, excerpt: intro, introHtml: introHtml, blocks: blocks, titleParts: splitTitle(title), readTime: readTime, takeaways: takeaways, tkSource: docTk.length ? "docx" : "auto", words: words, tags: tagNames, category: category, slug: slugify(primary, 60) };
+                    blog.content = buildContent(blog);
+                    blogs.push(blog);
                 });
                 return blogs;
             }
 
+            // Assembles the final WP HTML in house format: markers, Key Takeaways
+            // (rendered by the site as the sidebar, like existing blogs), intro, body.
+            function buildContent(b) {
+                var content = "<!-- readtime:" + b.readTime + " -->\n<!-- titleparts:" + JSON.stringify(b.titleParts) + " -->\n";
+                if (b.takeaways && b.takeaways.length) {
+                    content += "<h2><strong>Key Takeaways</strong></h2>\n<ul>\n" + b.takeaways.map(function (t) {
+                        return "<li>" + esc(t) + "</li>\n";
+                    }).join("") + "</ul>\n";
+                }
+                content += "<p>" + b.introHtml + "</p>\n";
+                b.blocks.forEach(function (bl) { content += "<" + bl.tag + ">" + bl.html + "</" + bl.tag + ">\n"; });
+                return boldLinks(linkify(content));
+            }
             function catOptions(selected) {
                 return CATS.map(function (c) {
                     return '<option value="' + c[0] + '"' + (c[0] === selected ? " selected" : "") + ">" + c[1] + "</option>";
@@ -526,6 +584,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                     + '<div><div class="text-[10px] font-bold uppercase tracking-widest text-white/40 mb-1">Tags</div>'
                     + '<div class="max-h-[74px] overflow-y-auto preview-scroll">' + tagChips(b.tags) + "</div></div>"
                     + "</div>"
+                    + '<label class="text-[10px] font-bold uppercase tracking-widest text-white/40">Key Takeaways <span class="normal-case font-semibold text-white/30">(optional — sidebar, like other blogs)</span></label>'
+                    + '<textarea data-tk="' + i + '" rows="3" placeholder="One takeaway per line…" spellcheck="true" class="w-full mt-1 mb-1 bg-white/[0.06] border border-white/15 rounded-lg px-2.5 py-2 text-[13px] leading-relaxed focus:outline-none focus:border-white/50 transition-colors placeholder:text-white/25 resize-y">' + esc((b.takeaways || []).join("\n")) + "</textarea>"
                     + '<button data-pv="' + i + '" class="text-xs font-bold text-white/60 hover:text-white underline underline-offset-4 transition-colors">Preview content</button>'
                     + '<div data-pvbody="' + i + '" class="hidden mt-2.5 max-h-60 overflow-y-auto preview-scroll p-3.5 rounded-xl bg-black/40 border border-white/10 text-[13px] leading-relaxed preview-render"></div>'
                     + "</div>"
@@ -599,6 +659,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                         copyText(SITE_URL + "/blog-insights/" + (b.slug || ""), btn);
                     });
                 });
+                Array.prototype.forEach.call(cards.querySelectorAll("[data-tk]"), function (ta) {
+                    ta.addEventListener("change", function () {
+                        var b = parsed[+ta.getAttribute("data-tk")];
+                        b.takeaways = ta.value.split("\n").map(function (x) { return x.trim(); }).filter(Boolean).slice(0, 8);
+                        b.content = buildContent(b);
+                    });
+                });
                 Array.prototype.forEach.call(cards.querySelectorAll("[data-pv]"), function (tgl) {
                     tgl.addEventListener("click", function (e) {
                         e.stopPropagation();
@@ -653,6 +720,51 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                 renderCards();
             });
 
+            // Replaces the quick extractive bullets with real AI summaries, one
+            // blog at a time (docx-authored takeaways are kept as-is).
+            function plainText(b) {
+                return [b.title, b.excerpt].concat(b.blocks.map(function (x) { return stripTags(x.html); })).join("\n").slice(0, 8000);
+            }
+            function enhanceTakeaways() {
+                var queue = [];
+                parsed.forEach(function (b, i) { if (b.tkSource !== "docx") queue.push(i); });
+                var status = document.getElementById("ai-status");
+                if (!aiAvailable || !queue.length) {
+                    status.textContent = "";
+                    return;
+                }
+                var total = queue.length, done = 0, failed = 0;
+                function next() {
+                    if (!queue.length) {
+                        status.innerHTML = failed
+                            ? "AI takeaways finished — <b class=\"text-white\">" + failed + "</b> kept the quick summary. Review and edit as needed."
+                            : "<b class=\"text-emerald-300\">AI takeaways ready</b> — review and edit as needed.";
+                        return;
+                    }
+                    var i = queue.shift();
+                    status.innerHTML = "Generating AI takeaways… <b class=\"text-white\">" + (done + 1) + "/" + total + "</b>";
+                    fetch(ENDPOINT + "?action=takeaways", {
+                        method: "POST", credentials: "same-origin",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ title: parsed[i].title, text: plainText(parsed[i]) }),
+                    })
+                        .then(function (r) { return r.json().then(function (j) { return { s: r.status, j: j }; }); })
+                        .then(function (res) {
+                            done++;
+                            if (res.j && res.j.ok && res.j.items && res.j.items.length >= 2) {
+                                parsed[i].takeaways = res.j.items.slice(0, 4);
+                                parsed[i].tkSource = "ai";
+                                parsed[i].content = buildContent(parsed[i]);
+                                var ta = cards.querySelector('[data-tk="' + i + '"]');
+                                if (ta) ta.value = parsed[i].takeaways.join("\n");
+                            } else { failed++; }
+                            next();
+                        })
+                        .catch(function () { done++; failed++; next(); });
+                }
+                next();
+            }
+
             function handleFile(file) {
                 if (!file) return;
                 hideNotice();
@@ -676,6 +788,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                         setStep(3);
                         show("review");
                         renderCards();
+                        enhanceTakeaways();
                     }).catch(function () {
                         status.innerHTML = "";
                         showNotice("Could not read the file. Please upload a valid .docx file.", false);
@@ -695,6 +808,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                 .then(function (r) { return r.json(); })
                 .then(function (j) {
                     if (j && j.authed) enterUploader();
+                    aiAvailable = !!(j && j.ai);
                 })
                 .catch(function () {});
 
