@@ -284,10 +284,15 @@ window.WPInsights = (function () {
         };
     }
 
-    async function fetchIndex() {
+    async function fetchIndex(opts) {
+        opts = opts || {};
+        var q = "?per_page=100&_embed&orderby=date&order=desc";
+        if (opts.search) {
+            q += "&search=" + encodeURIComponent(String(opts.search).trim());
+        }
         var data = [];
         try {
-            data = await fetchWp("?per_page=100&_embed&orderby=date&order=desc");
+            data = await fetchWp(q);
             if (!Array.isArray(data)) throw new Error("bad payload");
         } catch (err) {
             console.warn("WPInsights fetchIndex failed:", err);

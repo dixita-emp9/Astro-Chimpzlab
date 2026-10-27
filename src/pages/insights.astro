@@ -58,6 +58,112 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                     gap: 1.25rem;
                 }
 
+                .insight-search-wrap {
+                    position: relative;
+                }
+
+                .insight-search-wrap svg {
+                    position: absolute;
+                    left: 0.75rem;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 1rem;
+                    height: 1rem;
+                    color: rgba(255, 255, 255, 0.45);
+                    pointer-events: none;
+                }
+
+                .insight-search {
+                    width: 100%;
+                    max-width: 100%;
+                    padding: 0.6rem 0.85rem 0.6rem 2.5rem;
+                    border-radius: 9999px;
+                    border: 1px solid rgba(255, 255, 255, 0.15);
+                    background: rgba(255, 255, 255, 0.04);
+                    color: #fff;
+                    font-size: 0.95rem;
+                    transition: all 0.3s ease;
+                }
+
+                .insight-search::placeholder {
+                    color: rgba(255, 255, 255, 0.45);
+                }
+
+                .insight-search:focus {
+                    outline: none;
+                    border-color: rgba(255, 255, 255, 0.4);
+                    background: rgba(255, 255, 255, 0.08);
+                }
+
+                @media (max-width: 767px) {
+                    .insight-search {
+                        width: 100%;
+                        max-width: 100%;
+                    }
+                    .insight-search:focus {
+                        width: 100%;
+                    }
+                    .insight-header-row {
+                        flex-wrap: wrap;
+                    }
+                    .insight-search-wrap {
+                        width: 100%;
+                        order: -1;
+                        margin-bottom: 0.5rem;
+                    }
+                }
+
+                .insight-search {
+                    padding-right: 2.75rem;
+                }
+
+                .insight-search:hover {
+                    border-color: rgba(255, 255, 255, 0.3);
+                    background: rgba(255, 255, 255, 0.06);
+                }
+
+                .insight-search:focus {
+                    outline: none;
+                    border-color: rgba(255, 255, 255, 0.55);
+                    background: rgba(255, 255, 255, 0.09);
+                    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+                }
+
+                .insight-search-spinner {
+                    position: absolute;
+                    right: 1rem;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 1rem;
+                    height: 1rem;
+                    border: 2px solid rgba(255, 255, 255, 0.15);
+                    border-top-color: rgba(255, 255, 255, 0.8);
+                    border-radius: 50%;
+                    animation: insight-spin 0.7s linear infinite;
+                }
+
+                .insight-search-spinner.hidden {
+                    display: none;
+                }
+
+                @keyframes insight-spin {
+                    to {
+                        transform: translateY(-50%) rotate(360deg);
+                    }
+                }
+
+                .search-highlight {
+                    background: rgba(234, 179, 8, 0.35);
+                    color: #fef08a;
+                    border-radius: 3px;
+                    padding: 0 2px;
+                    font-weight: 700;
+                }
+
+                #insight-grid {
+                    scroll-margin-top: 160px;
+                }
+
                 #insight-filters-wrapper {
                     flex: 1;
                     min-width: 0;
@@ -137,6 +243,22 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             <div
                 class="sticky top-24 z-40 mb-12 py-3 backdrop-blur-xl bg-brand-dark/85 -mx-2 px-2 rounded-xl border border-white/5"
             >
+                <div class="insight-search-row mb-3">
+                    <div class="insight-search-wrap relative w-full max-w-3xl mx-auto">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="11" cy="11" r="7"></circle>
+                            <path d="m21 21-4.3-4.3"></path>
+                        </svg>
+                        <input
+                            id="insight-search"
+                            class="insight-search w-full"
+                            type="search"
+                            placeholder="Search insights..."
+                            aria-label="Search insights"
+                        />
+                        <span id="insight-search-spinner" class="insight-search-spinner hidden" aria-hidden="true"></span>
+                    </div>
+                </div>
                 <div class="insight-header-row">
                     <div id="insight-filters-wrapper">
                         <div
@@ -431,15 +553,20 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                 const emptyMsg = document.getElementById("insight-empty");
                 if (!grid) return;
 
-                let articles = [];
+                let allArticles = [];
+                let searchArticles = null;
+                let currentFilter = "all";
+                let searchTerm = "";
+                let searchRequest = 0;
+                let isSearching = false;
                 try {
-                    articles = await window.WPInsights.fetchIndex();
+                    allArticles = await window.WPInsights.fetchIndex();
                 } catch (e) {
                     console.error("Failed to load insights data:", e);
                     return;
                 }
 
-                if (!articles.length) {
+                if (!allArticles.length) {
                     if (emptyMsg) emptyMsg.classList.remove("hidden");
                     return;
                 }
@@ -453,11 +580,49 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                         .join(" ");
                 }
 
-                function renderCards(filter) {
-                    const filtered =
-                        filter === "all"
-                            ? articles
-                            : articles.filter((a) => a.category === filter);
+                function clientMatch(article, q) {
+                    if (!q) return true;
+                    const hay = (
+                        (article.titleFull || "") +
+                        " " +
+                        ((article.titleParts || []).join(" "))
+                    ).toLowerCase();
+                    return hay.includes(q.toLowerCase());
+                }
+
+                function escHtml(s) {
+                    return String(s || "")
+                        .replace(/&/g, "&amp;")
+                        .replace(/</g, "&lt;")
+                        .replace(/>/g, "&gt;");
+                }
+
+                function highlightText(text, q) {
+                    const safe = escHtml(text);
+                    if (!q) return safe;
+                    const escaped = String(q).replace(
+                        /[.*+?^${}()|[\]\\]/g,
+                        "\\$&",
+                    );
+                    return safe.replace(
+                        new RegExp("(" + escaped + ")", "gi"),
+                        '<mark class="search-highlight">$1</mark>',
+                    );
+                }
+
+                function baseArticles() {
+                    if (searchTerm && searchArticles) return searchArticles;
+                    return allArticles;
+                }
+
+                function renderCards() {
+                    const filtered = baseArticles().filter((a) => {
+                        const catOk =
+                            currentFilter === "all" ||
+                            a.category === currentFilter;
+                        const searchOk = clientMatch(a, searchTerm);
+                        return catOk && searchOk;
+                    });
                     grid.querySelectorAll(".insight-card").forEach((c) =>
                         c.remove(),
                     );
@@ -475,19 +640,29 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                         </div>
                         <div class="p-6 pt-5">
                             <span class="text-[11px] font-bold uppercase tracking-widest text-gray-500 block mb-2.5">${capitalize(article.category)} • ${article.readTime.replace(/\s+/g, " ").trim()}</span>
-                            <h4 class="text-sm sm:text-base md:text-base lg:text-base xl:text-lg font-bold tracking-tight text-white group-hover:text-white/80 transition-colors leading-snug mb-2.5">${article.titleParts ? article.titleParts.join(" ") : article.titleFull}</h4>
+                            <h4 class="text-sm sm:text-base md:text-base lg:text-base xl:text-lg font-bold tracking-tight text-white group-hover:text-white/80 transition-colors leading-snug mb-2.5">${highlightText(article.titleParts ? article.titleParts.join(" ") : article.titleFull, searchTerm)}</h4>
                             <span class="text-xs font-bold uppercase tracking-widest text-white/60 group-hover:text-white transition-colors">Read Article →</span>
                         </div>
                     `;
                         grid.appendChild(card);
                     });
                     const countEl = document.querySelector(".insight-count");
-                    if (countEl)
-                        countEl.textContent =
-                            filtered.length +
-                            (filtered.length === 1 ? " Insight" : " Insights");
+                    if (countEl) {
+                        if (isSearching) {
+                            countEl.textContent = "Searching...";
+                        } else {
+                            countEl.textContent =
+                                filtered.length +
+                                (filtered.length === 1
+                                    ? " Insight"
+                                    : " Insights");
+                        }
+                    }
                     if (emptyMsg) {
                         if (filtered.length === 0) {
+                            emptyMsg.textContent = searchTerm
+                                ? "No insights match your search."
+                                : "No insights in this category yet - check back soon.";
                             emptyMsg.classList.remove("hidden");
                             grid.appendChild(emptyMsg);
                         } else {
@@ -515,7 +690,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                     }
                 }
 
-                renderCards("all");
+                renderCards();
 
                 const filterBar = document.getElementById("insight-filters");
                 if (filterBar) {
@@ -530,9 +705,85 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                             });
                             btn.classList.add("active");
                             btn.setAttribute("aria-selected", "true");
-                            renderCards(btn.getAttribute("data-filter"));
+                            currentFilter = btn.getAttribute("data-filter");
+                            renderCards();
                         });
                     });
+
+                    // Search functionality (queries the WordPress backend)
+                    const searchInput = document.getElementById("insight-search");
+                    const searchSpinner = document.getElementById(
+                        "insight-search-spinner",
+                    );
+                    let searchTimer = null;
+                    function setSearchLoading(loading) {
+                        isSearching = loading;
+                        if (searchSpinner)
+                            searchSpinner.classList.toggle("hidden", !loading);
+                        if (loading) {
+                            const c = document.querySelector(".insight-count");
+                            if (c) c.textContent = "Searching...";
+                        }
+                    }
+                    if (searchInput) {
+                        async function executeSearch(value) {
+                            searchTerm = value;
+                            if (!value) {
+                                searchArticles = null;
+                                setSearchLoading(false);
+                                renderCards();
+                                return;
+                            }
+                            setSearchLoading(true);
+                            const reqId = ++searchRequest;
+                            try {
+                                const results =
+                                    await window.WPInsights.fetchIndex({
+                                        search: value,
+                                    });
+                                if (reqId !== searchRequest) return;
+                                searchArticles = Array.isArray(results)
+                                    ? results
+                                    : [];
+                                setSearchLoading(false);
+                                renderCards();
+                                if (grid)
+                                    grid.scrollIntoView({
+                                        behavior: "smooth",
+                                        block: "start",
+                                    });
+                            } catch (err) {
+                                console.warn("Insight search failed:", err);
+                                searchArticles = null;
+                                setSearchLoading(false);
+                                renderCards();
+                            }
+                        }
+
+                        searchInput.addEventListener("input", () => {
+                            clearTimeout(searchTimer);
+                            const value = searchInput.value.trim();
+                            searchTimer = setTimeout(() => {
+                                executeSearch(value);
+                            }, 300);
+                        });
+
+                        searchInput.addEventListener("keydown", (e) => {
+                            if (e.key === "Enter") {
+                                e.preventDefault();
+                                clearTimeout(searchTimer);
+                                executeSearch(searchInput.value.trim());
+                            }
+                        });
+
+                        searchInput.addEventListener("focus", () => {
+                            if (grid)
+                                grid.scrollIntoView({
+                                    behavior: "smooth",
+                                    block: "start",
+                                });
+                        });
+                    }
 
                     // Drag-to-scroll for filter bar with momentum
                     let isDown = false,
