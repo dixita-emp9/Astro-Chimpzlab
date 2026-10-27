@@ -164,6 +164,46 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                     scroll-margin-top: 160px;
                 }
 
+                .insight-loading-spinner {
+                    width: 2.5rem;
+                    height: 2.5rem;
+                    border: 3px solid rgba(255, 255, 255, 0.15);
+                    border-top-color: rgba(255, 255, 255, 0.9);
+                    border-radius: 50%;
+                    animation: insight-loading-spin 0.7s linear infinite;
+                }
+
+                @keyframes insight-loading-spin {
+                    to {
+                        transform: rotate(360deg);
+                    }
+                }
+
+                .insight-search-btn {
+                    position: absolute;
+                    left: 0.75rem;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    border: none;
+                    background: transparent;
+                    color: rgba(255, 255, 255, 0.55);
+                    cursor: pointer;
+                    z-index: 2;
+                }
+
+                .insight-search-btn:hover {
+                    color: #fff;
+                }
+
+                .insight-search {
+                    padding-left: 2.75rem;
+                }
+
                 #insight-filters-wrapper {
                     flex: 1;
                     min-width: 0;
@@ -245,10 +285,17 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             >
                 <div class="insight-search-row mb-3">
                     <div class="insight-search-wrap relative w-full max-w-3xl mx-auto">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <circle cx="11" cy="11" r="7"></circle>
-                            <path d="m21 21-4.3-4.3"></path>
-                        </svg>
+                        <button
+                            type="button"
+                            id="insight-search-btn"
+                            class="insight-search-btn"
+                            aria-label="Search insights"
+                        >
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="11" cy="11" r="7"></circle>
+                                <path d="m21 21-4.3-4.3"></path>
+                            </svg>
+                        </button>
                         <input
                             id="insight-search"
                             class="insight-search w-full"
@@ -384,6 +431,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                 </div>
             </div>
 
+            <div class="relative min-h-[200px]">
             <div
                 class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                 id="insight-grid"
@@ -395,6 +443,16 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                 >
                     No insights in this category yet - check back soon.
                 </p>
+            </div>
+            <div
+                id="insight-loading"
+                class="hidden absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 bg-brand-dark/70 backdrop-blur-sm rounded-2xl"
+            >
+                <span class="insight-loading-spinner" aria-hidden="true"></span>
+                <span class="text-sm font-semibold uppercase tracking-widest text-white/80">
+                    Searching insights...
+                </span>
+            </div>
             </div>
         </div>
     </section>
@@ -559,12 +617,16 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                 let searchTerm = "";
                 let searchRequest = 0;
                 let isSearching = false;
+                const initialLoader = document.getElementById("insight-loading");
+                if (initialLoader) initialLoader.classList.remove("hidden");
                 try {
                     allArticles = await window.WPInsights.fetchIndex();
                 } catch (e) {
                     console.error("Failed to load insights data:", e);
+                    if (initialLoader) initialLoader.classList.add("hidden");
                     return;
                 }
+                if (initialLoader) initialLoader.classList.add("hidden");
 
                 if (!allArticles.length) {
                     if (emptyMsg) emptyMsg.classList.remove("hidden");
@@ -715,14 +777,21 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                     const searchSpinner = document.getElementById(
                         "insight-search-spinner",
                     );
+                    const loadingOverlay = document.getElementById(
+                        "insight-loading",
+                    );
                     let searchTimer = null;
                     function setSearchLoading(loading) {
                         isSearching = loading;
                         if (searchSpinner)
                             searchSpinner.classList.toggle("hidden", !loading);
-                        if (loading) {
-                            const c = document.querySelector(".insight-count");
-                            if (c) c.textContent = "Searching...";
+                        if (loadingOverlay)
+                            loadingOverlay.classList.toggle("hidden", !loading);
+                        const c = document.querySelector(".insight-count");
+                        if (c) {
+                            c.textContent = loading
+                                ? "Searching..."
+                                : c.textContent;
                         }
                     }
                     if (searchInput) {
@@ -767,6 +836,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                                 executeSearch(value);
                             }, 300);
                         });
+
+                        const searchBtn = document.getElementById("insight-search-btn");
+                        if (searchBtn) {
+                            searchBtn.addEventListener("click", () => {
+                                executeSearch(searchInput.value.trim());
+                            });
+                        }
 
                         searchInput.addEventListener("keydown", (e) => {
                             if (e.key === "Enter") {
