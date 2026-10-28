@@ -416,24 +416,9 @@ const { post } = Astro.props;
         </div>
     </div>
 
-    <!-- Not Found State -->
-    <div
-        id="blog-not-found"
-        class="hidden flex items-center justify-center min-h-[500px] bg-white text-brand-dark"
-    >
-        <div class="text-center p-6">
-            <h2 class="text-3xl font-bold mb-4">Blog Not Found</h2>
-            <p class="text-lg text-gray-600 mb-6">
-                The requested blog post could not be found.
-            </p>
-            <a
-                href="/insights"
-                class="inline-block px-6 py-3 bg-black text-white rounded-full font-medium hover:bg-gray-800 transition-colors"
-            >
-                View All Insights
-            </a>
-        </div>
-    </div>
+    <!-- Not Found State (rendered on demand so the heading is never in the
+         initial HTML of pages where the article actually exists) -->
+    <div id="blog-not-found" class="hidden"></div>
 
     <!-- Main Content & Sidebar Layout -->
     <section
@@ -1015,9 +1000,14 @@ const { post } = Astro.props;
         (async function () {
             function showNotFound() {
                 document.getElementById("blog-loading").classList.add("hidden");
-                document
-                    .getElementById("blog-not-found")
-                    .classList.remove("hidden");
+                var notFound = document.getElementById("blog-not-found");
+                if (notFound && !notFound.hasChildNodes()) {
+                    notFound.className =
+                        "flex items-center justify-center min-h-[500px] bg-white text-brand-dark";
+                    notFound.innerHTML =
+                        '<div class="text-center p-6"><h2 class="text-3xl font-bold mb-4">Blog Not Found</h2><p class="text-lg text-gray-600 mb-6">The requested blog post could not be found.</p><a href="/insights" class="inline-block px-6 py-3 bg-black text-white rounded-full font-medium hover:bg-gray-800 transition-colors">View All Insights</a></div>';
+                }
+                if (notFound) notFound.classList.remove("hidden");
             }
 
             // TOC ScrollSpy — created after layout settles (post-unhide) so
