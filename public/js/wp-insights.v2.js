@@ -238,7 +238,18 @@ window.WPInsights = (function () {
                 return 'src="' + proxifyImage(u) + '"';
             },
         );
+        var yoast =
+            post.yoast_head_json && typeof post.yoast_head_json === "object"
+                ? post.yoast_head_json
+                : {};
         var excerpt = (post.excerpt && post.excerpt.rendered) || "";
+...
+        var seoTitle = yoast.title
+            ? stripTags(String(yoast.title))
+            : title;
+        var seoDescription = yoast.description
+            ? String(yoast.description).trim()
+            : (stripTags(excerpt) || "");
         var terms = (post._embedded && post._embedded["wp:term"]) || [];
         var media =
             (post._embedded &&
@@ -279,6 +290,8 @@ window.WPInsights = (function () {
             image: absImage(image),
             alt: (media && media.alt_text) || title,
             intro: stripTags(excerpt) || "",
+            seoTitle: seoTitle || title,
+            seoDescription: seoDescription || stripTags(excerpt) || "",
             takeaways: takeaways,
             body: contentHtml,
         };

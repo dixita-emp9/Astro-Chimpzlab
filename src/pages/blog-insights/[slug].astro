@@ -37,11 +37,24 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
+const postYoast = post?.yoast_head_json || {};
+const postSeoTitle =
+    postYoast.title ||
+    String(post?.title?.rendered || "")
+        .replace(/<[^>]+>/g, "")
+        .trim() ||
+    "Blog & Insights | ChimpzLab";
+const postSeoDescription =
+    postYoast.description ||
+    String(post?.excerpt?.rendered || "")
+        .replace(/<[^>]+>/g, "")
+        .trim() ||
+    "Read ChimpzLab's latest blog posts on digital marketing, SEO, AI, social media, and industry trends.";
 ---
 
 <BaseLayout
-    title="Blog & Insights | ChimpzLab"
-    description="Read ChimpzLab's latest blog posts on digital marketing, SEO, AI, social media, and industry trends."
+    title={postSeoTitle}
+    description={postSeoDescription}
     canonical="/blog-insights"
     hideHeader={false}
     hideFooter={false}
@@ -1050,7 +1063,8 @@ const { post } = Astro.props;
 
             function showContent(article) {
                 // Update page title
-                document.title = article.titleFull + " | " + blogSiteName;
+                var seoTitle = article.seoTitle || (article.titleFull + " | " + blogSiteName);
+                document.title = seoTitle;
 
                 // Update canonical URL to the pretty per-article URL
                 var canon = document.querySelector('link[rel="canonical"]');
@@ -1060,8 +1074,10 @@ const { post } = Astro.props;
                 var metaDesc = document.querySelector(
                     'meta[name="description"]',
                 );
-                if (metaDesc && article.intro)
-                    metaDesc.setAttribute("content", article.intro);
+                var seoDescription =
+                    article.seoDescription || article.intro;
+                if (metaDesc && seoDescription)
+                    metaDesc.setAttribute("content", seoDescription);
 
                 // Inject BlogPosting JSON-LD schema
                 var blogSchema = {

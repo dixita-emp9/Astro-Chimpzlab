@@ -981,7 +981,8 @@ const blogLogoUrl = site.url + site.logo.ogImage;
 
             function showContent(article) {
                 // Update page title
-                document.title = article.titleFull + " | " + blogSiteName;
+                var seoTitle = article.seoTitle || (article.titleFull + " | " + blogSiteName);
+                document.title = seoTitle;
 
                 // Update canonical URL to the pretty per-article URL
                 var canon = document.querySelector('link[rel="canonical"]');
@@ -991,8 +992,10 @@ const blogLogoUrl = site.url + site.logo.ogImage;
                 var metaDesc = document.querySelector(
                     'meta[name="description"]',
                 );
-                if (metaDesc && article.intro)
-                    metaDesc.setAttribute("content", article.intro);
+                var seoDescription =
+                    article.seoDescription || article.intro;
+                if (metaDesc && seoDescription)
+                    metaDesc.setAttribute("content", seoDescription);
 
                 // Inject BlogPosting JSON-LD schema
                 var blogSchema = {
