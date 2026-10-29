@@ -243,7 +243,6 @@ window.WPInsights = (function () {
                 ? post.yoast_head_json
                 : {};
         var excerpt = (post.excerpt && post.excerpt.rendered) || "";
-...
         var seoTitle = yoast.title
             ? stripTags(String(yoast.title))
             : title;
